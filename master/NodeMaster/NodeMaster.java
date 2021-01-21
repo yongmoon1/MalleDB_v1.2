@@ -6,7 +6,9 @@ import util.Options;
 
 import java.util.Scanner;
 import java.util.Arrays;
-import java.util.Random;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class NodeMaster {
 
@@ -53,20 +55,20 @@ public class NodeMaster {
     }
 
     private static String calculate(){
-        int total_num = 10; // temporary (node number -> 0~9)
+        int total_num = 100; // temporary (node number -> 0~9)
         return Integer.toString((int)Math.random() * total_num);
     }
 
     private static void activate(String node_num){
-        // 
+        System.out.println("Activating Node " + node_num);
     }
     
     private static void notify_to_usr(String message){
-        //
+        System.out.println("Notify to User that the file is not in DB");
     }
 
     private static void implement_insert(BloomFilter bloomFilter, MalleDB malleDB, Scanner scanner){
-        System.out.println("Put the Filenam to insert");
+        System.out.println("Put the Filename to insert");
         String filename = scanner.next();
         System.out.println("Put the Unique Key");
         String unique_key = scanner.next(); // PROGRESS #1
@@ -89,11 +91,12 @@ public class NodeMaster {
         
         String hash_input = filename + unique_key;
         if(bloomFilter.isPresent(hash_input)){  // PROGRESS #2
-            String search_node; // = malleDB.read(filename);   // PROGRESS #3 MalleDB는 read시 출력밖에 하지 않음... 수정필요
+            String search_node= ""; // = malleDB.read(filename);   // PROGRESS #3 MalleDB는 read시 출력밖에 하지 않음... 수정필요
+            malleDB.read(filename);
             activate(search_node);  // PROGRESS #4
         }
         else{    // PROGRESS #3-FAIL
-            notify("FAIL");
+            notify_to_usr("FAIL");
         }
     }
     // private static void testWithOptimumSizeBitSet() {

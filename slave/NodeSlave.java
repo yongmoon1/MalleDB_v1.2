@@ -11,10 +11,16 @@ public class NodeSlave {
 
     public static void main(String arg[]){
 
+        MalleDB malleDB = new MalleDB();
+        Options option = new Options(/* This Should Be Customized */);
+        malleDB.init(option);
+        malleDB.create();
+
         Scanner scanner = new Scanner(System.in);   // System.in은 모든 Scanner가 공유하므로 하나의 Scanner를 쓰는 것이 좋다.
         System.out.println("==================Waiting For Request===================");
-        while(twait_for_req()){
+        while(wait_for_req()){
             boolean brk = false;
+            // It should be notified by Master if it is INSERT or READ.
             int slct = scanner.nextInt();
             // PROCESS #1
             switch (slct) {
@@ -36,18 +42,26 @@ public class NodeSlave {
 
     }
 
-    private static void send_to_master(String filename, String unique_key){
-        // Slave Sends metadata to the Master
+    private static boolean wait_for_req(){
+        // wait for REQUEST from Master
+        return true;
     }
 
-    private static void insert(Scanner scanner){
+    private static void send_to_master(String filename, String unique_key){
+        // PROCESS #8
+    }
+
+    private static void insert(Scanner scanner, MalleDB malleDB){
+        // Getting Filename and Unique Key from Master
         System.out.println("Put the Filename to insert");
         String filename = scanner.next();
         System.out.println("Put the Unique Key");
         String unique_key = scanner.next(); 
         
+        download_file();
+        
+
         send_to_master(filename, unique_key);
-        wait_for_res();
     }
 
     private static void read(Scanner scanner){
@@ -57,7 +71,6 @@ public class NodeSlave {
         String unique_key = scanner.next();
 
         send_to_master(filename, unique_key);
-        wait_for_res();
     }    
 
 }

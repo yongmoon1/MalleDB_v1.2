@@ -18,8 +18,10 @@ sudo apt install docker-ce
 # For Building Docker Image
 
 - At the same directory with Dockerfile, to build an image as hello:0.1
+
 sudo docker build --tag hello:0.1 .
 - We can check all of images in the host by
+
 sudo docker images -a
 
 # For Pulling Images from Docker Hub

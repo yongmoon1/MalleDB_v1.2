@@ -21,8 +21,8 @@ public class NodeMaster {
         double desired_p = scanner.nextDouble();
 
         MalleDB malleDB = new MalleDB();
-        Options option = new Options(Options.DB_TYPE.LEVELDB, Options.DB_TYPE.LEVELDB, Options.DB_TYPE.LEVELDB);
-        malleDB.init(option);
+        //Options option = new Options(Options.DB_TYPE.LEVELDB);
+        malleDB.init();
         malleDB.create();
 
         BloomFilter bloomFilter = new BasicBloomFilter(desired_p, expected_elements);

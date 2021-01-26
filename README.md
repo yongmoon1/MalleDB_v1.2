@@ -18,3 +18,6 @@ sudo apt install docker-ce
 docker pull lambent41/iesl-project
 
 docker run -it lambent41/iesl-project:v0.01 /bin/bash
+
+# For Compile
+export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8

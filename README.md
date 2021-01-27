@@ -33,3 +33,8 @@ docker run -it lambent41/iesl-project:v0.01 /bin/bash
 
 # For Compile
 export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
+
+# MySQL Setting
+
+mysql> create user iesl@localhost identified by '12345678';
+mysql> grant all privileges on *.* to 'iesl'@'localhost';

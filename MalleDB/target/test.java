@@ -4,7 +4,7 @@ import util.Options;
 public class test {
     public static void main(String[] args){
         MalleDB malleDB = new MalleDB();
-        malleDB.init(new Options(Options.DB_TYPE.MYSQL));
+        malleDB.init(new Options(Options.DB_TYPE.LEVELDB));
         malleDB.create();
 
         malleDB.insert("filename", "1");

@@ -16,7 +16,7 @@ public class LevelDB extends SubDB {
 
     private static Options options = null;
     private static DB db = null;
-    private static boolean assigned = false;    // If LevelDB already exists, assigned=true
+    private static boolean assigned = false;    // If LevelDB already exists, assigned=true.
 
     @Override
     public Status init() {
@@ -29,11 +29,11 @@ public class LevelDB extends SubDB {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            assigned = true;
+            assigned = true;    // Flag that LevelDB exists.
             return Status.OK;
         }
         else{
-            return null;
+            return null;    // If LevelDB already exists, Nothing's done.
         }
     }
 
@@ -47,19 +47,46 @@ public class LevelDB extends SubDB {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        assigned = false;
+        assigned = false;   // Unset the flag
         return Status.OK;
     }
+
 
     @Override
     public Status insert(Item item) {
-        String key = item.getType() + util.Options.DELIM + item.getOrder() + util.Options.DELIM + item.getKey();
-        String value = item.getValue();
-        System.out.println("Inserting: Key: " + key + " Value: " + value);
-        db.put(key.getBytes(), value.getBytes());
-        return Status.OK;
+        try{
+            if(item.isMeta){
+                String key = item.getKey();
+                Int[] counters = new int[3];
+                String value = item.getCounters()[0] + util.Options.DELIM + item.getCounters()[1]+ util.Options.DELIM + item.getCounters()[2];
+                db.put(key.getBytes(), value.getBytes());
+                System.out.println("Metadata for key \"" + item.getKey() + "\" inserted...");
+            }
+            else{
+                String key = item.getType() + util.Options.DELIM + item.getOrder() + util.Options.DELIM + item.getKey();
+                String value = item.getValue();
+                System.out.println("Inserting: Key: " + key + " Value: " + value);
+                db.put(key.getBytes(), value.getBytes());
+                return Status.OK;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return Status.ERROR;
+        }
     }
 
+    @Override
+    public Item readMeta(Item item) {
+        try{
+            String key = item.getKey();
+            byte[] value = db.get(key.getBytes());
+            
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
 
     @Override
     public List<Item> readAll(String table, Item item) {

@@ -66,7 +66,6 @@ public class MalleDB implements interfaces.MalleDB {
     //Initialize with custom configuration
     @Override
     public Status init(Options options) {
-        metadb = new LevelDB();
 
         if(options.isUsingDefault()) {
             usingOneSubDB = true;
@@ -82,8 +81,11 @@ public class MalleDB implements interfaces.MalleDB {
                 blockdb = new Cassandra();
             }
 
+            System.out.println("Check 1");
             metadb.init();
+            System.out.println("Check 2");
             blockdb.init();
+            System.out.println("Check 3");
 
             mdb = null;
             bdb = null;

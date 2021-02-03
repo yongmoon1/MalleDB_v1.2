@@ -89,11 +89,11 @@ public class MalleDB implements interfaces.MalleDB {
             */
 
             metadb = new LevelDB();
-            blockdb = new LevelDB();
+            //blockdb = new LevelDB();
             System.out.println("Check 1");
             metadb.init();
             System.out.println("Check 2");
-            blockdb.init();
+            //blockdb.init();
             System.out.println("Check 3");
 
             mdb = null;

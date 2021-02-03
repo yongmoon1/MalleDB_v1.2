@@ -36,9 +36,10 @@ public class Options {
     public static final String[] TABLES_CASS = {"mdatatable", "bdatatable", "tdatatable"};
     //Cassandra Configurations ends
 
-    private boolean usingDefault;
+    private final boolean usingDefault;
 
-    public enum DB_TYPE{MYSQL, LEVELDB, CASSANDRA};
+    public enum DB_TYPE{MYSQL, LEVELDB, CASSANDRA}
+
     public static  DB_TYPE SUB_DB = DB_TYPE.MYSQL;
     private DB_TYPE dbMedium;
     private DB_TYPE dbBlob;

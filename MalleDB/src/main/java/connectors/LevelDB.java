@@ -20,7 +20,7 @@ public class LevelDB extends SubDB {
 
     @Override
     public Status init() {
-        if(assigned==false){
+        if(!assigned){
             try {
                 options = new Options();
                 options.createIfMissing(true);
@@ -54,38 +54,34 @@ public class LevelDB extends SubDB {
 
     @Override
     public Status insert(Item item) {
-        try{
-            if(item.isMeta){
-                String key = item.getKey();
-                Int[] counters = new int[3];
-                String value = item.getCounters()[0] + util.Options.DELIM + item.getCounters()[1]+ util.Options.DELIM + item.getCounters()[2];
-                db.put(key.getBytes(), value.getBytes());
-                System.out.println("Metadata for key \"" + item.getKey() + "\" inserted...");
-            }
-            else{
-                String key = item.getType() + util.Options.DELIM + item.getOrder() + util.Options.DELIM + item.getKey();
-                String value = item.getValue();
-                System.out.println("Inserting: Key: " + key + " Value: " + value);
-                db.put(key.getBytes(), value.getBytes());
-                return Status.OK;
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            return Status.ERROR;
+        if(item.isMeta()){
+            String key = item.getKey();
+            String value =
+                    item.getCounters()[0] + util.Options.DELIM + item.getCounters()[1]+ util.Options.DELIM + item.getCounters()[2];
+            db.put(key.getBytes(), value.getBytes());
+            System.out.println("Metadata for key \"" + item.getKey() + "\" inserted...");
         }
+        else{
+            String key = item.getType() + util.Options.DELIM + item.getOrder() + util.Options.DELIM + item.getKey();
+            String value = item.getValue();
+            System.out.println("Inserting: Key: " + key + " Value: " + value);
+            db.put(key.getBytes(), value.getBytes());
+        }
+        return Status.OK;
     }
 
     @Override
     public Item readMeta(Item item) {
-        try{
-            String key = item.getKey();
-            byte[] value = db.get(key.getBytes());
-            
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return null;
+        String key = item.getKey();
+        String value = new String(db.get(key.getBytes()));
+        int[] counters = new int[3];
+        String[] splitArr = value.split(util.Options.DELIM);
+        counters[0] = Integer.parseInt(splitArr[0]);    // m_count
+        counters[1] = Integer.parseInt(splitArr[1]);    // b_count
+        counters[2] = Integer.parseInt(splitArr[2]);    // t_count
+        item.setCounters(counters);
+        System.out.println("Item \"" + key + "\" is retrieved...");
+        return item;
     }
 
     @Override

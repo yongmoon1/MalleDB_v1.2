@@ -69,7 +69,9 @@ public class MalleDB implements interfaces.MalleDB {
 
 
         if(options.isUsingDefault()) {
+            System.out.println("PASS");
             usingOneSubDB = true;
+            /*
             if (Options.SUB_DB == Options.DB_TYPE.MYSQL) {
                 System.out.println("MYSQL");
                 metadb = new MySQL();
@@ -84,7 +86,10 @@ public class MalleDB implements interfaces.MalleDB {
                 metadb = new Cassandra();
                 blockdb = new Cassandra();
             }
+            */
 
+            metadb = new LevelDB();
+            blockdb = new LevelDB();
             System.out.println("Check 1");
             metadb.init();
             System.out.println("Check 2");

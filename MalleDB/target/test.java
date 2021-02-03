@@ -1,9 +1,10 @@
 import db.MalleDB;
+import util.Options;
 
 public class test {
     public static void main(String[] args){
         MalleDB malleDB = new MalleDB();
-        malleDB.init();
+        malleDB.init(new Options(Options.DB_TYPE.MYSQL));
         malleDB.create();
 
         malleDB.insert("filename", "1");

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="MalleDB">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/master/NodeMaster/MalleDB.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

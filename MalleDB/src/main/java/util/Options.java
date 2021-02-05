@@ -50,6 +50,7 @@ public class Options {
         this.dbMedium = dbMedium;
         this.dbBlob = dbBlob;
         this.dbTiny = dbTiny;
+        SUB_DB = dbMedium;
     }
 
     public Options(DB_TYPE subDB) {

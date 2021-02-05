@@ -25,18 +25,15 @@ public class Cassandra extends SubDB {
 
     @Override
     public Status init() {
-        if(!assigned){
-            Cluster.Builder b = Cluster.builder().addContactPoint(Options.IP_CASS);
-            if (Options.PORT_CASS != 0) {
-                b.withPort(Options.PORT_CASS);
-            }
-            cluster = b.build();
-            session = cluster.connect();
-            System.out.println("Connected to Cassandra...");
-            assigned=true;
-            return Status.OK;
+        Cluster.Builder b = Cluster.builder().addContactPoint(Options.IP_CASS);
+        if (Options.PORT_CASS != 0) {
+            b.withPort(Options.PORT_CASS);
         }
-        else return Status.OK;
+        cluster = b.build();
+        session = cluster.connect();
+        System.out.println("Connected to Cassandra...");
+        assigned=true;
+        return Status.OK;
     }
 
     @Override

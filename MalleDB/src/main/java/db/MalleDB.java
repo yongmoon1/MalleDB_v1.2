@@ -67,34 +67,22 @@ public class MalleDB implements interfaces.MalleDB {
     @Override
     public Status init(Options options) {
 
-
         if(options.isUsingDefault()) {
-            System.out.println("PASS");
             usingOneSubDB = true;
-            /*
             if (Options.SUB_DB == Options.DB_TYPE.MYSQL) {
-                System.out.println("MYSQL");
                 metadb = new MySQL();
                 blockdb = new MySQL();
             } else if (Options.SUB_DB == Options.DB_TYPE.LEVELDB) {
                 //if(LevelDB.assigned==false)
-                System.out.println("LEVELDB");
                 metadb = new LevelDB();
                 blockdb = new LevelDB();
             } else {
-                System.out.println("CASSA");
                 metadb = new Cassandra();
                 blockdb = new Cassandra();
             }
-            */
 
-            metadb = new LevelDB();
-            blockdb = new LevelDB();
-            System.out.println("Check 1");
             metadb.init();
-            System.out.println("Check 2");
             blockdb.init();
-            System.out.println("Check 3");
 
             mdb = null;
             bdb = null;

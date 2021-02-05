@@ -25,11 +25,10 @@ public class LevelDB extends SubDB {
                 options = new Options();
                 options.createIfMissing(true);
                 db = factory.open(new File(util.Options.DB_LEVELDB), options);
-                assigned = true;
+                assigned = true;    // Flag that LevelDB exists.
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            assigned = true;    // Flag that LevelDB exists.
             return Status.OK;
         }
         else{

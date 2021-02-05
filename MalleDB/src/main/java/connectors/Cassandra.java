@@ -21,16 +21,22 @@ public class Cassandra extends SubDB {
 
     private static Session session;
 
+    private static boolean assigned = false;
+
     @Override
     public Status init() {
-        Cluster.Builder b = Cluster.builder().addContactPoint(Options.IP_CASS);
-        if (Options.PORT_CASS != 0) {
-            b.withPort(Options.PORT_CASS);
+        if(!assigned){
+            Cluster.Builder b = Cluster.builder().addContactPoint(Options.IP_CASS);
+            if (Options.PORT_CASS != 0) {
+                b.withPort(Options.PORT_CASS);
+            }
+            cluster = b.build();
+            session = cluster.connect();
+            System.out.println("Connected to Cassandra...");
+            assigned=true;
+            return Status.OK;
         }
-        cluster = b.build();
-        session = cluster.connect();
-        System.out.println("Connected to Cassandra...");
-        return Status.OK;
+        else return Status.OK;
     }
 
     @Override

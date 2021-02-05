@@ -89,6 +89,8 @@ public class MalleDB implements interfaces.MalleDB {
             tdb = null;
 
         }else {
+            metadb = new LevelDB();
+
             if(options.getDbMedium() == Options.DB_TYPE.MYSQL){
                 mdb = new MySQL();
             }else if(options.getDbMedium() == Options.DB_TYPE.LEVELDB){
@@ -113,6 +115,7 @@ public class MalleDB implements interfaces.MalleDB {
                 tdb = new Cassandra();
             }
 
+            metadb.init();
             mdb.init();
             bdb.init();
             tdb.init();

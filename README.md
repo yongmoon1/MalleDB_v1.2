@@ -44,5 +44,11 @@ mysql> grant all privileges on *.* to 'iesl'@'localhost';
 
 mysql> create database malledb;
 
+# Jedis Implemntation
 
+https://mvnrepository.com/artifact/redis.clients/jedis/3.5.1
+
+Get .jar file from link above and add dependency using IntelliJ.
+
+import redis.clients.jedis.Jedis;
 

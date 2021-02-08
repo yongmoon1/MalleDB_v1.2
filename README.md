@@ -37,6 +37,12 @@ export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
 # MySQL Setting
 
 sudo mysql -u root
+
 mysql> create user iesl@localhost identified by '12345678';
+
 mysql> grant all privileges on *.* to 'iesl'@'localhost';
+
 mysql> create database malledb;
+
+
+

@@ -38,7 +38,7 @@ public class Options {
 
     private final boolean usingDefault;
 
-    public enum DB_TYPE{MYSQL, LEVELDB, CASSANDRA}
+    public enum DB_TYPE{MYSQL, LEVELDB, CASSANDRA, REDIS}
 
     public static  DB_TYPE SUB_DB = DB_TYPE.MYSQL;
     private DB_TYPE dbMedium;

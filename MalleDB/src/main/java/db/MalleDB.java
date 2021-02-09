@@ -3,6 +3,7 @@ package db;
 import connectors.Cassandra;
 import connectors.LevelDB;
 import connectors.MySQL;
+import connectors.Redis;
 import interfaces.SubDB;
 import util.Item;
 import util.Options;
@@ -71,8 +72,11 @@ public class MalleDB implements interfaces.MalleDB {
                 metadb = new MySQL();
             } else if (Options.SUB_DB == Options.DB_TYPE.LEVELDB) {
                 metadb = new LevelDB();
-            } else {
+            } else if (Options.SUB_DB == Options.DB_TYPE.CASSANDRA){
                 metadb = new Cassandra();
+            } else if (Options.SUB_DB == Options.DB_TYPE.REDIS){
+                // Two Redis OK?
+                metadb = new MySQL();
             }
 
             metadb.init();
@@ -85,8 +89,10 @@ public class MalleDB implements interfaces.MalleDB {
             } else if (Options.SUB_DB == Options.DB_TYPE.LEVELDB) {
                 //if(LevelDB.assigned==false)
                 blockdb = new LevelDB();
-            } else {
+            } else if (Options.SUB_DB == Options.DB_TYPE.CASSANDRA){
                 blockdb = new Cassandra();
+            } else if (Options.SUB_DB == Options.DB_TYPE.REDIS){
+                blockdb = new Redis();
             }
 
             blockdb.init();

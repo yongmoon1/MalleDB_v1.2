@@ -1,7 +1,0 @@
-For compiling the java file having dependency on a jar
-
-javac -cp ".:path_of_the_jar/jarName.jar" className.java
-
-For executing the class file
-
-java -cp ".:path_of_the_jar/jarName.jar" className

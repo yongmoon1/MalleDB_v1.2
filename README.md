@@ -1,4 +1,13 @@
 # ChulWoo
+
+## In MalleDBv1.0 We Added the following functionalities.
+
+1. MalleDB using the leveldb for storing Meta data and actual Key-Value data.
+
+2. MalleDB also supports radix for storing Meta data and actual Key-Value data.
+
+
+
 ## [Docker Hub](https://hub.docker.com/r/lambent41/iesl-project)
 
 sudo apt update

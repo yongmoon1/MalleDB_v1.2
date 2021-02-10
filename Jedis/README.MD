@@ -1,3 +1,5 @@
+### Testing Jedis in Java.
+
 ### INSTALLATION
 $ sudo apt install redis-tools
 

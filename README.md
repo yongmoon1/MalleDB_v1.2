@@ -1,11 +1,16 @@
 # ChulWoo
 
+# Previous Version <<MalleDB>>  
+1. MalleDB also supports MySQL for storing Meta data and actual Key-Value data.
+2. MalleDB also supports MySQL for storing Meta data and Leveldb for actual Key-Value data.
+3. MalleDB also supports MySQL for storing Meta data and Cassandra for actual Key-Value data.
+  
 ## In MalleDBv1.0 We Added the following functionalities.
 
 1. MalleDB using the leveldb for storing Meta data and actual Key-Value data.
+2. MalleDB also supports radis for storing Meta data and actual Key-Value data.
 
-2. MalleDB also supports radix for storing Meta data and actual Key-Value data.
-
+* Issue when MalleDB supports Cassandra for storing Meta data and actual Key-Value data.
 
 
 ## [Docker Hub](https://hub.docker.com/r/lambent41/iesl-project)

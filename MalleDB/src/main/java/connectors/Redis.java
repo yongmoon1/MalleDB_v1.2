@@ -1,14 +1,18 @@
 package connectors;
 
+import it.unimi.dsi.fastutil.Hash;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.Pipeline;
 
 import interfaces.SubDB;
 import util.Item;
 import util.Options;
 import util.Status;
+import util.HashMap;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,31 +24,74 @@ public class Redis extends SubDB{
 
     private static JedisPoolConfig jedisPoolConfig = null;
     private static JedisPool pool = null;
-    Jedis jedis = null;
+    private static Jedis jedis = null;
+    private static Pipeline pipeline = jedis.pipelined();
+    boolean assigned = false;
 
     @Override
     public Status init(){
-        jedisPoolConfig = new JedisPoolConfig();
-        pool = new JedisPool(jedisPoolConfig, "127.0.0.1", 6379);
-        jedis = pool.getResource();
-        return Status.OK;
-    }
-
-    @Override
-    public Status close(){
-        if(jedis != null){
-            jedis.close();
+        if(!assigned){
+            jedisPoolConfig = new JedisPoolConfig();
+            pool = new JedisPool(jedisPoolConfig, "127.0.0.1", 6379);
+            jedis = pool.getResource();
+            assigned = true;
         }
         return Status.OK;
     }
 
     @Override
-    public Status insert(Item item){
-        String key = item.getType() + util.Options.DELIM + item.getOrder() + util.Options.DELIM + item.getKey();
-        String value = item.getValue();
-        System.out.println("Inserting: Key: " + key + " Value: " + value);
-        jedis.set(key.getBytes(), value.getBytes());
+    public Status close(){
+        if(jedis != null && assigned){
+            jedis.close();
+        }
+        assigned = false;
         return Status.OK;
+    }
+
+    @Override
+    public Status insert(Item item){
+        Status ins_check;
+        if(item.isMeta()){
+            String key = item.getKey();
+            String value =
+                    item.getCounters()[0] + util.Options.DELIM + item.getCounters()[1]+ util.Options.DELIM + item.getCounters()[2];
+            //jedis.set(key.getBytes(), value.getBytes());
+            ins_check=HashMap.insert(key, value);
+            System.out.println("Metadata for key \"" + item.getKey() + "\" inserted...");
+        }
+        else{
+            String key = item.getType() + util.Options.DELIM + item.getOrder() + util.Options.DELIM + item.getKey();
+            String value = item.getValue();
+            ins_check=HashMap.insert(key, value);
+            System.out.println("Inserting: Key: " + key + " Value: " + value);
+            jedis.set(key.getBytes(), value.getBytes());
+        }
+
+        if(ins_check==Status.HASHMAP_FULL){
+            HashMap.flush_redis(pipeline);
+        };
+
+        return Status.OK;
+    }
+
+    @Override
+    public void flush(){
+        HashMap.flush_redis(pipeline);
+    }
+
+    @Override
+    public Item readMeta(Item item){
+        String key = item.getKey();
+        String value = new String(jedis.get(key.getBytes()));
+        int[] counters = new int[3];
+        String[] splitArr = value.split(util.Options.DELIM);
+        counters[0] = Integer.parseInt(splitArr[0]);    // m_count
+        counters[1] = Integer.parseInt(splitArr[1]);    // b_count
+        counters[2] = Integer.parseInt(splitArr[2]);    // t_count
+        item.setCounters(counters);
+        System.out.println("Item \"" + key + "\" is retrieved...");
+        return item;
+
     }
 
     @Override

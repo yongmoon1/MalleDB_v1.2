@@ -25,4 +25,6 @@ public abstract class SubDB {
     public List<Item> sortByOrder(List<Item> items){
         return items;
     }
+
+    public void flush() {}
 }

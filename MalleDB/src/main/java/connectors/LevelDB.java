@@ -10,7 +10,9 @@ import util.Status;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LevelDB extends SubDB {
 
@@ -39,7 +41,7 @@ public class LevelDB extends SubDB {
     @Override
     public Status close() {
         try {
-            if(db != null)
+            if(db != null && assigned)
                 db.close();
             options = null;
             db = null;

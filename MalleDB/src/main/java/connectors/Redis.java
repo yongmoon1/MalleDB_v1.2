@@ -64,7 +64,7 @@ public class Redis extends SubDB{
             String value = item.getValue();
             ins_check=HashMap.insert(key, value);
             System.out.println("Inserting: Key: " + key + " Value: " + value);
-            jedis.set(key.getBytes(), value.getBytes());
+            //jedis.set(key.getBytes(), value.getBytes());
         }
 
         if(ins_check==Status.HASHMAP_FULL){

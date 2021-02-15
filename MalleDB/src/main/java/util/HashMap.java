@@ -12,6 +12,7 @@ public class HashMap {
     public static Status insert(String key, String value){
         map.put(key, value);
         System.out.println("Inserting into Hashmap...");
+        System.out.println(map.size());
         if(map.size()==map_size) return Status.HASHMAP_FULL;
         else return Status.OK;
     }

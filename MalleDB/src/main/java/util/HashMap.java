@@ -6,7 +6,7 @@ import redis.clients.jedis.Pipeline;
 
 public class HashMap {
 
-    private static Integer map_size = 2;
+    private static Integer map_size = 3;
     private static Map<String, String> map = new java.util.HashMap<>(map_size);
 
     public static Status insert(String key, String value){

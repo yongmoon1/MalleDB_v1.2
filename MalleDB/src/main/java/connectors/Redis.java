@@ -25,7 +25,7 @@ public class Redis extends SubDB{
     private static JedisPoolConfig jedisPoolConfig = null;
     private static JedisPool pool = null;
     private static Jedis jedis = null;
-    private static Pipeline pipeline = jedis.pipelined();
+    private static Pipeline pipeline = null;
     boolean assigned = false;
 
     @Override
@@ -34,6 +34,7 @@ public class Redis extends SubDB{
             jedisPoolConfig = new JedisPoolConfig();
             pool = new JedisPool(jedisPoolConfig, "127.0.0.1", 6379);
             jedis = pool.getResource();
+            pipeline = jedis.pipelined();
             assigned = true;
         }
         return Status.OK;

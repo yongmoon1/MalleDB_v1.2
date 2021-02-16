@@ -13,6 +13,9 @@ import util.Options;
 import util.Status;
 import util.HashMap;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -120,10 +123,19 @@ public class Redis extends SubDB{
             if(pipeSize==read_size){
                 pipeline.sync();
                 System.out.println("Flushing READ");
+                byte[] value = {};
                 for(Response response: responses){
                     Object o = response.get();
-                    String value = String.valueOf(o);
-                    items.add(new Item(i, item.getType(), item.getKey(), value));
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    try{
+                        ObjectOutputStream out = new ObjectOutputStream(bos);
+                        out.writeObject(o);
+                        value = bos.toByteArray();
+                    }
+                    catch (IOException e){
+                        System.out.println("Object Convertion to ByteArray FAILED!");
+                    }
+                    items.add(new Item(i, item.getType(), item.getKey(), new String(value)));
                 }
             }
             //item.setValue(Arrays.toString(value));
@@ -132,9 +144,18 @@ public class Redis extends SubDB{
         pipeline.sync();
         for(Response response: responses){
             System.out.println("Flushing READ at last");
+            byte[] value = {};
             Object o = response.get();
-            String value = String.valueOf(o);
-            items.add(new Item(0, item.getType(), item.getKey(), value));
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            try{
+                ObjectOutputStream out = new ObjectOutputStream(bos);
+                out.writeObject(o);
+                value = bos.toByteArray();
+            }
+            catch (IOException e){
+                System.out.println("Object Convertion to ByteArray FAILED!");
+            }
+            items.add(new Item(0, item.getType(), item.getKey(), new String(value)));
             // Don't care order
         }
         return items;

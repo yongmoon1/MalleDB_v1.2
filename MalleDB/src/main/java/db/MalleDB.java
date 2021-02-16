@@ -316,12 +316,13 @@ public class MalleDB implements interfaces.MalleDB {
         item = metadb.readMeta(item);
 
         if(usingOneSubDB) {
-            for (int i = 0; i < Options.bCOUNTER; i++) {
+          /*  for (int i = 0; i < Options.bCOUNTER; i++) {
                 if (item.getCounters()[i] > 0) {
                     blockdb.delete(Options.TABLES_MYSQL[i], item);
                     System.out.println("Block deleted...");
                 }
-            }
+            }*/
+            blockdb.deleteAll(item);
         }else {
             if(item.getCounters()[0] > 0){
                 mdb.delete(Options.TABLES_MYSQL[0], item);

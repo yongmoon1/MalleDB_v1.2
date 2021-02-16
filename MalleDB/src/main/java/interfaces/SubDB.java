@@ -22,7 +22,7 @@ public abstract class SubDB {
 
     public Status delete(String table, Item item){return null;}
 
-    public Status deleteAll(String table, Item item){return null;}
+    public Status deleteAll(Item item){return null;}
 
     public List<Item> sortByOrder(List<Item> items){
         return items;

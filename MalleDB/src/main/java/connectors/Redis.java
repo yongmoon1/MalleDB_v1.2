@@ -24,7 +24,7 @@ import static org.fusesource.leveldbjni.JniDBFactory.bytes;
 import static redis.clients.jedis.HostAndPort.localhost;
 
 
-public class Redis extends SubDB{
+public class Redis extends SubDB {
 
     private static JedisPoolConfig jedisPoolConfig = null;
     private static JedisPool pool = null;
@@ -32,10 +32,11 @@ public class Redis extends SubDB{
     private static Pipeline pipeline = null;
     boolean assigned = false;
     private static Integer read_size = 3;
+    private static Integer del_size = 3;
 
     @Override
-    public Status init(){
-        if(!assigned){
+    public Status init() {
+        if (!assigned) {
             jedisPoolConfig = new JedisPoolConfig();
             pool = new JedisPool(jedisPoolConfig, "127.0.0.1", 6379);
             jedis = pool.getResource();
@@ -46,8 +47,8 @@ public class Redis extends SubDB{
     }
 
     @Override
-    public Status close(){
-        if(jedis != null && assigned){
+    public Status close() {
+        if (jedis != null && assigned) {
             jedis.close();
         }
         assigned = false;
@@ -55,39 +56,39 @@ public class Redis extends SubDB{
     }
 
     @Override
-    public Status insert(Item item){
+    public Status insert(Item item) {
         Status ins_check;
-        if(item.isMeta()){
+        if (item.isMeta()) {
             String key = item.getKey();
             String value =
-                    item.getCounters()[0] + util.Options.DELIM + item.getCounters()[1]+ util.Options.DELIM + item.getCounters()[2];
+                    item.getCounters()[0] + util.Options.DELIM + item.getCounters()[1] + util.Options.DELIM + item.getCounters()[2];
             //jedis.set(key.getBytes(), value.getBytes());
-            ins_check=HashMap.insert(key, value);
+            ins_check = HashMap.insert(key, value);
             System.out.println("Metadata for key \"" + item.getKey() + "\" inserted...");
-        }
-        else{
+        } else {
             String key = item.getType() + util.Options.DELIM + item.getOrder() + util.Options.DELIM + item.getKey();
             String value = item.getValue();
-            ins_check=HashMap.insert(key, value);
+            ins_check = HashMap.insert(key, value);
             System.out.println("Inserting: Key: " + key + " Value: " + value);
             //jedis.set(key.getBytes(), value.getBytes());
         }
 
-        if(ins_check==Status.HASHMAP_FULL){
+        if (ins_check == Status.HASHMAP_FULL) {
             System.out.println("Hash_IS_FULL");
             HashMap.flush_redis(pipeline);
-        };
+        }
+        ;
 
         return Status.OK;
     }
 
     @Override
-    public void flush(){
+    public void flush() {
         HashMap.flush_redis(pipeline);
     }
 
     @Override
-    public Item readMeta(Item item){
+    public Item readMeta(Item item) {
         String key = item.getKey();
         String value = new String(jedis.get(key.getBytes()));
         int[] counters = new int[3];
@@ -107,23 +108,23 @@ public class Redis extends SubDB{
         List<Response> responses = new ArrayList<>();
         Integer pipeSize = 0;
         int index = 0;
-        for(int i = 0; i < util.Options.bCOUNTER; i++){
-            if(table.equals(util.Options.TABLES_MYSQL[i])){
+        for (int i = 0; i < util.Options.bCOUNTER; i++) {
+            if (table.equals(util.Options.TABLES_MYSQL[i])) {
                 index = i;
             }
         }
 
-        for(int i = 1; i <= item.getCounters()[index]; i++) {
+        for (int i = 1; i <= item.getCounters()[index]; i++) {
             String key = (index + 1) + util.Options.DELIM + i + util.Options.DELIM + item.getKey();
             responses.add(pipeline.get(key));
             pipeSize++;
             System.out.println("Pipelining Read: Key: " + key);
             //byte[] value = jedis.get(key.getBytes());
 
-            if(pipeSize==read_size){
+            if (pipeSize == read_size) {
                 pipeline.sync();
                 System.out.println("Flushing READ");
-                for(Response response: responses){
+                for (Response response : responses) {
                     Object o = response.get();
                     items.add(new Item(i, item.getType(), item.getKey(), o.toString()));
                 }
@@ -134,7 +135,7 @@ public class Redis extends SubDB{
         }
         // To flush remained READ instruction.
         pipeline.sync();
-        for(Response response: responses){
+        for (Response response : responses) {
             System.out.println("Flushing READ at last");
             Object o = response.get();
             items.add(new Item(0, item.getType(), item.getKey(), o.toString()));
@@ -156,13 +157,23 @@ public class Redis extends SubDB{
     @Override
     public Status delete(String table, Item item) {
         String key = item.getKey();
+
         jedis.del(bytes(key));
         return Status.OK;
     }
 
     @Override
-    public Status deleteAll(String table, Item item){
-
+    public Status deleteAll(Item item) {
+        List<Item> items = new ArrayList<>();
+        for (int index = 0; index < Options.bCOUNTER; index++) {
+            for (int i = 1; i <= item.getCounters()[index]; i++) {
+                String key = (index + 1) + util.Options.DELIM + i + util.Options.DELIM + item.getKey();
+                pipeline.del(key);
+                System.out.println("Pipelining Delete: Key: " + key);
+            }
+        }
+        System.out.println("Flushing DELETE");
+        pipeline.sync();
         return Status.OK;
     }
 }

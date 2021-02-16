@@ -1,4 +1,20 @@
 # ChulWoo
+
+# Previous Version <<MalleDB>>  
+1. MalleDB also supports MySQL for storing Meta data and actual Key-Value data.
+2. MalleDB also supports MySQL for storing Meta data and Leveldb for actual Key-Value data.
+3. MalleDB also supports MySQL for storing Meta data and Cassandra for actual Key-Value data.
+  
+## In MalleDBv1.0 We Added the following functionalities.
+
+1. MalleDB using the leveldb for storing Meta data and actual Key-Value data.
+2. MalleDB also supports radis for storing Meta data and actual Key-Value data.
+
+* Issue 1. when MalleDB supports Cassandra for storing Meta data and actual Key-Value data.
+
+* Issue 2. When Deleting Key-Value Data for given file, It will not delete all corresponding values from DB.
+
+
 ## [Docker Hub](https://hub.docker.com/r/lambent41/iesl-project)
 
 sudo apt update
@@ -37,6 +53,18 @@ export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
 # MySQL Setting
 
 sudo mysql -u root
+
 mysql> create user iesl@localhost identified by '12345678';
+
 mysql> grant all privileges on *.* to 'iesl'@'localhost';
+
 mysql> create database malledb;
+
+# Jedis Implemntation
+
+https://mvnrepository.com/artifact/redis.clients/jedis/3.5.1
+
+Get .jar file from link above and add dependency using IntelliJ.
+
+import redis.clients.jedis.Jedis;
+

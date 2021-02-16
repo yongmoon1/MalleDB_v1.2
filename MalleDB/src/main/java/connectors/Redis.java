@@ -31,7 +31,7 @@ public class Redis extends SubDB{
     private static Jedis jedis = null;
     private static Pipeline pipeline = null;
     boolean assigned = false;
-    private static Integer read_size = 1;
+    private static Integer read_size = 3;
 
     @Override
     public Status init(){

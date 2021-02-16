@@ -137,6 +137,7 @@ public class Redis extends SubDB{
                     }
                     items.add(new Item(i, item.getType(), item.getKey(), new String(value)));
                 }
+                responses.clear();
             }
             //item.setValue(Arrays.toString(value));
         }
@@ -158,6 +159,7 @@ public class Redis extends SubDB{
             items.add(new Item(0, item.getType(), item.getKey(), new String(value)));
             // Don't care order
         }
+        responses.clear();
         return items;
     }
 

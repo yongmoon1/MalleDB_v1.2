@@ -10,7 +10,9 @@
 1. MalleDB using the leveldb for storing Meta data and actual Key-Value data.
 2. MalleDB also supports radis for storing Meta data and actual Key-Value data.
 
-* Issue when MalleDB supports Cassandra for storing Meta data and actual Key-Value data.
+* Issue 1. when MalleDB supports Cassandra for storing Meta data and actual Key-Value data.
+
+* Issue 2. When Deleting Key-Value Data for given file, It will not delete all corresponding values from DB.
 
 
 ## [Docker Hub](https://hub.docker.com/r/lambent41/iesl-project)

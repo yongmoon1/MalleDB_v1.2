@@ -5,6 +5,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Pipeline;
+import redis.clients.jedis.Response;
 
 import interfaces.SubDB;
 import util.Item;
@@ -27,6 +28,7 @@ public class Redis extends SubDB{
     private static Jedis jedis = null;
     private static Pipeline pipeline = null;
     boolean assigned = false;
+    private static Integer read_size = 1;
 
     @Override
     public Status init(){
@@ -99,6 +101,8 @@ public class Redis extends SubDB{
     @Override
     public List<Item> readAll(String table, Item item) {
         List<Item> items = new ArrayList<>();
+        List<Response> responses = new ArrayList<>();
+        Integer pipeSize = 0;
         int index = 0;
         for(int i = 0; i < util.Options.bCOUNTER; i++){
             if(table.equals(util.Options.TABLES_MYSQL[i])){
@@ -108,12 +112,30 @@ public class Redis extends SubDB{
 
         for(int i = 1; i <= item.getCounters()[index]; i++) {
             String key = (index + 1) + util.Options.DELIM + i + util.Options.DELIM + item.getKey();
-            System.out.println("Reading: Key: " + key);
-            byte[] value = jedis.get(key.getBytes());
+            responses.add(pipeline.get(key.getBytes()));
+            pipeSize++;
+            System.out.println("Pipelining Read: Key: " + key);
+            //byte[] value = jedis.get(key.getBytes());
 
-
-            items.add(new Item(i, item.getType(), item.getKey(), new String(value)));
+            if(pipeSize==read_size){
+                pipeline.sync();
+                System.out.println("Flushing READ");
+                for(Response response: responses){
+                    Object o = response.get();
+                    String value = o.toString();
+                    items.add(new Item(i, item.getType(), item.getKey(), value));
+                }
+            }
             //item.setValue(Arrays.toString(value));
+        }
+        // To flush remained READ instruction.
+        pipeline.sync();
+        for(Response response: responses){
+            System.out.println("Flushing READ at last");
+            Object o = response.get();
+            String value = o.toString();
+            items.add(new Item(0, item.getType(), item.getKey(), value));
+            // Don't care order
         }
         return items;
     }
@@ -130,6 +152,12 @@ public class Redis extends SubDB{
     public Status delete(String table, Item item) {
         String key = item.getKey();
         jedis.del(bytes(key));
+        return Status.OK;
+    }
+
+    @Override
+    public Status deleteAll(String table, Item item){
+
         return Status.OK;
     }
 }

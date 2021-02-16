@@ -115,7 +115,7 @@ public class Redis extends SubDB{
 
         for(int i = 1; i <= item.getCounters()[index]; i++) {
             String key = (index + 1) + util.Options.DELIM + i + util.Options.DELIM + item.getKey();
-            responses.add(pipeline.get(key.getBytes()));
+            responses.add(pipeline.get(key));
             pipeSize++;
             System.out.println("Pipelining Read: Key: " + key);
             //byte[] value = jedis.get(key.getBytes());
@@ -123,10 +123,10 @@ public class Redis extends SubDB{
             if(pipeSize==read_size){
                 pipeline.sync();
                 System.out.println("Flushing READ");
-                byte[] value = {};
+                //byte[] value = {};
                 for(Response response: responses){
                     Object o = response.get();
-                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        /*            ByteArrayOutputStream bos = new ByteArrayOutputStream();
                     try{
                         ObjectOutputStream out = new ObjectOutputStream(bos);
                         out.writeObject(o);
@@ -134,8 +134,8 @@ public class Redis extends SubDB{
                     }
                     catch (IOException e){
                         System.out.println("Object Convertion to ByteArray FAILED!");
-                    }
-                    items.add(new Item(i, item.getType(), item.getKey(), new String(value)));
+                    }*/
+                    items.add(new Item(i, item.getType(), item.getKey(), o.toString()));
                 }
                 responses.clear();
             }

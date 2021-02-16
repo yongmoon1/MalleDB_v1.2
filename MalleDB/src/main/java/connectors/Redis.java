@@ -122,7 +122,7 @@ public class Redis extends SubDB{
                 System.out.println("Flushing READ");
                 for(Response response: responses){
                     Object o = response.get();
-                    String value = o.toString();
+                    String value = String.valueOf(o);
                     items.add(new Item(i, item.getType(), item.getKey(), value));
                 }
             }
@@ -133,7 +133,7 @@ public class Redis extends SubDB{
         for(Response response: responses){
             System.out.println("Flushing READ at last");
             Object o = response.get();
-            String value = o.toString();
+            String value = String.valueOf(o);
             items.add(new Item(0, item.getType(), item.getKey(), value));
             // Don't care order
         }

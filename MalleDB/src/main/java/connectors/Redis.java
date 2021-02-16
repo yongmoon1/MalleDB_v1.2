@@ -123,21 +123,12 @@ public class Redis extends SubDB{
             if(pipeSize==read_size){
                 pipeline.sync();
                 System.out.println("Flushing READ");
-                //byte[] value = {};
                 for(Response response: responses){
                     Object o = response.get();
-        /*            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                    try{
-                        ObjectOutputStream out = new ObjectOutputStream(bos);
-                        out.writeObject(o);
-                        value = bos.toByteArray();
-                    }
-                    catch (IOException e){
-                        System.out.println("Object Convertion to ByteArray FAILED!");
-                    }*/
                     items.add(new Item(i, item.getType(), item.getKey(), o.toString()));
                 }
                 responses.clear();
+                pipeSize = 0;
             }
             //item.setValue(Arrays.toString(value));
         }
@@ -145,21 +136,12 @@ public class Redis extends SubDB{
         pipeline.sync();
         for(Response response: responses){
             System.out.println("Flushing READ at last");
-            byte[] value = {};
             Object o = response.get();
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            try{
-                ObjectOutputStream out = new ObjectOutputStream(bos);
-                out.writeObject(o);
-                value = bos.toByteArray();
-            }
-            catch (IOException e){
-                System.out.println("Object Convertion to ByteArray FAILED!");
-            }
-            items.add(new Item(0, item.getType(), item.getKey(), new String(value)));
+            items.add(new Item(0, item.getType(), item.getKey(), o.toString()));
             // Don't care order
         }
         responses.clear();
+
         return items;
     }
 

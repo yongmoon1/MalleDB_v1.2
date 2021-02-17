@@ -3,6 +3,9 @@ package util;
 import java.util.Map;
 import java.util.Queue;
 import java.util.LinkedList;
+
+import org.iq80.leveldb.DB;
+import org.iq80.leveldb.WriteBatch;
 import redis.clients.jedis.Pipeline;
 
 
@@ -29,11 +32,11 @@ public class HashMap {
         map.clear();
     }
 
-    public static void flush_leveldb(Pipeline pipeline){
+    public static void flush_leveldb(WriteBatch batch, DB db){
         for(Map.Entry<String, String> entry : map.entrySet()){
-            pipeline.set(entry.getKey().getBytes(), entry.getValue().getBytes());
+            batch.put(entry.getKey().getBytes(), entry.getValue().getBytes());
         }
-        pipeline.sync();
+        db.write(batch);
         map.clear();
     }
 }

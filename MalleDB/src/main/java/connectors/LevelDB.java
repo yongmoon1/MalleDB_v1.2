@@ -4,13 +4,15 @@ import interfaces.SubDB;
 import org.iq80.leveldb.DB;
 import org.iq80.leveldb.Options;
 import static org.fusesource.leveldbjni.JniDBFactory.*;
+
+import org.iq80.leveldb.WriteBatch;
+import util.HashMap;
 import util.Item;
 import util.Status;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +21,8 @@ public class LevelDB extends SubDB {
     private static Options options = null;
     private static DB db = null;
     private static boolean assigned = false;    // If LevelDB already exists, assigned=true.
+    private static Integer read_size = 3;
+    WriteBatch batch = db.createWriteBatch();
 
     @Override
     public Status init() {
@@ -55,19 +59,26 @@ public class LevelDB extends SubDB {
 
     @Override
     public Status insert(Item item) {
+        Status ins_check;
         if(item.isMeta()){
             String key = item.getKey();
             String value =
                     item.getCounters()[0] + util.Options.DELIM + item.getCounters()[1]+ util.Options.DELIM + item.getCounters()[2];
-            db.put(key.getBytes(), value.getBytes());
+            ins_check = HashMap.insert(key, value);
             System.out.println("Metadata for key \"" + item.getKey() + "\" inserted...");
         }
         else{
             String key = item.getType() + util.Options.DELIM + item.getOrder() + util.Options.DELIM + item.getKey();
             String value = item.getValue();
+            ins_check = HashMap.insert(key, value);
             System.out.println("Inserting: Key: " + key + " Value: " + value);
-            db.put(key.getBytes(), value.getBytes());
         }
+
+        if (ins_check == Status.HASHMAP_FULL) {
+            System.out.println("Hash_IS_FULL");
+            HashMap.flush_leveldb(batch, db);
+        }
+
         return Status.OK;
     }
 
@@ -121,5 +132,19 @@ public class LevelDB extends SubDB {
         db.delete(bytes(key));
         return Status.OK;
 
+    }
+
+    @Override
+    public Status deleteAll(Item item) {
+        for (int index = 0; index < util.Options.bCOUNTER; index++) {
+            for (int i = 1; i <= item.getCounters()[index]; i++) {
+                String key = (index + 1) + util.Options.DELIM + i + util.Options.DELIM + item.getKey();
+                batch.delete(bytes(key));
+                System.out.println("Pipelining Delete: Key: " + key);
+            }
+        }
+        System.out.println("Flushing DELETE");
+        db.write(batch);
+        return Status.OK;
     }
 }

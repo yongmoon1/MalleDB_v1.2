@@ -32,7 +32,6 @@ public class Redis extends SubDB {
     private static Pipeline pipeline = null;
     boolean assigned = false;
     private static Integer read_size = 3;
-    private static Integer del_size = 3;
 
     @Override
     public Status init() {
@@ -62,7 +61,6 @@ public class Redis extends SubDB {
             String key = item.getKey();
             String value =
                     item.getCounters()[0] + util.Options.DELIM + item.getCounters()[1] + util.Options.DELIM + item.getCounters()[2];
-            //jedis.set(key.getBytes(), value.getBytes());
             ins_check = HashMap.insert(key, value);
             System.out.println("Metadata for key \"" + item.getKey() + "\" inserted...");
         } else {
@@ -164,7 +162,6 @@ public class Redis extends SubDB {
 
     @Override
     public Status deleteAll(Item item) {
-        List<Item> items = new ArrayList<>();
         for (int index = 0; index < Options.bCOUNTER; index++) {
             for (int i = 1; i <= item.getCounters()[index]; i++) {
                 String key = (index + 1) + util.Options.DELIM + i + util.Options.DELIM + item.getKey();

@@ -14,6 +14,8 @@
 
 * Issue 2. When Deleting Key-Value Data for given file, It will not delete all corresponding values from DB. (Solved)
 
+* Issue 3. Adding the Insert, Update, Delete, Read based on the original Leveldb, Cassandra DB in MalleDB.
+
 
 ## [Docker Hub](https://hub.docker.com/r/lambent41/iesl-project)
 

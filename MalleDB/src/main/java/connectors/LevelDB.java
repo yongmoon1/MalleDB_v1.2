@@ -22,7 +22,7 @@ public class LevelDB extends SubDB {
     private static DB db = null;
     private static boolean assigned = false;    // If LevelDB already exists, assigned=true.
     private static Integer read_size = 3;
-    WriteBatch batch;
+    private static WriteBatch batch;
 
     @Override
     public Status init() {
@@ -32,10 +32,10 @@ public class LevelDB extends SubDB {
                 options.createIfMissing(true);
                 db = factory.open(new File(util.Options.DB_LEVELDB), options);
                 assigned = true;    // Flag that LevelDB exists.
+                batch = db.createWriteBatch();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            batch = db.createWriteBatch();
             return Status.OK;
         }
         else{

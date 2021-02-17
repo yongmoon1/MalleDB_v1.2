@@ -3,15 +3,41 @@ package util;
 public class Status {
     private final String name;
     private final String description;
+    private String key;
+    private String value;
 
     /**
-     * @param name A short name for the status.
+     * @param name        A short name for the status.
      * @param description A description of the status.
      */
     public Status(String name, String description) {
         super();
         this.name = name;
         this.description = description;
+    }
+
+    public Status(String name, String description, String key, String value) {
+        super();
+        this.name = name;
+        this.description = description;
+        this.key = key;
+        this.value = value;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public String getName() {
@@ -62,6 +88,7 @@ public class Status {
 
     /**
      * Is {@code this} a passing state for the operation: {@link Status#OK} or {@link Status#BATCHED_OK}.
+     *
      * @return true if the operation is successful, false otherwise
      */
     public boolean isOk() {

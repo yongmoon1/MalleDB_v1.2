@@ -5,11 +5,10 @@ import connectors.LevelDB;
 import connectors.MySQL;
 import connectors.Redis;
 import interfaces.SubDB;
+import util.*;
 import util.HashMap;
-import util.Item;
-import util.Options;
-import util.Status;
 
+import java.io.*;
 import java.util.*;
 
 public class MalleDB implements interfaces.MalleDB {
@@ -20,44 +19,46 @@ public class MalleDB implements interfaces.MalleDB {
     private SubDB bdb;
     private SubDB tdb;
     private boolean usingOneSubDB = false;
-/*
-    public static void main(String[] args) {
+    private String prefix = "123456";
 
-       // String key = generateRandomString(20);
-       // System.out.println("Before: " + key);
+    /*
+        public static void main(String[] args) {
 
-        //byte[] arr = key.getBytes();
-        //String key1 = new String(arr);
+           // String key = generateRandomString(20);
+           // System.out.println("Before: " + key);
 
-        //System.out.println("After: " + key1);
+            //byte[] arr = key.getBytes();
+            //String key1 = new String(arr);
 
-
-        MalleDB malleDB = new MalleDB();
-        Options options = new Options(Options.DB_TYPE.MYSQL, Options.DB_TYPE.CASSANDRA, Options.DB_TYPE.LEVELDB);
-        malleDB.init(options);
-        malleDB.create();
-
-        //4294304
-
-        String key = generateRandomString(20);
-        String value = generateRandomString(500);
-
-        System.out.println("Key: " + key);
-        System.out.println("Value: " + value);
-
-        malleDB.insert(key, value);
+            //System.out.println("After: " + key1);
 
 
-        malleDB.read(key);
+            MalleDB malleDB = new MalleDB();
+            Options options = new Options(Options.DB_TYPE.MYSQL, Options.DB_TYPE.CASSANDRA, Options.DB_TYPE.LEVELDB);
+            malleDB.init(options);
+            malleDB.create();
 
-       // String key = "E1O1IByghZN0ryG7raPf";
-        malleDB.delete(key);
+            //4294304
+
+            String key = generateRandomString(20);
+            String value = generateRandomString(500);
+
+            System.out.println("Key: " + key);
+            System.out.println("Value: " + value);
+
+            malleDB.insert(key, value);
 
 
-        malleDB.close();
+            malleDB.read(key);
 
-    }
-*/
+           // String key = "E1O1IByghZN0ryG7raPf";
+            malleDB.delete(key);
+
+
+            malleDB.close();
+
+        }
+    */
     //Initialize with default configuration
     @Override
     public Status init() {
@@ -72,24 +73,24 @@ public class MalleDB implements interfaces.MalleDB {
             metadb = new MySQL();
         } else if (Options.SUB_DB == Options.DB_TYPE.LEVELDB) {
             metadb = new LevelDB();
-        } else if (Options.SUB_DB == Options.DB_TYPE.CASSANDRA){
+        } else if (Options.SUB_DB == Options.DB_TYPE.CASSANDRA) {
             metadb = new Cassandra();
-        } else if (Options.SUB_DB == Options.DB_TYPE.REDIS){
+        } else if (Options.SUB_DB == Options.DB_TYPE.REDIS) {
             metadb = new Redis();
         }
 
         metadb.init();
 
 
-        if(options.isUsingDefault()) {
+        if (options.isUsingDefault()) {
             usingOneSubDB = true;
             if (Options.SUB_DB == Options.DB_TYPE.MYSQL) {
                 blockdb = new MySQL();
             } else if (Options.SUB_DB == Options.DB_TYPE.LEVELDB) {
                 blockdb = new LevelDB();
-            } else if (Options.SUB_DB == Options.DB_TYPE.CASSANDRA){
+            } else if (Options.SUB_DB == Options.DB_TYPE.CASSANDRA) {
                 blockdb = new Cassandra();
-            } else if (Options.SUB_DB == Options.DB_TYPE.REDIS){
+            } else if (Options.SUB_DB == Options.DB_TYPE.REDIS) {
                 blockdb = new Redis();
             }
 
@@ -99,29 +100,29 @@ public class MalleDB implements interfaces.MalleDB {
             bdb = null;
             tdb = null;
 
-        }else {
+        } else {
 
-            if(options.getDbMedium() == Options.DB_TYPE.MYSQL){
+            if (options.getDbMedium() == Options.DB_TYPE.MYSQL) {
                 mdb = new MySQL();
-            }else if(options.getDbMedium() == Options.DB_TYPE.LEVELDB){
+            } else if (options.getDbMedium() == Options.DB_TYPE.LEVELDB) {
                 mdb = new LevelDB();
-            }else{
+            } else {
                 mdb = new Cassandra();
             }
 
-            if(options.getDbBlob() == Options.DB_TYPE.MYSQL){
+            if (options.getDbBlob() == Options.DB_TYPE.MYSQL) {
                 bdb = new MySQL();
-            }else if(options.getDbBlob() == Options.DB_TYPE.LEVELDB){
+            } else if (options.getDbBlob() == Options.DB_TYPE.LEVELDB) {
                 bdb = new LevelDB();
-            }else{
+            } else {
                 bdb = new Cassandra();
             }
 
-            if(options.getDbTiny() == Options.DB_TYPE.MYSQL){
+            if (options.getDbTiny() == Options.DB_TYPE.MYSQL) {
                 tdb = new MySQL();
-            }else if(options.getDbTiny() == Options.DB_TYPE.LEVELDB){
+            } else if (options.getDbTiny() == Options.DB_TYPE.LEVELDB) {
                 tdb = new LevelDB();
-            }else{
+            } else {
                 tdb = new Cassandra();
             }
 
@@ -138,9 +139,9 @@ public class MalleDB implements interfaces.MalleDB {
     @Override
     public Status create() {
         metadb.create();
-        if(usingOneSubDB) {
+        if (usingOneSubDB) {
             blockdb.create();
-        }else{
+        } else {
             mdb.create();
             bdb.create();
             tdb.create();
@@ -152,9 +153,9 @@ public class MalleDB implements interfaces.MalleDB {
     @Override
     public Status close() {
         metadb.close();
-        if(usingOneSubDB){
+        if (usingOneSubDB) {
             blockdb.close();
-        }else{
+        } else {
             mdb.close();
             bdb.close();
             tdb.close();
@@ -171,16 +172,16 @@ public class MalleDB implements interfaces.MalleDB {
         int order;
         Item meta;
         ArrayList<Item>[] blocks = new ArrayList[Options.bCOUNTER];
-        for(int i = 0; i < Options.bCOUNTER; i++){
-            blocks[i] =  new ArrayList<>();
+        for (int i = 0; i < Options.bCOUNTER; i++) {
+            blocks[i] = new ArrayList<>();
         }
         int[] counters = new int[Options.bCOUNTER];
         //Initialize the variables ends
 
         //Memtable managements part starts
-        for (int i = 0; i < Options.bCOUNTER; i++){
+        for (int i = 0; i < Options.bCOUNTER; i++) {
             //check if the value size smaller than the block but the block is not tiny
-            if(value.length() < Options.BLOCKS[i] && i != Options.bCOUNTER - 1) {
+            if (value.length() < Options.BLOCKS[i] && i != Options.bCOUNTER - 1) {
                 continue;
             }
             //Initialize the order to 0
@@ -194,7 +195,7 @@ public class MalleDB implements interfaces.MalleDB {
                     value = "";
                 } else { //Otherwise
                     //Break the while if the value size is smaller
-                    if (value.length() < Options.BLOCKS[i]){
+                    if (value.length() < Options.BLOCKS[i]) {
                         order--;
                         break;
                     }
@@ -217,13 +218,13 @@ public class MalleDB implements interfaces.MalleDB {
         metadb.insert(meta);
 
         //Insert to databases
-        if(usingOneSubDB) {
+        if (usingOneSubDB) {
             for (int i = 0; i < Options.bCOUNTER; i++) {
-                for (int j = 0; j < blocks[i].size(); j++){
+                for (int j = 0; j < blocks[i].size(); j++) {
                     blockdb.insert(blocks[i].get(j));
                 }
             }
-        }else{
+        } else {
             for (int i = 0; i < blocks[0].size(); i++) {
                 mdb.insert(blocks[0].get(i));
             }
@@ -265,6 +266,74 @@ public class MalleDB implements interfaces.MalleDB {
         return Status.OK;
     }
 */
+    public Status insertMetaFile(MetaFile newmeta) {
+        String key;
+        String metaInfo;
+        metaInfo = newmeta.toString();
+        key = prefix + newmeta.getKey();//change random generate key
+        return insert(key, metaInfo);
+    }
+
+    public Status updateMetaFile(String key, MetaFile newmeta) {
+        //뉴 메타 파일의 정보에서 기존 메타파일과 동일점 찾아서 업데이트
+        deleteMetaFile(key);
+        String metaInfo = newmeta.toString();
+        return insert(key, metaInfo);
+    }
+
+    public Status deleteMetaFile(String key) {
+        return delete(key);
+    }
+
+    public MetaFile readMetaFile(String key) {
+        String value = read(key).getValue();
+        MetaFile metaFile = new MetaFile();
+        metaFile.Stringto(value);
+        return metaFile;
+    }
+
+    public Status insertFile(String filename) {
+        String value = encoder(filename);
+        return insert(filename, value);
+    }
+
+    public Status readFile(String filename) {
+        Status status = read(filename);
+        if (status.isOk()) {
+            String value = status.getValue();
+            decoder(value, filename);
+            return Status.OK;
+        }
+        return Status.ERROR;
+    }
+
+    private String encoder(String imagePath) {
+        String base64Image = "";
+        File file = new File(imagePath);
+        try (FileInputStream imageInFile = new FileInputStream(file)) {
+            // Reading a Image file from file system
+            byte imageData[] = new byte[(int) file.length()];
+            imageInFile.read(imageData);
+            base64Image = Base64.getEncoder().encodeToString(imageData);
+        } catch (FileNotFoundException e) {
+            System.out.println("Image not found" + e);
+        } catch (IOException ioe) {
+            System.out.println("Exception while reading the Image " + ioe);
+        }
+        return base64Image;
+    }
+
+    private void decoder(String base64Image, String pathFile) {
+        try (FileOutputStream imageOutFile = new FileOutputStream(pathFile)) {
+            // Converting a Base64 String into Image byte array
+            byte[] imageByteArray = Base64.getDecoder().decode(base64Image);
+            imageOutFile.write(imageByteArray);
+        } catch (FileNotFoundException e) {
+            System.out.println("Image not found" + e);
+        } catch (IOException ioe) {
+            System.out.println("Exception while reading the Image " + ioe);
+        }
+    }
 
     @Override
     public Status read(String key) {
@@ -275,7 +344,7 @@ public class MalleDB implements interfaces.MalleDB {
         StringBuilder sb = new StringBuilder();
 
         //Read each block from the sub database
-        if(usingOneSubDB) {
+        if (usingOneSubDB) {
             for (int i = 0; i < Options.bCOUNTER; i++) {
                 List<Item> blocks = blockdb.readAll(Options.TABLES_MYSQL[i], item);
                 for (Item block : blocks) {
@@ -283,7 +352,7 @@ public class MalleDB implements interfaces.MalleDB {
                     sb.append(block.getValue());
                 }
             }
-        }else{
+        } else {
             List<Item> mblocks = mdb.readAll(Options.TABLES_MYSQL[0], item);
             for (Item block : mblocks) {
                 sb.append(block.getValue());
@@ -300,7 +369,7 @@ public class MalleDB implements interfaces.MalleDB {
             }
         }
         System.out.println("Read Value: " + sb.toString());
-        return Status.OK;
+        return new Status("OK", "Success", key, sb.toString());
     }
 
     @Override
@@ -315,7 +384,7 @@ public class MalleDB implements interfaces.MalleDB {
         item.setKey(key);
         item = metadb.readMeta(item);
 
-        if(usingOneSubDB) {
+        if (usingOneSubDB) {
           /*  for (int i = 0; i < Options.bCOUNTER; i++) {
                 if (item.getCounters()[i] > 0) {
                     blockdb.delete(Options.TABLES_MYSQL[i], item);
@@ -323,14 +392,14 @@ public class MalleDB implements interfaces.MalleDB {
                 }
             }*/
             blockdb.deleteAll(item);
-        }else {
-            if(item.getCounters()[0] > 0){
+        } else {
+            if (item.getCounters()[0] > 0) {
                 mdb.delete(Options.TABLES_MYSQL[0], item);
             }
-            if(item.getCounters()[1] > 0){
+            if (item.getCounters()[1] > 0) {
                 bdb.delete(Options.TABLES_MYSQL[1], item);
             }
-            if(item.getCounters()[2] > 0){
+            if (item.getCounters()[2] > 0) {
                 tdb.delete(Options.TABLES_MYSQL[2], item);
             }
         }
@@ -339,8 +408,7 @@ public class MalleDB implements interfaces.MalleDB {
         return Status.OK;
     }
 
-    static String generateRandomString(int n)
-    {
+    static String generateRandomString(int n) {
 
         // chose a Character random from this String
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -355,7 +423,7 @@ public class MalleDB implements interfaces.MalleDB {
             // generate a random number between
             // 0 to AlphaNumericString Optionsiable length
             int index
-                    = (int)(AlphaNumericString.length()
+                    = (int) (AlphaNumericString.length()
                     * Math.random());
 
             // add Character one by one in end of sb

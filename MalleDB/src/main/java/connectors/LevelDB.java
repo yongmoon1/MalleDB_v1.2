@@ -50,10 +50,11 @@ public class LevelDB extends SubDB {
                 db.close();
             options = null;
             db = null;
+            assigned = false;   // Unset the flag
+            batch.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        assigned = false;   // Unset the flag
         return Status.OK;
     }
 

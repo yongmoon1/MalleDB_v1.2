@@ -5,15 +5,15 @@ public class filestream {
 
         try{
             FileInputStream fis = new FileInputStream("src/testfile.txt");
-            BufferedInputStream bis = new BufferedInputStream(fis);
+            FileOutputStream fos = new FileOutputStream("output.txt");
 
+            BufferedInputStream bis = new BufferedInputStream(fis);
+            BufferedOutputStream bos = new BufferedOutputStream(fos, 100);
             byte[] buffer = new byte[100];
             int size = bis.read(buffer);
-            System.out.println(new String(buffer));
-
-
-
-
+            System.out.println(size);
+            bos.write(buffer, 0, size);
+            bos.flush();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

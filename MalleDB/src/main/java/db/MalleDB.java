@@ -293,11 +293,13 @@ public class MalleDB implements interfaces.MalleDB {
     }
 
     public Status insertFile(String filename) {
+        System.out.println("Inserting File : " + filename);
         String value = encoder(filename);
         return insert(filename, value);
     }
 
     public Status readFile(String filename) {
+        System.out.println("Reading Fiile : " + filename);
         Status status = read(filename);
         if (status.isOk()) {
             String value = status.getValue();
@@ -315,7 +317,8 @@ public class MalleDB implements interfaces.MalleDB {
             byte imageData[] = new byte[(int) file.length()];
             BufferedInputStream bis = new BufferedInputStream(imageInFile);
             int size = bis.read(imageData);
-            base64Image = Base64.getEncoder().encodeToString(imageData);
+            return imageData.toString();
+            //base64Image = Base64.getEncoder().encodeToString(imageData);
         } catch (FileNotFoundException e) {
             System.out.println("Image not found" + e);
         } catch (IOException ioe) {

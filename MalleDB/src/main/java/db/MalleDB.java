@@ -310,6 +310,15 @@ public class MalleDB implements interfaces.MalleDB {
         return Status.ERROR;
     }
 
+    public void updateFile(String filename){
+        deleteFile(filename);
+        insertFile(filename);
+    }
+
+    public void deleteFile(String filename){
+        delete(filename);
+    }
+
     private String encoder(String imagePath) {
         String base64Image = "";
         byte imageData[] = {};

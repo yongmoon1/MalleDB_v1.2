@@ -13,11 +13,11 @@
 
 3. MalleDB also supports radis and leveldb for storing Meta data and actual Key-Value data. (+ pipelining)
 
+4. MalleDb supports File, MetaFile Insert, Read, Update, Delete.
+
 * Issue 1. when MalleDB supports Cassandra for storing Meta data and actual Key-Value data.
 
 * Issue 2. Adding the Insert, Update, Delete, Read based on the original Leveldb, Cassandra DB in MalleDB.
-
-* Issue 3. 
 
 
 ## [Docker Hub](https://hub.docker.com/r/lambent41/iesl-project)

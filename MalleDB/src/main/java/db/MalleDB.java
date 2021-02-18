@@ -378,7 +378,7 @@ public class MalleDB implements interfaces.MalleDB {
             }
         }
         System.out.println("Read Value: " + sb.toString());
-        return new Status("OK", "Success", key, sb.toString());
+        return new Status("READ_OK", "Success", key, sb.toString());
     }
 
     @Override

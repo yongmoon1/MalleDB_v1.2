@@ -333,6 +333,7 @@ public class MalleDB implements interfaces.MalleDB {
         try (FileOutputStream imageOutFile = new FileOutputStream(pathFile)) {
             // Converting a Base64 String into Image byte array
             //byte[] imageByteArray = Base64.getDecoder().decode(base64Image);
+            System.out.println("Creating File");
             BufferedOutputStream bos = new BufferedOutputStream(imageOutFile);
             bos.write(value.getBytes());
             bos.flush();

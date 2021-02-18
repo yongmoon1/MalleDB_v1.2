@@ -317,7 +317,7 @@ public class MalleDB implements interfaces.MalleDB {
             byte imageData[] = new byte[(int) file.length()];
             BufferedInputStream bis = new BufferedInputStream(imageInFile);
             int size = bis.read(imageData);
-            return imageData.toString();
+            return new String(imageData);
             //base64Image = Base64.getEncoder().encodeToString(imageData);
         } catch (FileNotFoundException e) {
             System.out.println("Image not found" + e);

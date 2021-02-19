@@ -1,9 +1,0 @@
-/home/dev-db/ChulWoo/iesl-project/MalleDB/src/main/java/db/MalleDB.java
-/home/dev-db/ChulWoo/iesl-project/MalleDB/src/main/java/interfaces/MalleDB.java
-/home/dev-db/ChulWoo/iesl-project/MalleDB/src/main/java/util/Options.java
-/home/dev-db/ChulWoo/iesl-project/MalleDB/src/main/java/util/Status.java
-/home/dev-db/ChulWoo/iesl-project/MalleDB/src/main/java/interfaces/SubDB.java
-/home/dev-db/ChulWoo/iesl-project/MalleDB/src/main/java/util/Item.java
-/home/dev-db/ChulWoo/iesl-project/MalleDB/src/main/java/connectors/LevelDB.java
-/home/dev-db/ChulWoo/iesl-project/MalleDB/src/main/java/connectors/Cassandra.java
-/home/dev-db/ChulWoo/iesl-project/MalleDB/src/main/java/connectors/MySQL.java

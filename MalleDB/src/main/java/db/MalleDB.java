@@ -74,7 +74,6 @@ public class MalleDB implements interfaces.MalleDB {
     public Status init(Options options) {
 
         if (SUB_DB == Options.DB_TYPE.MYSQL) {
-            System.out.println("MYSQL???");
             metadb = new MySQL();
             onlyOneType = Options.DB_TYPE.MYSQL;
         } else if (SUB_DB == Options.DB_TYPE.LEVELDB) {
@@ -84,7 +83,6 @@ public class MalleDB implements interfaces.MalleDB {
             metadb = new Cassandra();
             onlyOneType = Options.DB_TYPE.CASSANDRA;
         } else if (SUB_DB == Options.DB_TYPE.REDIS) {
-            System.out.println("REDIS???");
             metadb = new Redis();
             onlyOneType = Options.DB_TYPE.REDIS;
         }
@@ -173,6 +171,7 @@ public class MalleDB implements interfaces.MalleDB {
         return null;
     }
 
+
     //Insert data
     @Override
     public Status insert(String key, String value) {
@@ -252,24 +251,29 @@ public class MalleDB implements interfaces.MalleDB {
         return Status.OK;
     }
 
+    public Status direct_create(){
+        blockdb.direct_create();
+        return Status.OK;
+    }
+
     public void direct_insert(String key, String value){
-        blockdb.direct_insert(key, value);
         System.out.println("Direct Inserting Key: " + key);
+        blockdb.direct_insert(key, value);
     }
 
     public void direct_read(String key){
-        blockdb.direct_read(key);
         System.out.println("Direct Reading Key: " + key);
+        blockdb.direct_read(key);
     }
 
     public void direct_update(String key, String value){
-        blockdb.direct_update(key, value);
         System.out.println("Direct Updating Key: " + key);
+        blockdb.direct_update(key, value);
     }
 
     public void direct_delete(String key){
-        blockdb.direct_delete(key);
         System.out.println("Direct Deleting Key: " + key);
+        blockdb.direct_delete(key);
     }
 
     /*

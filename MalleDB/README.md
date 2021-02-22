@@ -15,11 +15,9 @@
 
 4. MalleDB supports File, MetaFile Insert, Read, Update, Delete.
 
-5. MalleDB supports Direct Instructions for Redis and LevelDB.
+5. MalleDB supports Direct Instructions for Redis, LevelDB and Cassandra.
 
-* Issue 1. when MalleDB supports Cassandra for storing Meta data and actual Key-Value data.
-
-* Issue 2. Adding the Insert, Update, Delete, Read based on the Cassandra DB in MalleDB.
+* Issue 1. When MalleDB supports Cassandra for storing Meta data and actual Key-Value data, It doesn't work well.
 
 
 ## [Docker Hub](https://hub.docker.com/r/lambent41/iesl-project)

@@ -25,15 +25,18 @@ public class Cassandra extends SubDB {
 
     @Override
     public Status init() {
-        Cluster.Builder b = Cluster.builder().addContactPoint(Options.IP_CASS);
-        if (Options.PORT_CASS != 0) {
-            b.withPort(Options.PORT_CASS);
+        if(!assigned){
+            Cluster.Builder b = Cluster.builder().addContactPoint(Options.IP_CASS);
+            if (Options.PORT_CASS != 0) {
+                b.withPort(Options.PORT_CASS);
+            }
+            cluster = b.build();
+            session = cluster.connect();
+            System.out.println("Connected to Cassandra...");
+            assigned=true;
+            return Status.OK;
         }
-        cluster = b.build();
-        session = cluster.connect();
-        System.out.println("Connected to Cassandra...");
-        assigned=true;
-        return Status.OK;
+        else return null;
     }
 
     @Override
@@ -145,6 +148,61 @@ public class Cassandra extends SubDB {
         return Status.OK;
     }
 
+    public Status direct_create(){
+        String query = "CREATE TABLE IF NOT EXISTS " + Options.KEYSPACE_CASS + "." +
+                "direct" +
+                "(" +
+                "        d_key text PRIMARY KEY,\n" +
+                "        d_value blob,\n" +
+                "        );";
 
+        session.execute(query);
+        System.out.println("Table Created: " + Options.KEYSPACE_CASS + "." + "direct");
+        return Status.OK;
+    }
+
+    public Status direct_insert(String key, String value){
+        StringBuilder sb =
+                new StringBuilder("INSERT INTO ")
+                        .append(Options.KEYSPACE_CASS).append(".").append("direct")
+                        .append("(d_key, d_value) VALUES ('")
+                        .append(key).append("', ")
+                        .append("textAsBlob('").append(value).append("'));");
+        String query = sb.toString();
+        //System.out.println(query);
+        session.execute(query);
+        System.out.println("Item \"" + key + "\" directly inserted ...");
+        return Status.OK;
+    }
+
+    public Status direct_read(String key){
+        StringBuilder sb = new StringBuilder("SELECT * FROM ")
+                .append(Options.KEYSPACE_CASS).append(".").append("direct").append(" WHERE ")
+                .append("d_key = '").append(key).append("' ALLOW FILTERING;");
+        String query = sb.toString();
+        System.out.println(query);
+        ResultSet rs = session.execute(query);
+        List<Row> rows = rs.all();
+        for (Row r: rows) {
+           System.out.println(StandardCharsets.UTF_8.decode(r.getBytes("d_value")).toString());
+        }
+        return Status.OK;
+    }
+
+    public Status direct_delete(String key){
+        StringBuilder sb = new StringBuilder("DELETE FROM ")
+                .append(Options.KEYSPACE_CASS).append(".").append("direct").append(" WHERE ")
+                .append("d_key = \'").append(key).append("\';");
+        String query = sb.toString();
+        System.out.println(query);
+        session.execute(query);
+        return Status.OK;
+    }
+
+    public Status direct_update(String key, String value){
+        direct_delete(key);
+        direct_insert(key, value);
+        return Status.OK;
+    }
 
 }

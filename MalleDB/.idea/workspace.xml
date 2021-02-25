@@ -10,18 +10,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f6df7e33-d2a1-4548-8fc0-a4dd16816112" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_2021-02-19__4_42__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_2021-02-19__4_42__Default_Changelist_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_checkerframework_checker_qual_3_5_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_postgresql_postgresql_42_2_19.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__redis_clients_jedis_3_5_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/connectors/PostgreSQL.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/newMain.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/connectors/PostgreSQL.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/newMain.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MalleDB.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MalleDB.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DIRECT_INSTRUCTIONS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DIRECT_INSTRUCTIONS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/connectors/Cassandra.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/connectors/Cassandra.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/connectors/MySQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/connectors/MySQL.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/db/MalleDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/MalleDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/interfaces/SubDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interfaces/SubDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/leveldb/000003.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/leveldb/CURRENT" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/leveldb/LOCK" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/leveldb/LOG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/leveldb/MANIFEST-000002" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/interfaces/MalleDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interfaces/MalleDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/util/Options.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/Options.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/leveldb/000003.log" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/leveldb/000003.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/leveldb/LOG" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/leveldb/LOG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/leveldb/MANIFEST-000002" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/leveldb/MANIFEST-000002" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/DIRECT_INSTRUCTIONS.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DIRECT_INSTRUCTIONS.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/connectors/Cassandra.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/connectors/Cassandra.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/connectors/LevelDB.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/connectors/LevelDB.class" afterDir="false" />
@@ -73,9 +80,10 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Jedis/jedis-3.5.1.jar" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -89,13 +97,6 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="DIRECT_INSTRUCTIONS" type="Application" factoryName="Application" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="DIRECT_INSTRUCTIONS" />
-      <module name="MalleDB" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -103,6 +104,13 @@
         </value>
       </option>
       <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DIRECT_INSTRUCTIONS" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="DIRECT_INSTRUCTIONS" />
+      <module name="MalleDB" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>

@@ -17,7 +17,11 @@
 
 5. MalleDB supports Direct Instructions for Redis, LevelDB and Cassandra.
 
+6. MalleDB supports Query Methods (select, execute, flush) for MySQL.
+
 * Issue 1. When MalleDB supports Cassandra for storing Meta data and actual Key-Value data, It doesn't work well.
+
+* Issue 2. MalleDB doesn't support Query Methods (select, execute, flush) for PostreSQL yet.
 
 
 ## [Docker Hub](https://hub.docker.com/r/lambent41/iesl-project)

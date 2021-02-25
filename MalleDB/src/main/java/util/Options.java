@@ -29,16 +29,25 @@ public class Options {
 
     //Cassandra Configurations starts
     public static String IP_CASS = "127.0.0.1";
-    public static int PORT_CASS = 0;
+    public static int PORT_CASS = 19042;
     public static String REP_STRATEGY_CASS = "SimpleStrategy";
     public static int REP_FACTOR_CASS = 3;
     public static final String KEYSPACE_CASS = "malledb";
     public static final String[] TABLES_CASS = {"mdatatable", "bdatatable", "tdatatable"};
     //Cassandra Configurations ends
 
+    //PostgreSQL Configurations starts
+    public static String DB_POST = "malledb";
+    public static final String TABLE_META_POSTGRESQL = "metatable";
+    public static final String TABLE_MDATA_POST = "mdatatable";
+    public static final String TABLE_BDATA_POST = "bdatatable";
+    public static final String TABLE_TDATA_POST = "tdatatable";
+
+    //PostgreSQL Configurations ends
+
     private final boolean usingDefault;
 
-    public enum DB_TYPE{MYSQL, LEVELDB, CASSANDRA, REDIS}
+    public enum DB_TYPE{MYSQL, LEVELDB, CASSANDRA, REDIS, POSTGRESQL}
 
     public static  DB_TYPE SUB_DB = DB_TYPE.MYSQL;
     private DB_TYPE dbMedium;

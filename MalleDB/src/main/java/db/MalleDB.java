@@ -1,9 +1,6 @@
 package db;
 
-import connectors.Cassandra;
-import connectors.LevelDB;
-import connectors.MySQL;
-import connectors.Redis;
+import connectors.*;
 import interfaces.SubDB;
 import util.*;
 import util.HashMap;
@@ -384,6 +381,48 @@ public class MalleDB implements interfaces.MalleDB {
         } catch (IOException ioe) {
             System.out.println("Exception while reading the Image " + ioe);
         }
+    }
+
+    public String[][] select(String query){
+        //if(!(blockdb || mdb || tdb || bdb));
+        MySQL db = new MySQL();
+        db.init(); //change to use existing DB
+
+        String[][] Result = db.select(Options.DB_MYSQL, query);
+        return Result;
+//        for(int i = 0; i<db.getROW();i++) {
+//            for (int j = 0; j < db.getCOL(); j++)
+//            { System.out.println(Result[i][j]);}
+//
+//        }
+//        return Status.OK;//열 개수 파악 추가
+    }
+
+    @Override
+    public Status execute(String query){
+        MySQL db = new MySQL();
+        db.init();
+        return db.execute(Options.DB_MYSQL, query);
+    }
+
+    @Override
+    public Status flush(String[] query){
+        MySQL db = new MySQL();  //
+        db.init();
+        return db.flush(Options.DB_MYSQL, query);
+    }
+
+    public String[][] select_post(String query){
+        PostgreSQL db = new PostgreSQL();
+        db.init();
+        db.create();
+        return db.select(Options.DB_POST, query);
+    }
+
+    public Status execute_post(String query){
+        PostgreSQL db = new PostgreSQL();
+        db.init();
+        return db.execute(Options.DB_MYSQL, query);
     }
 
     @Override

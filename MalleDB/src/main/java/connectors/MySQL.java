@@ -17,6 +17,10 @@ public class MySQL extends SubDB {
     private Statement stmt = null;
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
+    private String[] querytype = {"create","insert","update" };
+    private int ROW=0;
+    private int COL=0;
+
 
     @Override
     public Status init() {
@@ -194,6 +198,100 @@ public class MySQL extends SubDB {
         return null;
     }
 
+    public String[][] select(String DBName, String query) {
+
+        try {
+            conn.setCatalog(DBName);// DB 변경
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(query);
+            rs.last();             //DB 마지막레코드로 이동
+            ROW = rs.getRow(); //레코드 개수 반환
+            rs.beforeFirst();      //처음 상태로복귀
+            ResultSetMetaData md = rs.getMetaData();//
+            COL = md.getColumnCount();//컬럼 반환
+
+            String[][] data = new String[ROW][COL];
+            int cur = 1;
+            for(int row = 0; row < ROW; row++ ) {
+                rs.next();
+                for (int col = 0; col < COL; col++) {
+                    System.out.println(ROW +" "+ COL +"set: " + col+1 + "\n");
+                    data[row][col] = Integer.toString(rs.getInt((col+1)));//추후 컬럼별 타입별로 수정
+                    System.out.println(data[row][col]+"\n");
+                }
+
+            }System.out.println("done");
+            return data;
+
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+            return null;
+        }
+
+
+    }
+
+    public Status execute(String DBName,String query) {
+        // Type: 1=Create, 2= Insert 3= Update
+        try{//타입 감지해서 나눌것
+            conn.setCatalog(DBName);
+            stmt = conn.createStatement();
+            if(query.startsWith("S")) {
+                rs = stmt.executeQuery(query);//select용
+            }
+            else {
+                stmt.executeUpdate(query);//create insert delete 용
+            }
+            stmt.close();
+            return Status.OK;
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+            return Status.ERROR;
+        }
+        // 타입 별 쿼리 실행
+
+    }
+
+    public Status flush(String DBName,String[] query) {
+        // Type: 1=Create, 2= Insert 3= Update add 4.delete
+        int i=0;
+        /*ArrayList<String>querylist = new ArrayList<String>();
+        for(String temp:query){
+            querylist.add(temp);
+        }
+        int size = sizeof(query[0]);*/
+        try{
+            conn.setCatalog(DBName);
+            while(query[i] == null) {
+                //is dangerous?
+                stmt = conn.createStatement();
+                stmt.addBatch(query[i]);
+
+                i++;
+            }
+            pstmt.executeBatch();
+            stmt.executeBatch();
+            pstmt.close();
+            stmt.close();
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+            System.out.println("failquery: " + query[i]);
+            return Status.ERROR;
+        }
+
+        // 타입 별 쿼리 실행
+        return Status.OK;
+    }
+
     @Override
     public Status update(String table, Item item) {
         return null;
@@ -224,4 +322,8 @@ public class MySQL extends SubDB {
                 .replaceAll("'", "\\'")
                 .replaceAll("\"", "\\\"");
     }
+
+    public int getROW(){return ROW;}
+    public int getCOL(){return COL;}
+
 }

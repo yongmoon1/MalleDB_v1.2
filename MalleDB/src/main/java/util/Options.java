@@ -43,6 +43,7 @@ public class Options {
     public static final String TABLE_BDATA_POST = "bdatatable";
     public static final String TABLE_TDATA_POST = "tdatatable";
 
+    public static final String[] TABLES_POSTGRESQL = {"mdatatable", "bdatatable", "tdatatable"};
     //PostgreSQL Configurations ends
 
     private final boolean usingDefault;

@@ -17,14 +17,14 @@ public class MySQL extends SubDB {
     private Statement stmt = null;
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
-    private String[] querytype = {"create","insert","update" };
-    private int ROW=0;
-    private int COL=0;
+    private String[] querytype = {"create", "insert", "update"};
+    private int ROW = 0;
+    private int COL = 0;
 
 
     @Override
     public Status init() {
-        try{
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             conn = DriverManager.getConnection(Options.SERVER_MYSQL +
                     "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=" +
@@ -47,7 +47,7 @@ public class MySQL extends SubDB {
 
     @Override
     public Status create() {
-        try{
+        try {
             stmt = conn.createStatement();
 
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS " + Options.DB_MYSQL + "." + Options.TABLE_META_MYSQL + "(\n" +
@@ -60,7 +60,7 @@ public class MySQL extends SubDB {
                     "        );");
             System.out.println("Successfully created table \"" + Options.TABLE_META_MYSQL + "\"...");
 
-            if(Options.SUB_DB == Options.DB_TYPE.MYSQL){
+            if (Options.SUB_DB == Options.DB_TYPE.MYSQL) {
                 stmt.executeUpdate("CREATE TABLE IF NOT EXISTS " + Options.DB_MYSQL + "." + Options.TABLE_MDATA_MYSQL + "(\n" +
                         "        id INT NOT NULL AUTO_INCREMENT,\n" +
                         "        d_order int NOT NULL,\n" +
@@ -102,13 +102,13 @@ public class MySQL extends SubDB {
     @Override
     public Status close() {
         try {
-            if(rs != null)
+            if (rs != null)
                 rs.close();
-            if(stmt != null)
+            if (stmt != null)
                 stmt.close();
-            if(pstmt != null)
+            if (pstmt != null)
                 pstmt.close();
-            if(conn != null)
+            if (conn != null)
                 conn.close();
             return Status.OK;
         } catch (SQLException throwables) {
@@ -155,12 +155,12 @@ public class MySQL extends SubDB {
 
     @Override
     public Item readMeta(Item item) {
-        try{
+        try {
             String key = item.getKey();
             String query = "SELECT * FROM " + Options.DB_MYSQL + "." + Options.TABLE_META_MYSQL + " WHERE d_key='" + key + "';";
             stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
-            if(rs.next()){
+            if (rs.next()) {
                 int[] counters = new int[3];
                 counters[0] = rs.getInt("m_count");
                 counters[1] = rs.getInt("b_count");
@@ -168,7 +168,7 @@ public class MySQL extends SubDB {
                 item.setCounters(counters);
                 System.out.println("Item \"" + key + "\" is retrieved...");
                 return item;
-            }else{
+            } else {
                 System.out.println("Item \"" + key + "\" is not found...");
                 return null;
             }
@@ -177,15 +177,16 @@ public class MySQL extends SubDB {
         }
         return null;
     }
+
     @Override
     public List<Item> readAll(String table, Item item) {
-        try{
-            List<Item> items = new ArrayList<>();   
+        try {
+            List<Item> items = new ArrayList<>();
             String key = item.getKey();
             String query = "SELECT * FROM " + Options.DB_MYSQL + "." + table + " WHERE d_key='" + key + "';";
             stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
-            while(rs.next()){
+            while (rs.next()) {
                 int order = rs.getInt("d_order");
                 String value = new String(rs.getBlob("d_value").getBytes(1l, (int) rs.getBlob("d_value").length()));
                 items.add(new Item(order, 0, key, value));
@@ -198,10 +199,11 @@ public class MySQL extends SubDB {
         return null;
     }
 
-    public String[][] select(String DBName, String query) {
+    @Override
+    public String[][] select(String query) {
 
         try {
-            conn.setCatalog(DBName);// DB 변경
+            conn.setCatalog(Options.DB_MYSQL);// DB 변경
             stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
             rs.last();             //DB 마지막레코드로 이동
@@ -212,15 +214,26 @@ public class MySQL extends SubDB {
 
             String[][] data = new String[ROW][COL];
             int cur = 1;
-            for(int row = 0; row < ROW; row++ ) {
+            for (int row = 0; row < ROW; row++) {
                 rs.next();
                 for (int col = 0; col < COL; col++) {
                     System.out.println(ROW +" "+ COL +"set: " + col+1 + "\n");
-                    data[row][col] = Integer.toString(rs.getInt((col+1)));//추후 컬럼별 타입별로 수정
+                    if(md.getColumnType(col)==6) {  // int
+                        data[row][col] = Integer.toString(rs.getInt((col + 1)));
+                    }
+                    else if(md.getColumnType(col)==1) { // String
+                        data[row][col] = rs.getString((col + 1));
+                    }
+                    else if(md.getColumnType(col)==9) { // Double
+                        data[row][col] = Double.toString(rs.getDouble((col + 1)));
+                    }
+                    else if(md.getColumnType(col)==10) {    // Float
+                        data[row][col] = Float.toString(rs.getFloat((col + 1)));
+                    }
+                    //develop efficiency
                     System.out.println(data[row][col]+"\n");
                 }
-
-            }System.out.println("done");
+            }
             return data;
 
         } catch (SQLException ex) {
@@ -234,15 +247,15 @@ public class MySQL extends SubDB {
 
     }
 
-    public Status execute(String DBName,String query) {
+    @Override
+    public Status execute(String query) {
         // Type: 1=Create, 2= Insert 3= Update
-        try{//타입 감지해서 나눌것
-            conn.setCatalog(DBName);
+        try {//타입 감지해서 나눌것
+            conn.setCatalog(Options.DB_MYSQL);
             stmt = conn.createStatement();
-            if(query.startsWith("S")) {
+            if (query.startsWith("S")) {
                 rs = stmt.executeQuery(query);//select용
-            }
-            else {
+            } else {
                 stmt.executeUpdate(query);//create insert delete 용
             }
             stmt.close();
@@ -258,38 +271,20 @@ public class MySQL extends SubDB {
 
     }
 
-    public Status flush(String DBName,String[] query) {
-        // Type: 1=Create, 2= Insert 3= Update add 4.delete
-        int i=0;
-        /*ArrayList<String>querylist = new ArrayList<String>();
-        for(String temp:query){
-            querylist.add(temp);
-        }
-        int size = sizeof(query[0]);*/
-        try{
-            conn.setCatalog(DBName);
-            while(query[i] == null) {
-                //is dangerous?
-                stmt = conn.createStatement();
+    @Override
+    public Status flush_query(String[] query) {
+        try {
+            conn.setCatalog(Options.DB_MYSQL);
+            stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            for (int i = 0; i < query.length; i++) {
                 stmt.addBatch(query[i]);
-
-                i++;
             }
-            pstmt.executeBatch();
             stmt.executeBatch();
-            pstmt.close();
-            stmt.close();
+            stmt.clearBatch();
+            return Status.OK;
         } catch (SQLException ex) {
-            // handle any errors
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-            System.out.println("failquery: " + query[i]);
             return Status.ERROR;
         }
-
-        // 타입 별 쿼리 실행
-        return Status.OK;
     }
 
     @Override
@@ -302,7 +297,7 @@ public class MySQL extends SubDB {
         try {
             stmt = conn.createStatement();
             String query = "DELETE FROM " + Options.DB_MYSQL + "." + table + " WHERE d_key='" + item.getKey() + "';";
-            System.out.println("Query: " +  query);
+            System.out.println("Query: " + query);
             stmt.executeUpdate(query);
             System.out.println("Item for key \"" + item.getKey() + "\" deleted...");
             stmt.close();
@@ -313,8 +308,8 @@ public class MySQL extends SubDB {
     }
 
     private String escapeString(String s) {
-        return s.replaceAll("\b","\\b")
-                .replaceAll("\n","\\n")
+        return s.replaceAll("\b", "\\b")
+                .replaceAll("\n", "\\n")
                 .replaceAll("\r", "\\r")
                 .replaceAll("\t", "\\t")
                 .replaceAll("\\x1A", "\\Z")
@@ -323,7 +318,12 @@ public class MySQL extends SubDB {
                 .replaceAll("\"", "\\\"");
     }
 
-    public int getROW(){return ROW;}
-    public int getCOL(){return COL;}
+    public int getROW() {
+        return ROW;
+    }
+
+    public int getCOL() {
+        return COL;
+    }
 
 }

@@ -18,48 +18,9 @@ public class MalleDB implements interfaces.MalleDB {
     private SubDB mdb;
     private SubDB bdb;
     private SubDB tdb;
-    private Options.DB_TYPE onlyOneType = Options.DB_TYPE.LEVELDB;
     private boolean usingOneSubDB = false;
     private String prefix = "123456";
 
-    /*
-        public static void main(String[] args) {
-
-           // String key = generateRandomString(20);
-           // System.out.println("Before: " + key);
-
-            //byte[] arr = key.getBytes();
-            //String key1 = new String(arr);
-
-            //System.out.println("After: " + key1);
-
-
-            MalleDB malleDB = new MalleDB();
-            Options options = new Options(Options.DB_TYPE.MYSQL, Options.DB_TYPE.CASSANDRA, Options.DB_TYPE.LEVELDB);
-            malleDB.init(options);
-            malleDB.create();
-
-            //4294304
-
-            String key = generateRandomString(20);
-            String value = generateRandomString(500);
-
-            System.out.println("Key: " + key);
-            System.out.println("Value: " + value);
-
-            malleDB.insert(key, value);
-
-
-            malleDB.read(key);
-
-           // String key = "E1O1IByghZN0ryG7raPf";
-            malleDB.delete(key);
-
-
-            malleDB.close();
-
-        }
-    */
     //Initialize with default configuration
     @Override
     public Status init() {
@@ -72,16 +33,14 @@ public class MalleDB implements interfaces.MalleDB {
 
         if (SUB_DB == Options.DB_TYPE.MYSQL) {
             metadb = new MySQL();
-            onlyOneType = Options.DB_TYPE.MYSQL;
         } else if (SUB_DB == Options.DB_TYPE.LEVELDB) {
             metadb = new LevelDB();
-            onlyOneType = Options.DB_TYPE.LEVELDB;
         } else if (SUB_DB == Options.DB_TYPE.CASSANDRA) {
             metadb = new Cassandra();
-            onlyOneType = Options.DB_TYPE.CASSANDRA;
         } else if (SUB_DB == Options.DB_TYPE.REDIS) {
             metadb = new Redis();
-            onlyOneType = Options.DB_TYPE.REDIS;
+        } else if (SUB_DB == Options.DB_TYPE.POSTGRESQL) {
+            metadb = new PostgreSQL();
         }
 
         metadb.init();
@@ -97,6 +56,8 @@ public class MalleDB implements interfaces.MalleDB {
                 blockdb = new Cassandra();
             } else if (SUB_DB == Options.DB_TYPE.REDIS) {
                 blockdb = new Redis();
+            } else if (SUB_DB == Options.DB_TYPE.POSTGRESQL) {
+                blockdb = new PostgreSQL();
             }
 
             blockdb.init();
@@ -273,30 +234,6 @@ public class MalleDB implements interfaces.MalleDB {
         blockdb.direct_delete(key);
     }
 
-    /*
-    @Override
-    public Status insert(List<String> keys, List<String> values) {
-
-        String chunk;
-        int order;
-        List<Item> metaList = new ArrayList<>();
-        ArrayList<Item>[] blocks = new ArrayList[Options.bCOUNTER];
-        int[] counters = new int[Options.bCOUNTER];
-
-        for(int n = 0; n < values.size(); n++) {
-            //TODO: implement
-        }
-
-        for(int i = 0; i < metaList.size(); i++){
-            metadb.insert(metaList.get(i));
-        }
-        for(int i = 0; i < Options.bCOUNTER; i++){
-            for (int j = 0; j < blocks[i].size(); j++)
-                blockdb.insert(blocks[i].get(j));
-        }
-        return Status.OK;
-    }
-*/
     public Status insertMetaFile(MetaFile newmeta) {
         String key;
         String metaInfo;
@@ -384,12 +321,8 @@ public class MalleDB implements interfaces.MalleDB {
     }
 
     public String[][] select(String query){
-        //if(!(blockdb || mdb || tdb || bdb));
-        MySQL db = new MySQL();
-        db.init(); //change to use existing DB
+        return blockdb.select(query);
 
-        String[][] Result = db.select(Options.DB_MYSQL, query);
-        return Result;
 //        for(int i = 0; i<db.getROW();i++) {
 //            for (int j = 0; j < db.getCOL(); j++)
 //            { System.out.println(Result[i][j]);}
@@ -398,31 +331,12 @@ public class MalleDB implements interfaces.MalleDB {
 //        return Status.OK;//열 개수 파악 추가
     }
 
-    @Override
     public Status execute(String query){
-        MySQL db = new MySQL();
-        db.init();
-        return db.execute(Options.DB_MYSQL, query);
+        return blockdb.execute(query);
     }
 
-    @Override
-    public Status flush(String[] query){
-        MySQL db = new MySQL();  //
-        db.init();
-        return db.flush(Options.DB_MYSQL, query);
-    }
-
-    public String[][] select_post(String query){
-        PostgreSQL db = new PostgreSQL();
-        db.init();
-        db.create();
-        return db.select(Options.DB_POST, query);
-    }
-
-    public Status execute_post(String query){
-        PostgreSQL db = new PostgreSQL();
-        db.init();
-        return db.execute(Options.DB_MYSQL, query);
+    public Status flush_query(String[] query){
+        return blockdb.flush_query(query);
     }
 
     @Override
@@ -475,14 +389,15 @@ public class MalleDB implements interfaces.MalleDB {
         item = metadb.readMeta(item);
 
         if (usingOneSubDB) {
-            if(onlyOneType== Options.DB_TYPE.MYSQL) {
+            if(SUB_DB== Options.DB_TYPE.MYSQL||SUB_DB== Options.DB_TYPE.POSTGRESQL) {
+                // For RDBMS
                 for (int i = 0; i < Options.bCOUNTER; i++) {
                     if (item.getCounters()[i] > 0) {
                         blockdb.delete(Options.TABLES_MYSQL[i], item);
                         System.out.println("Block deleted...");
                     }
                 }
-            }else{
+            }else{  // For NO-SQL
                 blockdb.deleteAll(item);
             }
         } else {

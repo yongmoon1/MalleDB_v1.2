@@ -10,9 +10,6 @@ public interface MalleDB {
     Status init(Options options);
     Status create();
     Status close();
-    Status execute(String query);
-    Status flush(String[] query);
-
 
     Status insert(String key, String value);
     //Status insert(List<String> keys, List<String> values);

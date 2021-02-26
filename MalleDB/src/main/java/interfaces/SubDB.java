@@ -29,9 +29,14 @@ public abstract class SubDB {
     }
 
     public void flush() {}
+
     public Status direct_create(){return null;}
     public Status direct_insert(String key, String value){return null;}
     public Status direct_read(String key){return null;}
     public Status direct_delete(String key){return null;}
     public Status direct_update(String key, String value){return null;}
+
+    public String[][] select(String query){return null;}
+    public Status execute(String query){return null;}
+    public Status flush_query(String[] query){return null;}
 }

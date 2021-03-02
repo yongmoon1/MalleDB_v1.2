@@ -26,9 +26,10 @@ public class PostgreSQL extends SubDB {
 
     public Status init() {
         try {
+            Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection(url, user, password);
             return Status.OK;
-        } catch (SQLException throwables) {
+        } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
             return Status.ERROR;
         }

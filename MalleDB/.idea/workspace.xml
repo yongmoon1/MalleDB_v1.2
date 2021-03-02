@@ -10,25 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f6df7e33-d2a1-4548-8fc0-a4dd16816112" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_2021-02-19__4_42__Default_Changelist_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_2021-02-19_오후_4_42_[Default_Changelist]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DIRECT_INSTRUCTIONS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DIRECT_INSTRUCTIONS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/connectors/MySQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/connectors/MySQL.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/connectors/PostgreSQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/connectors/PostgreSQL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/db/MalleDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/MalleDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/interfaces/MalleDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interfaces/MalleDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/interfaces/SubDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interfaces/SubDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/util/Options.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/Options.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DIRECT_INSTRUCTIONS.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DIRECT_INSTRUCTIONS.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/connectors/MySQL.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/connectors/MySQL.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/connectors/PostgreSQL.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/connectors/PostgreSQL.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/db/MalleDB.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db/MalleDB.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/interfaces/MalleDB.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/interfaces/MalleDB.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/interfaces/SubDB.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/interfaces/SubDB.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/util/Options$DB_TYPE.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/util/Options$DB_TYPE.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/util/Options.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/util/Options.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

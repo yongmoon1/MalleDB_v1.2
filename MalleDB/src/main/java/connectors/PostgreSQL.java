@@ -1,6 +1,7 @@
 package connectors;
 
 import interfaces.SubDB;
+import org.postgresql.Driver;
 import util.Item;
 import util.Options;
 import util.Status;
@@ -26,11 +27,11 @@ public class PostgreSQL extends SubDB {
 
     public Status init() {
         try {
-            Class.forName("org.postgresql.Driver");
+            DriverManager.registerDriver(new org.postgresql.Driver());
             conn = DriverManager.getConnection(url, user, password);
             return Status.OK;
-        } catch (SQLException | ClassNotFoundException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
             return Status.ERROR;
         }
     }

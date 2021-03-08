@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="bcc21f30-fa52-40fc-9899-8991125d73fd" name="dev-db">
+        <fileTransfer rootFolder="/home/dev-db" accessType="SFTP" host="165.246.41.191" port="22" sshConfigId="a857a2e1-3e79-45f2-96f9-bd2f037bf326" sshConfig="dev-db@165.246.41.191:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

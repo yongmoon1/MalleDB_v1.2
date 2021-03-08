@@ -33,11 +33,11 @@ public class MalleDB implements interfaces.MalleDB {
 
         if (SUB_DB == Options.DB_TYPE.MYSQL) {
             metadb = new MySQL();
-        } else if (SUB_DB == Options.DB_TYPE.LEVELDB) {
+        } else if (SUB_DB == Options.DB_TYPE.LEVELDB || SUB_DB== Options.DB_TYPE.TDLEVELDB) {
             metadb = new LevelDB();
-        } else if (SUB_DB == Options.DB_TYPE.CASSANDRA) {
+        } else if (SUB_DB == Options.DB_TYPE.CASSANDRA || SUB_DB == Options.DB_TYPE.TDCASSANDRA) {
             metadb = new Cassandra();
-        } else if (SUB_DB == Options.DB_TYPE.REDIS) {
+        } else if (SUB_DB == Options.DB_TYPE.REDIS || SUB_DB== Options.DB_TYPE.TDREDIS) {
             metadb = new Redis();
         } else if (SUB_DB == Options.DB_TYPE.POSTGRESQL) {
             metadb = new PostgreSQL();
@@ -134,6 +134,11 @@ public class MalleDB implements interfaces.MalleDB {
     @Override
     public Status insert(String key, String value) {
 
+        if (SUB_DB == Options.DB_TYPE.TDLEVELDB || SUB_DB == Options.DB_TYPE.TDCASSANDRA || SUB_DB == Options.DB_TYPE.TDREDIS) {
+            System.out.println("Direct Inserting Key: " + key);
+            blockdb.direct_insert(key, value);
+        }
+
         //Initialize the variables starts
         String chunk;
         int order;
@@ -209,27 +214,26 @@ public class MalleDB implements interfaces.MalleDB {
         return Status.OK;
     }
 
-    public Status direct_create(){
+    public Status direct_create() {
         blockdb.direct_create();
         return Status.OK;
     }
 
-    public void direct_insert(String key, String value){
-        System.out.println("Direct Inserting Key: " + key);
-        blockdb.direct_insert(key, value);
+    public void direct_insert(String key, String value) {
+
     }
 
-    public void direct_read(String key){
+    public void direct_read(String key) {
         System.out.println("Direct Reading Key: " + key);
         blockdb.direct_read(key);
     }
 
-    public void direct_update(String key, String value){
+    public void direct_update(String key, String value) {
         System.out.println("Direct Updating Key: " + key);
         blockdb.direct_update(key, value);
     }
 
-    public void direct_delete(String key){
+    public void direct_delete(String key) {
         System.out.println("Direct Deleting Key: " + key);
         blockdb.direct_delete(key);
     }
@@ -277,12 +281,12 @@ public class MalleDB implements interfaces.MalleDB {
         return Status.ERROR;
     }
 
-    public void updateFile(String filename){
+    public void updateFile(String filename) {
         deleteFile(filename);
         insertFile(filename);
     }
 
-    public void deleteFile(String filename){
+    public void deleteFile(String filename) {
         delete(filename);
     }
 
@@ -320,7 +324,7 @@ public class MalleDB implements interfaces.MalleDB {
         }
     }
 
-    public String[][] select(String query){
+    public String[][] select(String query) {
         return blockdb.select(query);
 
 //        for(int i = 0; i<db.getROW();i++) {
@@ -331,11 +335,11 @@ public class MalleDB implements interfaces.MalleDB {
 //        return Status.OK;//열 개수 파악 추가
     }
 
-    public Status execute(String query){
+    public Status execute(String query) {
         return blockdb.execute(query);
     }
 
-    public Status flush_query(String[] query){
+    public Status flush_query(String[] query) {
         return blockdb.flush_query(query);
     }
 
@@ -389,7 +393,7 @@ public class MalleDB implements interfaces.MalleDB {
         item = metadb.readMeta(item);
 
         if (usingOneSubDB) {
-            if(SUB_DB== Options.DB_TYPE.MYSQL||SUB_DB== Options.DB_TYPE.POSTGRESQL) {
+            if (SUB_DB == Options.DB_TYPE.MYSQL || SUB_DB == Options.DB_TYPE.POSTGRESQL) {
                 // For RDBMS
                 for (int i = 0; i < Options.bCOUNTER; i++) {
                     if (item.getCounters()[i] > 0) {
@@ -397,7 +401,7 @@ public class MalleDB implements interfaces.MalleDB {
                         System.out.println("Block deleted...");
                     }
                 }
-            }else{  // For NO-SQL
+            } else {  // For NO-SQL
                 blockdb.deleteAll(item);
             }
         } else {

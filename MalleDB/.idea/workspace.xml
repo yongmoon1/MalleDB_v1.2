@@ -9,7 +9,31 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f6df7e33-d2a1-4548-8fc0-a4dd16816112" name="Default Changelist" comment="" />
+    <list default="true" id="f6df7e33-d2a1-4548-8fc0-a4dd16816112" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sshConfigs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/db/MalleDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/MalleDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/util/Options.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/Options.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DIRECT_INSTRUCTIONS.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DIRECT_INSTRUCTIONS.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/connectors/Cassandra.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/connectors/Cassandra.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/connectors/LevelDB.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/connectors/LevelDB.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/connectors/MySQL.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/connectors/MySQL.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/connectors/PostgreSQL.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/connectors/PostgreSQL.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/connectors/Redis.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/connectors/Redis.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/db/MalleDB.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db/MalleDB.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/interfaces/MalleDB.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/interfaces/MalleDB.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/interfaces/SubDB.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/interfaces/SubDB.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/newMain.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/newMain.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/util/HashMap.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/util/HashMap.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/util/Item.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/util/Item.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/util/MetaFile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/util/MetaFile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/util/Options$DB_TYPE.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/util/Options$DB_TYPE.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/util/Options.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/util/Options.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/util/Status.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/util/Status.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,13 +71,18 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -62,18 +91,7 @@
       <recent name="C:\Users\ChulWoo_Lee\Desktop\iesl-project\MalleDB\src" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Remote JVM Debug.dev-db">
     <configuration name="DIRECT_INSTRUCTIONS" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="DIRECT_INSTRUCTIONS" />
       <module name="MalleDB" />
@@ -81,6 +99,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="dev-db" type="Remote">
+      <module name="MalleDB" />
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <option name="AUTO_RESTART" value="false" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.DIRECT_INSTRUCTIONS" />
+      <item itemvalue="Remote JVM Debug.dev-db" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -92,6 +124,7 @@
       <updated>1613721322374</updated>
       <workItem from="1613826816699" duration="985000" />
       <workItem from="1613941515555" duration="7213000" />
+      <workItem from="1614753795080" duration="1551000" />
     </task>
     <servers />
   </component>

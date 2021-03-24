@@ -1,5 +1,3 @@
-# ChulWoo
-
 ## [Docker Hub](https://hub.docker.com/r/lambent41/iesl-project)
 
 sudo apt update

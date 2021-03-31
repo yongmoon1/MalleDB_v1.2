@@ -10,29 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f6df7e33-d2a1-4548-8fc0-a4dd16816112" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sshConfigs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/util/FileManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/util/Metalist.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/db/MalleDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/MalleDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/util/Options.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/Options.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DIRECT_INSTRUCTIONS.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DIRECT_INSTRUCTIONS.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/connectors/Cassandra.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/connectors/Cassandra.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/connectors/LevelDB.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/connectors/LevelDB.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/connectors/MySQL.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/connectors/MySQL.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/connectors/PostgreSQL.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/connectors/PostgreSQL.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/connectors/Redis.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/connectors/Redis.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/db/MalleDB.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db/MalleDB.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/interfaces/MalleDB.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/interfaces/MalleDB.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/interfaces/SubDB.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/interfaces/SubDB.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/newMain.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/newMain.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/util/HashMap.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/util/HashMap.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/util/Item.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/util/Item.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/util/MetaFile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/util/MetaFile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/util/Options$DB_TYPE.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/util/Options$DB_TYPE.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/util/Options.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/util/Options.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/util/Status.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/util/Status.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,6 +80,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="dev-db" type="Remote">
       <module name="MalleDB" />
       <option name="USE_SOCKET_TRANSPORT" value="true" />
@@ -125,6 +117,12 @@
       <workItem from="1613826816699" duration="985000" />
       <workItem from="1613941515555" duration="7213000" />
       <workItem from="1614753795080" duration="1551000" />
+      <workItem from="1616843875940" duration="3624000" />
+      <workItem from="1616913308467" duration="7608000" />
+      <workItem from="1616985623151" duration="3244000" />
+      <workItem from="1617069823451" duration="331000" />
+      <workItem from="1617074045493" duration="130000" />
+      <workItem from="1617153048490" duration="1560000" />
     </task>
     <servers />
   </component>

@@ -19,7 +19,7 @@ public class MalleDB implements interfaces.MalleDB {
     private SubDB bdb;
     private SubDB tdb;
     private boolean usingOneSubDB = false;
-    private String prefix = "123456";
+    private FileManager fileManager;
 
     //Initialize with default configuration
     @Override
@@ -30,6 +30,8 @@ public class MalleDB implements interfaces.MalleDB {
     //Initialize with custom configuration
     @Override
     public Status init(Options options) {
+        // FileManager Init
+        fileManager = new FileManager(this);
 
         if (SUB_DB == Options.DB_TYPE.MYSQL) {
             metadb = new MySQL();
@@ -238,111 +240,6 @@ public class MalleDB implements interfaces.MalleDB {
         blockdb.direct_delete(key);
     }
 
-    public Status insertMetaFile(MetaFile newmeta) {
-        String key;
-        String metaInfo;
-        metaInfo = newmeta.toString();
-        key = prefix + newmeta.getKey();//change random generate key
-        return insert(key, metaInfo);
-    }
-
-    public Status updateMetaFile(String key, MetaFile newmeta) {
-        //뉴 메타 파일의 정보에서 기존 메타파일과 동일점 찾아서 업데이트
-        deleteMetaFile(key);
-        String metaInfo = newmeta.toString();
-        return insert(key, metaInfo);
-    }
-
-    public Status deleteMetaFile(String key) {
-        return delete(key);
-    }
-
-    public MetaFile readMetaFile(String key) {
-        String value = read(key).getValue();
-        MetaFile metaFile = new MetaFile();
-        metaFile.Stringto(value);
-        return metaFile;
-    }
-
-    public Status insertFile(String filename) {
-        System.out.println("Inserting File : " + filename);
-        String value = encoder(filename);
-        return insert(filename, value);
-    }
-
-    public Status readFile(String filename) {
-        System.out.println("Reading Fiile : " + filename);
-        Status status = read(filename);
-        if (status.isOk()) {
-            String value = status.getValue();
-            decoder(value, filename);
-            return Status.OK;
-        }
-        return Status.ERROR;
-    }
-
-    public void updateFile(String filename) {
-        deleteFile(filename);
-        insertFile(filename);
-    }
-
-    public void deleteFile(String filename) {
-        delete(filename);
-    }
-
-    private String encoder(String imagePath) {
-        String base64Image = "";
-        byte imageData[] = {};
-        File file = new File(imagePath);
-        try (FileInputStream imageInFile = new FileInputStream(file)) {
-            // Reading a Image file from file system
-            imageData = new byte[(int) file.length()];
-            BufferedInputStream bis = new BufferedInputStream(imageInFile);
-            int size = bis.read(imageData);
-            //base64Image = Base64.getEncoder().encodeToString(imageData);
-        } catch (FileNotFoundException e) {
-            System.out.println("Image not found" + e);
-        } catch (IOException ioe) {
-            System.out.println("Exception while reading the Image " + ioe);
-        }
-        // return base64Image;
-        return new String(imageData);
-    }
-
-    private void decoder(String value, String pathFile) {
-        try (FileOutputStream imageOutFile = new FileOutputStream(pathFile)) {
-            // Converting a Base64 String into Image byte array
-            //byte[] imageByteArray = Base64.getDecoder().decode(base64Image);
-            System.out.println("Creating File");
-            BufferedOutputStream bos = new BufferedOutputStream(imageOutFile);
-            bos.write(value.getBytes());
-            bos.flush();
-        } catch (FileNotFoundException e) {
-            System.out.println("Image not found" + e);
-        } catch (IOException ioe) {
-            System.out.println("Exception while reading the Image " + ioe);
-        }
-    }
-
-    public String[][] select(String query) {
-        return blockdb.select(query);
-
-//        for(int i = 0; i<db.getROW();i++) {
-//            for (int j = 0; j < db.getCOL(); j++)
-//            { System.out.println(Result[i][j]);}
-//
-//        }
-//        return Status.OK;//열 개수 파악 추가
-    }
-
-    public Status execute(String query) {
-        return blockdb.execute(query);
-    }
-
-    public Status flush_query(String[] query) {
-        return blockdb.flush_query(query);
-    }
-
     @Override
     public Status read(String key) {
         //Initialize the Item
@@ -418,6 +315,26 @@ public class MalleDB implements interfaces.MalleDB {
         metadb.delete(Options.TABLE_META_MYSQL, item);
         System.out.println("Meta deleted...");
         return Status.OK;
+    }
+
+
+    public String[][] select(String query) {
+        return blockdb.select(query);
+
+//        for(int i = 0; i<db.getROW();i++) {
+//            for (int j = 0; j < db.getCOL(); j++)
+//            { System.out.println(Result[i][j]);}
+//
+//        }
+//        return Status.OK;//열 개수 파악 추가
+    }
+
+    public Status execute(String query) {
+        return blockdb.execute(query);
+    }
+
+    public Status flush_query(String[] query) {
+        return blockdb.flush_query(query);
     }
 
     static String generateRandomString(int n) {

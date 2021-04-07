@@ -19,7 +19,7 @@ public class MetaFile {
     //3: tiny
 
     private int[] counters;
-    private int id;
+    private String id;
     private int size;
     private String name;
     private String key;
@@ -47,7 +47,7 @@ public class MetaFile {
     public MetaFile(int order, int size, String name, String key, String userid, String Refrenceid, boolean hot) {
         this.order = order;
         this.userid = userid;
-            this.key = key;
+        this.key = key;
         this.name = name;
         this.hot = hot;
         this.size = size;
@@ -64,7 +64,7 @@ public class MetaFile {
         this.order = order;
     }
 
-    public void setid(int id) {
+    public void setid(String id) {
         this.id = id;
     }
 
@@ -104,7 +104,7 @@ public class MetaFile {
         return size;
     }
 
-    public int getid() {
+    public String getid() {
         return id;
     }
 
@@ -156,20 +156,19 @@ public class MetaFile {
                 '}';
     }
 
-    public void Stringto(String metadata){
+    public void Stringto(String metadata) {
         String[] info = new String[8];
-        for(int i = 0; i <8; i++)
-        {
+        for (int i = 0; i < 8; i++) {
             info[i] = metadata.split(",")[i];
         }
         this.sethot(Boolean.parseBoolean(info[0].substring(token[0].length())));
         this.setOrder(Integer.parseInt(info[1].substring(token[1].length())));
-        this.setid(Integer.parseInt(info[2].substring(token[2].length())));
+        this.setid(info[2].substring(token[2].length()));
         this.setsize(Integer.parseInt(info[3].substring(token[3].length())));
-        this.setKey(info[4].substring(token[4].length(),info[4].lastIndexOf("\'")));
-        this.setname(info[5].substring(token[5].length(),info[5].lastIndexOf("\'")));
-        this.setUserid(info[6].substring(token[6].length(),info[6].lastIndexOf("\'")));
-        this.setRefrenceid(info[7].substring(token[7].length(),info[7].lastIndexOf("\'")));
+        this.setKey(info[4].substring(token[4].length(), info[4].lastIndexOf("\'")));
+        this.setname(info[5].substring(token[5].length(), info[5].lastIndexOf("\'")));
+        this.setUserid(info[6].substring(token[6].length(), info[6].lastIndexOf("\'")));
+        this.setRefrenceid(info[7].substring(token[7].length(), info[7].lastIndexOf("\'")));
     }
 
 

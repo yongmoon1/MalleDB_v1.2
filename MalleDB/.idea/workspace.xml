@@ -10,10 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f6df7e33-d2a1-4548-8fc0-a4dd16816112" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/util/FileManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/util/Metalist.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fileManage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/db/MalleDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/MalleDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/util/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/util/HashMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/HashMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/util/MetaFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/MetaFile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/util/Options.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/Options.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,9 +75,16 @@
       <recent name="C:\Users\ChulWoo_Lee\Desktop\iesl-project\MalleDB\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Remote JVM Debug.dev-db">
+  <component name="RunManager" selected="Application.fileManage">
     <configuration name="DIRECT_INSTRUCTIONS" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="DIRECT_INSTRUCTIONS" />
+      <module name="MalleDB" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="fileManage" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="fileManage" />
       <module name="MalleDB" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -102,6 +112,7 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Application.fileManage" />
       <item itemvalue="Application.DIRECT_INSTRUCTIONS" />
       <item itemvalue="Remote JVM Debug.dev-db" />
     </list>
@@ -123,6 +134,8 @@
       <workItem from="1617069823451" duration="331000" />
       <workItem from="1617074045493" duration="130000" />
       <workItem from="1617153048490" duration="1560000" />
+      <workItem from="1617336865911" duration="32000" />
+      <workItem from="1617585853044" duration="38336000" />
     </task>
     <servers />
   </component>
@@ -145,5 +158,19 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/../.." />
     </ignored-roots>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/db/FileManager.java</url>
+          <line>64</line>
+          <properties class="db.FileManager" method="insertFile">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

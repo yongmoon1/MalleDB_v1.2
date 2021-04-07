@@ -10,7 +10,7 @@ import org.iq80.leveldb.WriteBatch;
 import redis.clients.jedis.Pipeline;
 
 
-public class HashMap {
+public class HashMap {  // Utility Class
 
     private static Integer insert_size = 2;
     private static Map<String, String> map = new java.util.HashMap<>(insert_size);

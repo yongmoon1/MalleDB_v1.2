@@ -3,10 +3,7 @@ package db;
 import connectors.*;
 import interfaces.SubDB;
 import util.*;
-import util.HashMap;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import static util.Options.SUB_DB;
@@ -19,7 +16,6 @@ public class MalleDB implements interfaces.MalleDB {
     private SubDB bdb;
     private SubDB tdb;
     private boolean usingOneSubDB = false;
-    private FileManager fileManager;
 
     //Initialize with default configuration
     @Override
@@ -30,8 +26,6 @@ public class MalleDB implements interfaces.MalleDB {
     //Initialize with custom configuration
     @Override
     public Status init(Options options) {
-        // FileManager Init
-        fileManager = new FileManager(this);
 
         if (SUB_DB == Options.DB_TYPE.MYSQL) {
             metadb = new MySQL();
@@ -131,7 +125,6 @@ public class MalleDB implements interfaces.MalleDB {
         return null;
     }
 
-
     //Insert data
     @Override
     public Status insert(String key, String value) {
@@ -216,30 +209,6 @@ public class MalleDB implements interfaces.MalleDB {
         return Status.OK;
     }
 
-    public Status direct_create() {
-        blockdb.direct_create();
-        return Status.OK;
-    }
-
-    public void direct_insert(String key, String value) {
-
-    }
-
-    public void direct_read(String key) {
-        System.out.println("Direct Reading Key: " + key);
-        blockdb.direct_read(key);
-    }
-
-    public void direct_update(String key, String value) {
-        System.out.println("Direct Updating Key: " + key);
-        blockdb.direct_update(key, value);
-    }
-
-    public void direct_delete(String key) {
-        System.out.println("Direct Deleting Key: " + key);
-        blockdb.direct_delete(key);
-    }
-
     @Override
     public Status read(String key) {
         //Initialize the Item
@@ -318,6 +287,31 @@ public class MalleDB implements interfaces.MalleDB {
     }
 
 
+    public Status direct_create() {
+        blockdb.direct_create();
+        return Status.OK;
+    }
+
+    public void direct_insert(String key, String value) {
+        System.out.println("Direct Inserting Key: " + key);
+        blockdb.direct_insert(key, value);
+    }
+
+    public void direct_read(String key) {
+        System.out.println("Direct Reading Key: " + key);
+        blockdb.direct_read(key);
+    }
+
+    public void direct_update(String key, String value) {
+        System.out.println("Direct Updating Key: " + key);
+        blockdb.direct_update(key, value);
+    }
+
+    public void direct_delete(String key) {
+        System.out.println("Direct Deleting Key: " + key);
+        blockdb.direct_delete(key);
+    }
+
     public String[][] select(String query) {
         return blockdb.select(query);
 
@@ -337,7 +331,7 @@ public class MalleDB implements interfaces.MalleDB {
         return blockdb.flush_query(query);
     }
 
-    static String generateRandomString(int n) {
+    public static String generateRandomString(int n) {
 
         // chose a Character random from this String
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -361,5 +355,42 @@ public class MalleDB implements interfaces.MalleDB {
         }
 
         return sb.toString();
+    }
+
+    public Item readKV(String key) {
+        //Initialize the Item
+        Item item = new Item();
+        item.setKey(key);
+        item = metadb.readMeta(item);
+        StringBuilder sb = new StringBuilder();
+
+        //Read each block from the sub database
+        if(usingOneSubDB) {
+            for (int i = 0; i < Options.bCOUNTER; i++) {
+                List<Item> blocks = blockdb.readAll(Options.TABLES_MYSQL[i], item);
+                for (Item block : blocks) {
+                    //Append with the value
+                    sb.append(block.getValue());
+                }
+            }
+        }else{
+            List<Item> mblocks = mdb.readAll(Options.TABLES_MYSQL[0], item);
+            for (Item block : mblocks) {
+                sb.append(block.getValue());
+            }
+
+            List<Item> bblocks = bdb.readAll(Options.TABLES_MYSQL[1], item);
+            for (Item block : bblocks) {
+                sb.append(block.getValue());
+            }
+
+            List<Item> tblocks = tdb.readAll(Options.TABLES_MYSQL[2], item);
+            for (Item block : tblocks) {
+                sb.append(block.getValue());
+            }
+        }
+        System.out.println("Read Value: " + sb.toString());
+        item.setValue(sb.toString());
+        return item;
     }
 }

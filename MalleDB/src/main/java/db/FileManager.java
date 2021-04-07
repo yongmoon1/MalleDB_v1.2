@@ -1,4 +1,4 @@
-package util;
+package db;
 
 import java.util.ArrayList;
 import java.util.Base64;
@@ -11,12 +11,26 @@ import java.nio.channels.FileChannel;
 import java.util.List;
 
 import db.MalleDB;
+import util.*;
 
 import java.io.*;
 
 public class FileManager {
-    private String prefix = "123456";
     private MalleDB malleDB;
+    private String prefix = "123456";
+
+    public boolean isBig(String filePath) {
+        int size;
+        File file = new File(filePath);
+        if (file.isFile()) {
+            size = Long.valueOf(file.length()).intValue();
+            if (size > Options.BUFFERSIZE) return true;
+            else return false;
+        } else {
+            System.out.println("WRONG FILE PATH");
+            return false;
+        }
+    }
 
     public FileManager(MalleDB malleDB) {
         this.malleDB = malleDB;
@@ -48,10 +62,22 @@ public class FileManager {
         return metaFile;
     }
 
-    public Status insertFile(String filename) {
+    public Status insertFile(String filename) throws IOException {
         System.out.println("Inserting File : " + filename);
-        String value = encoder(filename);
-        return malleDB.insert(filename, value);
+
+        File file = new File(filename);
+        if (file.isDirectory()) {
+            smallFileInsertEncoder(filename);
+            return Status.OK;
+        }
+
+        if (isBig(filename)) {
+            bigFileInsert(filename);
+            return Status.OK;
+        } else {
+            smallFileInsertEncoder(filename);
+            return Status.OK;
+        }
     }
 
     public Status readFile(String filename) {
@@ -65,7 +91,7 @@ public class FileManager {
         return Status.ERROR;
     }
 
-    public void updateFile(String filename) {
+    public void updateFile(String filename) throws IOException {
         deleteFile(filename);
         insertFile(filename);
     }
@@ -130,7 +156,7 @@ public class FileManager {
         for (int i = 0; i < metaFiles.length; i++) {
             // insert(metaFiles[i].getid(), metaFiles[i].toString());\
             //is it meta기능 추가
-            insert(metaFiles[i].getid(), metalistId);
+            malleDB.insert(metaFiles[i].getid(), metalistId);
 
             metalist.addlist(metaFiles[i].toString());
             keyList += metaFiles[i].getid() + "&";
@@ -141,9 +167,9 @@ public class FileManager {
         }
 
         // insert keyList and metailst in MalleDB
-        insert("KLI_" + metalistId, keyList);
+        malleDB.insert("KLI_" + metalistId, keyList);
         metalist.makemerge();
-        insert(metalist.getkey(), metalist.getallvalue());
+        malleDB.insert(metalist.getkey(), metalist.getallvalue());
 
         //최종적으로
 
@@ -167,9 +193,9 @@ public class FileManager {
 
         //export metalist in MalleDB
         System.out.println(".................read 1");
-        tempItem = readKV(metaId);       //get metalist key      작은 파일의 메타Id로 메타리스트id 를 가져옴
+        tempItem = malleDB.readKV(metaId);       //get metalist key      작은 파일의 메타Id로 메타리스트id 를 가져옴
         System.out.println(".................read 2");
-        metaListItem = readKV(tempItem.getValue());    //get metalist's Item 메타리스트의 아이템을 가져옴
+        metaListItem = malleDB.readKV(tempItem.getValue());    //get metalist's Item 메타리스트의 아이템을 가져옴
         System.out.println(".................read 3");
         metalist.setkey(metaListItem.getKey());        // 메타리스트로 변환
         System.out.println(".................read 4");
@@ -177,7 +203,7 @@ public class FileManager {
         System.out.println(".................read 5");
         System.out.println("................." + metalist.getallvalue());
         //export keyList in MalleDB
-        keyListItem = readKV("KLI_" + tempItem.getValue());    //get keyList's Item
+        keyListItem = malleDB.readKV("KLI_" + tempItem.getValue());    //get keyList's Item
         String keyList = keyListItem.getValue();                 //get keyList
 
         //export "one" metavalue in metalist
@@ -228,7 +254,6 @@ public class FileManager {
 
     }
 
-
     public void serchpath(String directory_path, List<String> filepath) {//파일패스는 리스트사용
         File dir = new File(directory_path);
         File[] files = dir.listFiles();
@@ -258,7 +283,7 @@ public class FileManager {
 
         //init metalist
         Metalist metalist = new Metalist();
-        metalist.setkey(generateRandomString(6));          // change later to name or another
+        metalist.setkey(malleDB.generateRandomString(6));          // change later to name or another
         String metaListId = metalist.getkey();       // change later to name or another
 
         //init files
@@ -269,7 +294,7 @@ public class FileManager {
 
         try {
             //init buffer
-            ByteBuffer buffer = ByteBuffer.allocateDirect(4 * 1024);
+            ByteBuffer buffer = ByteBuffer.allocateDirect(Options.BUFFERSIZE);
 
             //seach file path
             serchpath(driectory_path, filepath);
@@ -304,12 +329,12 @@ public class FileManager {
                         metalist.addlist(V);
                         buffer.clear();
                         System.out.println(buffer.toString());
-                        insert("KLI_" + metaListId, keyList);             //key : metalist's keylistID, value : metafiles's key
-                        insert("MLI_" + metaListId, valueList);           //key : metalist's            value : metafiles's meta_information
+                        malleDB.insert("KLI_" + metaListId, keyList);             //key : metalist's keylistID, value : metafiles's key
+                        malleDB.insert("MLI_" + metaListId, valueList);           //key : metalist's            value : metafiles's meta_information
                         metalist.makemerge();
-                        insert(metalist.getkey(), metalist.getallvalue());//key : metalist's            value : metafiles's data
+                        malleDB.insert(metalist.getkey(), metalist.getallvalue());//key : metalist's            value : metafiles's data
                         metalist = new Metalist();
-                        metalist.setkey(generateRandomString(6)); // change later to name or another
+                        metalist.setkey(malleDB.generateRandomString(6)); // change later to name or another
                         //check if existing key 코드작성
                         metaListId = metalist.getkey();       // change later to name or another
 
@@ -324,7 +349,7 @@ public class FileManager {
                     meta.setname(file.getName());
                     meta.setsize((int) file.length());
 
-                    insert(meta.getid(), metaListId); //each metafile's value is metalistid
+                    malleDB.insert(meta.getid(), metaListId); //each metafile's value is metalistid
                     //key : file ID       value : metalistId
                     System.out.println("............" + meta.getid());
                     valueList += meta.toString();//metafiles's  values stored in metalist
@@ -396,10 +421,10 @@ public class FileManager {
         }
 
         // insert keyList and metailst in MalleDB
-        insert("KLI_" + metaListId, keyList);             //key : metalist's keylistID, value : metafiles's key
-        insert("MLI_" + metaListId, valueList);           //key : metalist's            value : metafiles's meta_information
+        malleDB.insert("KLI_" + metaListId, keyList);             //key : metalist's keylistID, value : metafiles's key
+        malleDB.insert("MLI_" + metaListId, valueList);           //key : metalist's            value : metafiles's meta_information
         metalist.makemerge();
-        insert(metalist.getkey(), metalist.getallvalue());//key : metalist's            value : metafiles's data
+        malleDB.insert(metalist.getkey(), metalist.getallvalue());//key : metalist's            value : metafiles's data
 
         return Status.OK;
     }
@@ -424,4 +449,38 @@ public class FileManager {
         }
     }
 
+    public void bigFileInsert(String filepath) throws IOException {
+        RandomAccessFile raf = new RandomAccessFile(filepath, "r");
+        long sourceSize = raf.length();
+        long chunksPerBuffer = sourceSize / Options.BUFFERSIZE + 1;
+        long remainingBytes = sourceSize % Options.BUFFERSIZE;
+        for (int destIx = 1; destIx <= chunksPerBuffer; destIx++) {
+            BufferedInputStream bw = new BufferedInputStream(new FileInputStream(filepath));
+            if (destIx != chunksPerBuffer)
+                readWrite(raf, bw, Options.BUFFERSIZE);
+            else
+                readWrite(raf, bw, remainingBytes);
+            malleDB.insert(getFileName(filepath), bw.toString());
+            bw.close();
+        }
+        raf.close();
+    }
+
+    static void readWrite(RandomAccessFile raf, BufferedOutputStream bw, long numBytes) throws IOException {
+        byte[] buf = new byte[(int) numBytes];
+        int val = raf.read(buf);
+        if (val != -1) {
+            bw.write(buf);
+        }
+    }
+
+    static String getFileName(String filePath){
+        int lastSlashIdx = filePath.lastIndexOf('/');
+        if(lastSlashIdx==-1){
+            return filePath;
+        }
+        else{
+            return filePath.substring(lastSlashIdx + 1);
+        }
+    }
 }

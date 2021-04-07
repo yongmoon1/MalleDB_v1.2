@@ -1,5 +1,5 @@
 import db.MalleDB;
-import db.FileManager;
+import file.FileManager;
 import util.Options;
 
 import java.io.IOException;
@@ -10,7 +10,6 @@ public class fileManage {
         malleDB.init(new Options(Options.DB_TYPE.REDIS));
 
         FileManager fileManager = new FileManager(malleDB);
-        fileManager.insertFile("C:\\Users\\ChulWoo\\Desktop\\malltest\\image.png");
-
+        fileManager.insertFile("C:\\Users\\ChulWoo_Lee\\Desktop\\test\\numbers.jpg");
     }
 }

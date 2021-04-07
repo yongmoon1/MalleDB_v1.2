@@ -1,137 +1,24 @@
-package db;
+package file;
 
-import java.util.ArrayList;
-import java.util.Base64;
+import db.MalleDB;
+import sun.text.normalizer.CodePointTrie;
+import util.*;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
 import java.util.List;
 
-import db.MalleDB;
-import util.*;
+public class SmallFileManager {
 
-import java.io.*;
+    MalleDB malleDB;
 
-public class FileManager {
-    private MalleDB malleDB;
-    private String prefix = "123456";
-
-    public boolean isBig(String filePath) {
-        int size;
-        File file = new File(filePath);
-        if (file.isFile()) {
-            size = Long.valueOf(file.length()).intValue();
-            if (size > Options.BUFFERSIZE) return true;
-            else return false;
-        } else {
-            System.out.println("WRONG FILE PATH");
-            return false;
-        }
-    }
-
-    public FileManager(MalleDB malleDB) {
+    public SmallFileManager(MalleDB malleDB){
         this.malleDB = malleDB;
-    }
-
-    public Status insertMetaFile(MetaFile newmeta) {
-        String key;
-        String metaInfo;
-        metaInfo = newmeta.toString();
-        key = prefix + newmeta.getKey();//change random generate key
-        return malleDB.insert(key, metaInfo);
-    }
-
-    public Status updateMetaFile(String key, MetaFile newmeta) {
-        //뉴 메타 파일의 정보에서 기존 메타파일과 동일점 찾아서 업데이트
-        deleteMetaFile(key);
-        String metaInfo = newmeta.toString();
-        return malleDB.insert(key, metaInfo);
-    }
-
-    public Status deleteMetaFile(String key) {
-        return malleDB.delete(key);
-    }
-
-    public MetaFile readMetaFile(String key) {
-        String value = malleDB.read(key).getValue();
-        MetaFile metaFile = new MetaFile();
-        metaFile.Stringto(value);
-        return metaFile;
-    }
-
-    public Status insertFile(String filename) throws IOException {
-        System.out.println("Inserting File : " + filename);
-
-        File file = new File(filename);
-        if (file.isDirectory()) {
-            smallFileInsertEncoder(filename);
-            return Status.OK;
-        }
-
-        if (isBig(filename)) {
-            bigFileInsert(filename);
-            return Status.OK;
-        } else {
-            smallFileInsertEncoder(filename);
-            return Status.OK;
-        }
-    }
-
-    public Status readFile(String filename) {
-        System.out.println("Reading Fiile : " + filename);
-        Status status = malleDB.read(filename);
-        if (status.isOk()) {
-            String value = status.getValue();
-            decoder(value, filename);
-            return Status.OK;
-        }
-        return Status.ERROR;
-    }
-
-    public void updateFile(String filename) throws IOException {
-        deleteFile(filename);
-        insertFile(filename);
-    }
-
-    public void deleteFile(String filename) {
-        malleDB.delete(filename);
-    }
-
-    private String encoder(String imagePath) {
-        String base64Image = "";
-        byte imageData[] = {};
-        File file = new File(imagePath);
-        try (FileInputStream imageInFile = new FileInputStream(file)) {
-            // Reading a Image file from file system
-            imageData = new byte[(int) file.length()];
-            BufferedInputStream bis = new BufferedInputStream(imageInFile);
-            int size = bis.read(imageData);
-            //base64Image = Base64.getEncoder().encodeToString(imageData);
-        } catch (FileNotFoundException e) {
-            System.out.println("Image not found" + e);
-        } catch (IOException ioe) {
-            System.out.println("Exception while reading the Image " + ioe);
-        }
-        // return base64Image;
-        return new String(imageData);
-    }
-
-    private void decoder(String value, String pathFile) {
-        try (FileOutputStream imageOutFile = new FileOutputStream(pathFile)) {
-            // Converting a Base64 String into Image byte array
-            //byte[] imageByteArray = Base64.getDecoder().decode(base64Image);
-            System.out.println("Creating File");
-            BufferedOutputStream bos = new BufferedOutputStream(imageOutFile);
-            bos.write(value.getBytes());
-            bos.flush();
-        } catch (FileNotFoundException e) {
-            System.out.println("Image not found" + e);
-        } catch (IOException ioe) {
-            System.out.println("Exception while reading the Image " + ioe);
-        }
     }
 
     //여러개의 작은 파일들을 버퍼의 크기에 맟추어 모아서 하나의 Item으로 insert 하는 메소드
@@ -449,38 +336,4 @@ public class FileManager {
         }
     }
 
-    public void bigFileInsert(String filepath) throws IOException {
-        RandomAccessFile raf = new RandomAccessFile(filepath, "r");
-        long sourceSize = raf.length();
-        long chunksPerBuffer = sourceSize / Options.BUFFERSIZE + 1;
-        long remainingBytes = sourceSize % Options.BUFFERSIZE;
-        for (int destIx = 1; destIx <= chunksPerBuffer; destIx++) {
-            BufferedInputStream bw = new BufferedInputStream(new FileInputStream(filepath));
-            if (destIx != chunksPerBuffer)
-                readWrite(raf, bw, Options.BUFFERSIZE);
-            else
-                readWrite(raf, bw, remainingBytes);
-            malleDB.insert(getFileName(filepath), bw.toString());
-            bw.close();
-        }
-        raf.close();
-    }
-
-    static void readWrite(RandomAccessFile raf, BufferedOutputStream bw, long numBytes) throws IOException {
-        byte[] buf = new byte[(int) numBytes];
-        int val = raf.read(buf);
-        if (val != -1) {
-            bw.write(buf);
-        }
-    }
-
-    static String getFileName(String filePath){
-        int lastSlashIdx = filePath.lastIndexOf('/');
-        if(lastSlashIdx==-1){
-            return filePath;
-        }
-        else{
-            return filePath.substring(lastSlashIdx + 1);
-        }
-    }
 }

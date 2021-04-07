@@ -10,11 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6dd0b625-155d-4ea7-90f1-ab2ea1ba03c8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/file/SmallFileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/file/SmallFileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/db/MalleDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/MalleDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/file/BigFileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/file/BigFileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/file/FileItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/file/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/file/FileManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fileManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fileManage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/file/SmallFileManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/file/SmallFileManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fileManage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fileManage.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +44,12 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/AppData/Local/Temp/tmp__MalleDB.class" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Temp/tmp_1_MalleDB.class" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Temp/tmp_2_MalleDB.class" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar://$USER_HOME$/.jdks/corretto-1.8.0_282/src.zip!/java/lang/String.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="ProjectId" id="1ogw0xjKeK5MbJZyqsA0dgOIOum" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -70,6 +76,9 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
+  </component>
+  <component name="ReaderModeSettings">
+    <option name="enabled" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">

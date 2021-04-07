@@ -1,14 +1,9 @@
 package file;
 
-import java.util.ArrayList;
-import java.util.Base64;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
-import java.util.List;
 
 import db.MalleDB;
 import util.*;
@@ -16,9 +11,9 @@ import util.*;
 import java.io.*;
 
 public class FileManager {
-    private MalleDB malleDB;
-    private SmallFileManager smallFileManager;
-    private BigFileManager bigFileManager;
+    private final MalleDB malleDB;
+    private final SmallFileManager smallFileManager;
+    private final BigFileManager bigFileManager;
     private String prefix = "123456";
 
     public boolean isBig(String filePath) {
@@ -55,8 +50,8 @@ public class FileManager {
         return malleDB.insert(key, metaInfo);
     }
 
-    public Status deleteMetaFile(String key) {
-        return malleDB.delete(key);
+    public void deleteMetaFile(String key) {
+        malleDB.delete(key);
     }
 
     public MetaFile readMetaFile(String key) {
@@ -70,10 +65,6 @@ public class FileManager {
         System.out.println("Inserting File : " + filename);
 
         File file = new File(filename);
-        if (file.isDirectory()) {
-            smallFileManager.smallFileInsertEncoder(filename);
-            return Status.OK;
-        }
 
         if (isBig(filename)) {
             bigFileManager.bigFileInsert(filename);
@@ -137,5 +128,4 @@ public class FileManager {
             System.out.println("Exception while reading the Image " + ioe);
         }
     }
-
 }

@@ -10,9 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f6df7e33-d2a1-4548-8fc0-a4dd16816112" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/file/FileItem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/file/BigFileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/file/BigFileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/file/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/file/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/file/SmallFileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/file/SmallFileManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/util/MetaFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/MetaFile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/db/FileManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fileManage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fileManage.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

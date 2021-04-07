@@ -26,7 +26,7 @@ public class MalleDB implements interfaces.MalleDB {
     //Initialize with custom configuration
     @Override
     public Status init(Options options) {
-
+        // BRANCH TEST
         if (SUB_DB == Options.DB_TYPE.MYSQL) {
             metadb = new MySQL();
         } else if (SUB_DB == Options.DB_TYPE.LEVELDB || SUB_DB== Options.DB_TYPE.TDLEVELDB) {

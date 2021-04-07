@@ -9,12 +9,13 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 public class BigFileManager {
 
     MalleDB malleDB;
 
-    public BigFileManager(MalleDB malleDB){
+    public BigFileManager(MalleDB malleDB) {
         this.malleDB = malleDB;
     }
 
@@ -35,12 +36,11 @@ public class BigFileManager {
         MetaFile newMeta = new MetaFile();
         newMeta.Stringto(testMeta);
 
-        for (int chunkNum = 0; chunkNum < chunkCount; chunkNum++) {
+        for (int chunkNum = 1; chunkNum <= chunkCount; chunkNum++) {
             byte[] buf;
-            if (chunkNum != chunkCount){
+            if (chunkNum != chunkCount) {
                 buf = new byte[(int) Options.BUFFERSIZE];
-            }
-            else{
+            } else {
                 buf = new byte[(int) remainingBytes];
             }
             int val = raf.read(buf);
@@ -49,18 +49,22 @@ public class BigFileManager {
         raf.close();
     }
 
-    public void bigFileRead(String filename){
-        Status chunkCntStatus = malleDB.read(filename);
-        int chunkCount = Integer.parseInt(chunkCntStatus.getValue());
-
+    public void bigFileRead(String metaID) {
+        String metaFileString = malleDB.read(metaID).getValue();
+        MetaFile metaFile = new MetaFile();
+        metaFile.Stringto(metaFileString);
+        int chunkCount = metaFile.getN();
+        for (int chunkNum = 1; chunkNum <= chunkCount; chunkNum++) {
+            String chunk = malleDB.read(metaID + chunkNum).getValue();
+            RandomAccessFile raf = new RandomAccessFile()
+        }
     }
 
-    static String getFileName(String filePath){
+    static String getFileName(String filePath) {
         int lastSlashIdx = filePath.lastIndexOf('\\');
-        if(lastSlashIdx==-1){
+        if (lastSlashIdx == -1) {
             return filePath;
-        }
-        else{
+        } else {
             return filePath.substring(lastSlashIdx + 1);
         }
     }

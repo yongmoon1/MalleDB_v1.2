@@ -10,6 +10,6 @@ public class fileManage {
         malleDB.init(new Options(Options.DB_TYPE.REDIS));
 
         FileManager fileManager = new FileManager(malleDB);
-        fileManager.insertFile("C:\\Users\\ChulWoo_Lee\\Desktop\\test\\numbers.jpg");
+        fileManager.insertFile("C:\\rrr");
     }
 }

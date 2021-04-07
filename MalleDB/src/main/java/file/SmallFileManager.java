@@ -1,7 +1,7 @@
 package file;
 
 import db.MalleDB;
-import sun.text.normalizer.CodePointTrie;
+
 import util.*;
 //adfdjklsdfjkl
 import java.io.File;
@@ -185,7 +185,8 @@ public class SmallFileManager {
 
             //seach file path
             serchpath(driectory_path, filepath);
-
+            int row = 1;
+            int col = 1;
 
             if (files != null && files.length > 0) {
                 for (int i = 0; i < filepath.size(); i++) {
@@ -216,10 +217,9 @@ public class SmallFileManager {
                         metalist.addlist(V);
                         buffer.clear();
                         System.out.println(buffer.toString());
-                        malleDB.insert("KLI_" + metaListId, keyList);             //key : metalist's keylistID, value : metafiles's key
-                        malleDB.insert("MLI_" + metaListId, valueList);           //key : metalist's            value : metafiles's meta_information
+
                         metalist.makemerge();
-                        malleDB.insert(metalist.getkey(), metalist.getallvalue());//key : metalist's            value : metafiles's data
+                        malleDB.insert(metaListId+row, metalist.getallvalue());//key : metalist's            value : metafiles's data
                         metalist = new Metalist();
                         metalist.setkey(malleDB.generateRandomString(6)); // change later to name or another
                         //check if existing key 코드작성
@@ -235,12 +235,11 @@ public class SmallFileManager {
                     meta.setid("Meta_" + file.getName());//파일의 ID
                     meta.setname(file.getName());
                     meta.setsize((int) file.length());
-
-                    malleDB.insert(meta.getid(), metaListId); //each metafile's value is metalistid
+                    meta.setMetaListId(metaListId+row);
+                    meta.setN(col);
+                    malleDB.insert(meta.getid(), meta.toString()); //each metafile's value is metalistid
                     //key : file ID       value : metalistId
                     System.out.println("............" + meta.getid());
-                    valueList += meta.toString();//metafiles's  values stored in metalist
-                    keyList += meta.getid() + "&";    //metafiles's  keys are stored in keyList
 
                     inputChannel.read(buffer); //read data from inputChannel. and write data in buffer
                     buffer.put((byte) 38);      //add delimeter "&" each file
@@ -299,6 +298,8 @@ public class SmallFileManager {
                     buffer.clear();
                     System.out.println(buffer.toString());
 
+                    metalist.makemerge();
+                    malleDB.insert(metaListId+row, metalist.getallvalue());//key : metalist's            value : metafiles's data
                 }
             }
         } catch (FileNotFoundException e) {
@@ -308,14 +309,31 @@ public class SmallFileManager {
         }
 
         // insert keyList and metailst in MalleDB
-        malleDB.insert("KLI_" + metaListId, keyList);             //key : metalist's keylistID, value : metafiles's key
-        malleDB.insert("MLI_" + metaListId, valueList);           //key : metalist's            value : metafiles's meta_information
-        metalist.makemerge();
-        malleDB.insert(metalist.getkey(), metalist.getallvalue());//key : metalist's            value : metafiles's data
+
 
         return Status.OK;
     }
+/*
+    public void smallFileDataRead(String startDir) {
+        File dir = new File(startDir);
+        File[] files = dir.listFiles();
 
+        if (files != null && files.length > 0) {
+            for (File file : files) {
+                // Check if the file is a directory
+                if (file.isDirectory()) {
+                    // We will not print the directory name, just use it as a new
+                    // starting point to list files from
+                    smallFileDataRead(file.getAbsolutePath());
+                } else {
+                    // We can use .length() to get the file size
+                    System.out.println(file.getAbsolutePath() + "  " + file.getName() + " (size in bytes: " + file.length() + ")");
+
+                }
+            }
+        }
+    }
+*/
     public void smallFileDataRead(String startDir) {
         File dir = new File(startDir);
         File[] files = dir.listFiles();

@@ -1,11 +1,14 @@
 package file;
 
 import db.MalleDB;
+import util.MetaFile;
 import util.Options;
 import util.Status;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class BigFileManager {
 
@@ -17,12 +20,22 @@ public class BigFileManager {
 
     public void bigFileInsert(String filepath) throws IOException {
         RandomAccessFile raf = new RandomAccessFile(filepath, "r");
-        long sourceSize = raf.length();
-        long chunkCount = sourceSize / Options.BUFFERSIZE + 1;
-        long remainingBytes = sourceSize % Options.BUFFERSIZE;
+        int sourceSize = Long.valueOf(raf.length()).intValue();
+        int chunkCount = sourceSize / Options.BUFFERSIZE + 1;
+        int remainingBytes = sourceSize % Options.BUFFERSIZE;
         String fileName = getFileName(filepath);
-        malleDB.insert(fileName + "Meta", Long.toString(chunkCount));
-        for (int chunkNum = 1; chunkNum <= chunkCount; chunkNum++) {
+
+        // Insert MetaFile for BigFile
+        MetaFile metaFile = new MetaFile(sourceSize, fileName, true, chunkCount);
+        malleDB.insert(metaFile.getid(), metaFile.toString());
+
+        //test
+        String testMeta = metaFile.toString();
+        System.out.println(testMeta);
+        MetaFile newMeta = new MetaFile();
+        newMeta.Stringto(testMeta);
+
+        for (int chunkNum = 0; chunkNum < chunkCount; chunkNum++) {
             byte[] buf;
             if (chunkNum != chunkCount){
                 buf = new byte[(int) Options.BUFFERSIZE];
@@ -31,7 +44,7 @@ public class BigFileManager {
                 buf = new byte[(int) remainingBytes];
             }
             int val = raf.read(buf);
-            malleDB.insert(fileName + chunkNum, buf.toString()); // key: filename + chunkNum
+            malleDB.insert(metaFile.getid() + chunkNum, buf.toString()); // key: filename + chunkNum
         }
         raf.close();
     }

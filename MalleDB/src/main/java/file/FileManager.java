@@ -68,22 +68,24 @@ public class FileManager {
 
         if (isBig(filename)) {
             bigFileManager.bigFileInsert(filename);
-            return Status.OK;
         } else {
             smallFileManager.smallFileInsertEncoder(filename);
-            return Status.OK;
         }
+        return Status.OK;
     }
 
-    public Status readFile(String filename) {
-        System.out.println("Reading Fiile : " + filename);
-        Status status = malleDB.read(filename);
-        if (status.isOk()) {
-            String value = status.getValue();
-            decoder(value, filename);
-            return Status.OK;
+    public Status readFile(String metaID) {
+        String metaFileString = malleDB.read(metaID).getValue();
+        MetaFile metaFile = new MetaFile();
+        metaFile.Stringto(metaFileString);
+
+        if(metaFile.isBig()){
+            bigFileManager.bigFileRead(metaFile);
         }
-        return Status.ERROR;
+        else{
+            smallFileManager.smallFileDataRead(metaFile);
+        }
+        return Status.OK;
     }
 
     public void updateFile(String filename) throws IOException {

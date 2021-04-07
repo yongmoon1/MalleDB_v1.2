@@ -29,6 +29,12 @@ public class MetaFile {
     private boolean isBackup;
     private boolean isinMemory;
 
+    private boolean isBig;
+    private int n;
+    private String metaListId;
+
+
+
     public MetaFile() {
         this.key = "eeeeeee";
     }

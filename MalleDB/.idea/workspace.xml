@@ -10,13 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f6df7e33-d2a1-4548-8fc0-a4dd16816112" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/file/BigFileManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/file/SmallFileManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/file/FileItem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/db/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/file/FileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fileManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fileManage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/db/FileManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db/FileManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fileManage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fileManage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/util/MetaFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/MetaFile.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,7 +134,7 @@
       <workItem from="1617153048490" duration="1560000" />
       <workItem from="1617336865911" duration="32000" />
       <workItem from="1617585853044" duration="38336000" />
-      <workItem from="1617763138273" duration="9725000" />
+      <workItem from="1617763138273" duration="10630000" />
     </task>
     <servers />
   </component>

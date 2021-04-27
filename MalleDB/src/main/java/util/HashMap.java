@@ -37,6 +37,7 @@ public class HashMap {  // Utility Class
         for(Map.Entry<String, String> entry : map.entrySet()){
             batch.put(entry.getKey().getBytes(), entry.getValue().getBytes());
         }
+        System.out.println("Flushing to leveldb");
         db.write(batch);
         map.clear();
     }

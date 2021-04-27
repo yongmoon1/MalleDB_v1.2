@@ -8,10 +8,11 @@ import java.io.IOException;
 public class fileManage {
     public static void main(String[] args) throws IOException {
         MalleDB malleDB = new MalleDB();
-        malleDB.init(new Options(Options.DB_TYPE.REDIS));
+        malleDB.init(new Options(Options.DB_TYPE.LEVELDB));
 
         FileManager fileManager = new FileManager(malleDB);
-        //fileManager.insertFile("C:\\Users\\ChulWoo_Lee\\Desktop\\algorithm.png");
-        fileManager.readFile("20210427180338algorithm.png");
+
+        //fileManager.insertFile("C:\\Users\\ChulWoo_Lee\\Desktop\\toeic.jpg");
+        fileManager.readFile("20210427214531toeic.jpg");
     }
 }

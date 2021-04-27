@@ -31,7 +31,7 @@ public class Redis extends SubDB {
     private static Jedis jedis = null;
     private static Pipeline pipeline = null;
     boolean assigned = false;
-    private static Integer read_size = 3;
+    private static Integer read_size = 50;
 
     @Override
     public Status init() {
@@ -132,8 +132,8 @@ public class Redis extends SubDB {
         }
         // To flush remained READ instruction.
         pipeline.sync();
+        System.out.println("Flushing READ at last");
         for (Response response : responses) {
-            System.out.println("Flushing READ at last");
             Object o = response.get();
             items.add(new Item(0, item.getType(), item.getKey(), o.toString()));
             // Don't care order

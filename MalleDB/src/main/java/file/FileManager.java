@@ -12,8 +12,6 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
-import org.mozilla.universalchardet.UniversalDetector;
-
 public class FileManager {
     private final MalleDB malleDB;
     private final SmallFileManager smallFileManager;
@@ -109,24 +107,6 @@ public class FileManager {
 
     public static byte[] decoder(String base64Image) {
         return Base64.getDecoder().decode(base64Image);
-    }
-
-    public static String detectEncodingType(String fileName) throws java.io.IOException {
-        byte[] buf = new byte[4096];
-        FileInputStream fis = new java.io.FileInputStream(fileName);
-        UniversalDetector detector = new UniversalDetector(null);
-        int nread;
-        while ((nread = fis.read(buf)) > 0 && !detector.isDone()) {
-            detector.handleData(buf, 0, nread);
-        }
-        detector.dataEnd();
-        String encoding = detector.getDetectedCharset();
-        if (encoding != null) {
-            return encoding;
-        } else {
-            System.out.println("No encoding detected.");
-            return null;
-        }
     }
 
 }

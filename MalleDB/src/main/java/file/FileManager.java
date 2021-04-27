@@ -80,10 +80,10 @@ public class FileManager {
         metaFile.Stringto(metaFileString);
 
         if(metaFile.isBig()){
-            bigFileManager.bigFileRead(metaFile);
+            bigFileManager.bigFileRead(metaFile.getid());
         }
         else{
-            smallFileManager.smallFileDataRead(metaFile);
+            smallFileManager.smallFileDataRead(metaFile.getid());
         }
         return Status.OK;
     }

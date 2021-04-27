@@ -196,7 +196,6 @@ public class SmallFileManager {
 
                     //when buffer is full
                     if ((buffer.remaining() < file.length() + 2)) {
-                        System.out.println("............encoder11");
                         int pos = buffer.position();
                         buffer.flip();
                         //value[i] = Base64.getEncoder().encodeToString(buffer.array());
@@ -229,7 +228,6 @@ public class SmallFileManager {
 
 
                     //when buffer is not full
-                    System.out.println("............encoder1");
                     //made metafile for one small file
                     MetaFile meta = new MetaFile();
                     meta.setid("Meta_" + file.getName());//파일의 ID

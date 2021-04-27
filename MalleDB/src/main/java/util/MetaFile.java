@@ -33,6 +33,7 @@ public class MetaFile {
     private boolean isinMemory;
 
     private boolean isBig;
+    private boolean isAPI;
     private int n;
     private String metaListId;
 
@@ -168,8 +169,11 @@ public class MetaFile {
         this.time = time;
     }
 
+    public void setAPI(boolean API) { isAPI = API; }
+    public  boolean isAPI() { return isAPI; }
+
     public static String[] token = {"MetaFile{ hot=", " order=", " id=", " size=", " key='", " name='", " userid='", " " +
-            "Refrenceid='", " time='", " isBig='", " n='", ", metaListId='"};
+            "Refrenceid='", " time='", " isBig='", " n='", ", metaListId='", ", isAPI='"};
 
     public String toStringMeta() {
         return "MetaFile{" +
@@ -203,12 +207,13 @@ public class MetaFile {
                 ", isBig='" + isBig + '\'' +
                 ", n='" + n + '\'' +
                 ", metaListId='" + metaListId + '\'' +
+                ", isAPI='" + isAPI + '\'' +
                 '}';
     }
 
     public void Stringto(String metadata) {
-        String[] info = new String[12];
-        for (int i = 0; i < 12; i++) {
+        String[] info = new String[13];
+        for (int i = 0; i < 13; i++) {
             info[i] = metadata.split(",")[i];
         }
         this.sethot(Boolean.parseBoolean(info[0].substring(token[0].length())));
@@ -223,6 +228,7 @@ public class MetaFile {
         this.setBig(Boolean.parseBoolean(info[9].substring(token[9].length(), info[9].lastIndexOf('\''))));
         this.setN(Integer.parseInt(info[10].substring(token[10].length(), info[10].lastIndexOf('\''))));
         this.setMetaListId(info[11].substring(token[11].length(), info[11].lastIndexOf('\'')));
+        this.setAPI(Boolean.parseBoolean(info[12].substring(token[12].length(), info[12].lastIndexOf('\''))));
     }
 
 

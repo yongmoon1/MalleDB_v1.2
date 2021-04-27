@@ -78,8 +78,7 @@ public class FileManager {
     }
 
     public Status readFile(String metaID) throws IOException {
-        String metaFileByteArray = malleDB.read(metaID).getValue();
-        String metaFileString = new String(metaFileByteArray);
+        String metaFileString = malleDB.read(metaID).getValue();
         MetaFile metaFile = new MetaFile();
         metaFile.Stringto(metaFileString);
 
@@ -91,13 +90,30 @@ public class FileManager {
         return Status.OK;
     }
 
-    public void updateFile(String filename) throws IOException {
-        deleteFile(filename);
-        insertFile(filename);
+    public Status updateFile(String metaID) {
+        String metaFileString = malleDB.read(metaID).getValue();
+        MetaFile metaFile = new MetaFile();
+        metaFile.Stringto(metaFileString);
+
+        if (metaFile.isBig()) {
+            bigFileManager.bigFileUpdate(metaFile);
+        } else {
+            // Small File Update
+        }
+        return Status.OK;
     }
 
-    public void deleteFile(String filename) {
-        malleDB.delete(filename);
+    public Status deleteFile(String metaID) {
+        String metaFileString = malleDB.read(metaID).getValue();
+        MetaFile metaFile = new MetaFile();
+        metaFile.Stringto(metaFileString);
+
+        if (metaFile.isBig()) {
+            bigFileManager.bigFileDelete(metaFile);
+        } else {
+            // Small File Update
+        }
+        return Status.OK;
     }
 
     public static String encoder(byte[] imageData) {

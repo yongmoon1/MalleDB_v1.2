@@ -58,6 +58,21 @@ public class BigFileManager {
         fos.close();
     }
 
+    public void bigFileDelete(MetaFile metaFile) {
+        String metaID = metaFile.getid();
+        int chunkCount = metaFile.getN();
+
+        for (int chunkNum = 1; chunkNum <= chunkCount; chunkNum++) {
+            malleDB.delete(metaID + chunkNum);
+        }
+
+        malleDB.delete(metaID);
+    }
+
+    public void bigFileUpdate(MetaFile metaFile){
+
+    }
+
     static String getFileName(String filePath) {
         int lastSlashIdx = filePath.lastIndexOf('\\');
         if (lastSlashIdx == -1) {

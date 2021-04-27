@@ -10,33 +10,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6dd0b625-155d-4ea7-90f1-ab2ea1ba03c8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_googlecode_juniversalchardet_juniversalchardet_1_0_3.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/connectors/LevelDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/connectors/LevelDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/connectors/Redis.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/connectors/Redis.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/file/BigFileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/file/BigFileManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/file/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/file/FileManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fileManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fileManage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/leveldb/000005.sst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/leveldb/000014.sst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/leveldb/000062.sst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/leveldb/000067.sst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/leveldb/000073.sst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/leveldb/CURRENT" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/leveldb/LOCK" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/leveldb/LOG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/leveldb/LOG.old" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/util/HashMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/HashMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/leveldb/000003.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/leveldb/CURRENT" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/leveldb/LOCK" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/leveldb/LOG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/leveldb/MANIFEST-000002" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/connectors/LevelDB.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/connectors/LevelDB.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/connectors/Redis.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/connectors/Redis.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/leveldb/001671.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/leveldb/001672.sst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/leveldb/001673.sst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/leveldb/001674.sst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/leveldb/CURRENT" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/leveldb/CURRENT" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/leveldb/LOG" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/leveldb/LOG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/leveldb/LOG.old" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/leveldb/LOG.old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/leveldb/MANIFEST-001669" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/file/BigFileManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/file/BigFileManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/file/FileManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/file/FileManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/fileManage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fileManage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/util/HashMap.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/util/HashMap.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +72,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
@@ -170,7 +159,7 @@
       <workItem from="1617336865911" duration="32000" />
       <workItem from="1617585853044" duration="38336000" />
       <workItem from="1617763138273" duration="10630000" />
-      <workItem from="1619506249358" duration="16315000" />
+      <workItem from="1619506249358" duration="17758000" />
     </task>
     <servers />
   </component>

@@ -9,6 +9,10 @@ import db.MalleDB;
 import util.*;
 //test pull
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+
+import org.mozilla.universalchardet.UniversalDetector;
 
 public class FileManager {
     private final MalleDB malleDB;
@@ -21,7 +25,7 @@ public class FileManager {
         File file = new File(filePath);
         if (file.isFile()) {
             size = Long.valueOf(file.length()).intValue();
-            if (size > Options.BUFFERSIZE) return true;
+            if (size > Options.BUFFER_SIZE) return true;
             else return false;
         } else {
             System.out.println("WRONG FILE PATH");
@@ -55,7 +59,8 @@ public class FileManager {
     }
 
     public MetaFile readMetaFile(String key) {
-        String value = malleDB.read(key).getValue();
+        String valueByteArray = malleDB.read(key).getValue();
+        String value = new String(valueByteArray);
         MetaFile metaFile = new MetaFile();
         metaFile.Stringto(value);
         return metaFile;
@@ -74,16 +79,16 @@ public class FileManager {
         return Status.OK;
     }
 
-    public Status readFile(String metaID) {
-        String metaFileString = malleDB.read(metaID).getValue();
+    public Status readFile(String metaID) throws IOException {
+        String metaFileByteArray = malleDB.read(metaID).getValue();
+        String metaFileString = new String(metaFileByteArray);
         MetaFile metaFile = new MetaFile();
         metaFile.Stringto(metaFileString);
 
-        if(metaFile.isBig()){
+        if (metaFile.isBig()) {
             bigFileManager.bigFileRead(metaFile);
-        }
-        else{
-            smallFileManager.smallFileDataRead(metaFile);
+        } else {
+            //smallFileManager.smallFileDataRead(metaFile);
         }
         return Status.OK;
     }
@@ -97,37 +102,31 @@ public class FileManager {
         malleDB.delete(filename);
     }
 
-    private String encoder(String imagePath) {
-        String base64Image = "";
-        byte imageData[] = {};
-        File file = new File(imagePath);
-        try (FileInputStream imageInFile = new FileInputStream(file)) {
-            // Reading a Image file from file system
-            imageData = new byte[(int) file.length()];
-            BufferedInputStream bis = new BufferedInputStream(imageInFile);
-            int size = bis.read(imageData);
-            //base64Image = Base64.getEncoder().encodeToString(imageData);
-        } catch (FileNotFoundException e) {
-            System.out.println("Image not found" + e);
-        } catch (IOException ioe) {
-            System.out.println("Exception while reading the Image " + ioe);
-        }
-        // return base64Image;
-        return new String(imageData);
+    public static String encoder(byte[] imageData) {
+        System.out.println("ENCODING");
+        return Base64.getEncoder().encodeToString(imageData);
     }
 
-    private void decoder(String value, String pathFile) {
-        try (FileOutputStream imageOutFile = new FileOutputStream(pathFile)) {
-            // Converting a Base64 String into Image byte array
-            //byte[] imageByteArray = Base64.getDecoder().decode(base64Image);
-            System.out.println("Creating File");
-            BufferedOutputStream bos = new BufferedOutputStream(imageOutFile);
-            bos.write(value.getBytes());
-            bos.flush();
-        } catch (FileNotFoundException e) {
-            System.out.println("Image not found" + e);
-        } catch (IOException ioe) {
-            System.out.println("Exception while reading the Image " + ioe);
+    public static byte[] decoder(String base64Image) {
+        return Base64.getDecoder().decode(base64Image);
+    }
+
+    public static String detectEncodingType(String fileName) throws java.io.IOException {
+        byte[] buf = new byte[4096];
+        FileInputStream fis = new java.io.FileInputStream(fileName);
+        UniversalDetector detector = new UniversalDetector(null);
+        int nread;
+        while ((nread = fis.read(buf)) > 0 && !detector.isDone()) {
+            detector.handleData(buf, 0, nread);
+        }
+        detector.dataEnd();
+        String encoding = detector.getDetectedCharset();
+        if (encoding != null) {
+            return encoding;
+        } else {
+            System.out.println("No encoding detected.");
+            return null;
         }
     }
+
 }

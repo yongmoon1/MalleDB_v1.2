@@ -181,7 +181,7 @@ public class SmallFileManager {
 
         try {
             //init buffer
-            ByteBuffer buffer = ByteBuffer.allocateDirect(Options.BUFFERSIZE);
+            ByteBuffer buffer = ByteBuffer.allocateDirect(Options.BUFFER_SIZE);
 
             //seach file path
             serchpath(driectory_path, filepath);

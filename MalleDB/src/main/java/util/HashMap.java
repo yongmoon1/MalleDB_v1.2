@@ -12,7 +12,7 @@ import redis.clients.jedis.Pipeline;
 
 public class HashMap {  // Utility Class
 
-    private static Integer insert_size = 2;
+    private static Integer insert_size = 50;
     private static Map<String, String> map = new java.util.HashMap<>(insert_size);
     private static Queue<String> queue = new LinkedList<>();
 

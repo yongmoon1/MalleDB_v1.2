@@ -10,11 +10,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6dd0b625-155d-4ea7-90f1-ab2ea1ba03c8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/db/MalleDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/MalleDB.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_googlecode_juniversalchardet_juniversalchardet_1_0_3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MalleDB.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MalleDB.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/connectors/Redis.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/connectors/Redis.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/file/BigFileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/file/BigFileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/file/FileItem.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/file/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/file/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/file/SmallFileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/file/SmallFileManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fileManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fileManage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/util/HashMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/HashMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/util/Options.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/Options.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/connectors/Redis.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/connectors/Redis.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/file/BigFileManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/file/BigFileManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/file/FileItem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/file/FileManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/file/FileManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/file/SmallFileManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/file/SmallFileManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fileManage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fileManage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/util/HashMap.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/util/HashMap.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/util/Options.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/util/Options.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,9 +59,6 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$USER_HOME$/AppData/Local/Temp/tmp__MalleDB.class" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$USER_HOME$/AppData/Local/Temp/tmp_1_MalleDB.class" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$USER_HOME$/AppData/Local/Temp/tmp_2_MalleDB.class" root0="FORCE_HIGHLIGHTING" />
     <setting file="jar://$USER_HOME$/.jdks/corretto-1.8.0_282/src.zip!/java/lang/String.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="1ogw0xjKeK5MbJZyqsA0dgOIOum" />
@@ -102,13 +113,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -132,7 +145,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f6df7e33-d2a1-4548-8fc0-a4dd16816112" name="Default Changelist" comment="" />
+      <changelist id="6dd0b625-155d-4ea7-90f1-ab2ea1ba03c8" name="Default Changelist" comment="" />
       <created>1613721322374</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -149,6 +162,7 @@
       <workItem from="1617336865911" duration="32000" />
       <workItem from="1617585853044" duration="38336000" />
       <workItem from="1617763138273" duration="10630000" />
+      <workItem from="1619506249358" duration="7699000" />
     </task>
     <servers />
   </component>

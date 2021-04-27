@@ -3,13 +3,10 @@ package file;
 import db.MalleDB;
 import util.MetaFile;
 import util.Options;
-import util.Status;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Random;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class BigFileManager {
 
@@ -20,44 +17,45 @@ public class BigFileManager {
     }
 
     public void bigFileInsert(String filepath) throws IOException {
-        RandomAccessFile raf = new RandomAccessFile(filepath, "r");
-        int sourceSize = Long.valueOf(raf.length()).intValue();
-        int chunkCount = sourceSize / Options.BUFFERSIZE + 1;
-        int remainingBytes = sourceSize % Options.BUFFERSIZE;
+        File file = new File(filepath);
+        FileInputStream fis = new FileInputStream(file);
+        BufferedInputStream bis = new BufferedInputStream(fis, Options.BUFFER_SIZE);
+
+        //RandomAccessFile raf = new RandomAccessFile(filepath, "r");
+        int sourceSize = Long.valueOf(file.length()).intValue();
+        int chunkCount = sourceSize / Options.BUFFER_SIZE + 1;
+        int remainingBytes = sourceSize % Options.BUFFER_SIZE;
         String fileName = getFileName(filepath);
 
         // Insert MetaFile for BigFile
         MetaFile metaFile = new MetaFile(sourceSize, fileName, true, chunkCount);
         malleDB.insert(metaFile.getid(), metaFile.toString());
 
-        //test
-        String testMeta = metaFile.toString();
-        System.out.println(testMeta);
-        MetaFile newMeta = new MetaFile();
-        newMeta.Stringto(testMeta);
+        byte[] buf = new byte[Options.BUFFER_SIZE];
+        int chunkNum = 1;
+        while(bis.read(buf) != -1)
+            malleDB.insert(metaFile.getid() + chunkNum++, FileManager.encoder(buf));
 
-        for (int chunkNum = 1; chunkNum <= chunkCount; chunkNum++) {
-            byte[] buf;
-            if (chunkNum != chunkCount) {
-                buf = new byte[(int) Options.BUFFERSIZE];
-            } else {
-                buf = new byte[(int) remainingBytes];
-            }
-            int val = raf.read(buf);
-            malleDB.insert(metaFile.getid() + chunkNum, buf.toString()); // key: filename + chunkNum
-        }
-        raf.close();
+        bis.close();
+        fis.close();
     }
 
-    public void bigFileRead(String metaID) {
-        String metaFileString = malleDB.read(metaID).getValue();
-        MetaFile metaFile = new MetaFile();
-        metaFile.Stringto(metaFileString);
+    public void bigFileRead(MetaFile metaFile) throws IOException {
+        String metaID = metaFile.getid();
         int chunkCount = metaFile.getN();
+
+        FileOutputStream fos = new FileOutputStream("./output.png");
+        BufferedOutputStream bos = new BufferedOutputStream(fos);
+
+        BufferedImage bi = new BufferedImage(80, 50, BufferedImage.TYPE_INT_RGB);
+
         for (int chunkNum = 1; chunkNum <= chunkCount; chunkNum++) {
             String chunk = malleDB.read(metaID + chunkNum).getValue();
-            RandomAccessFile raf = new RandomAccessFile()
+            bos.write(FileManager.decoder(chunk));
         }
+
+        bos.close();
+        fos.close();
     }
 
     static String getFileName(String filePath) {

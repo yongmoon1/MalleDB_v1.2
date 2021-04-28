@@ -78,7 +78,7 @@ public class FileManager {
         return Status.OK;
     }
 
-    public Status readFile(String metaID) {
+    public Status readFile(String metaID) throws IOException {
         String metaFileString = malleDB.read(metaID).getValue();
         MetaFile metaFile = new MetaFile();
         metaFile.Stringto(metaFileString);
@@ -87,7 +87,8 @@ public class FileManager {
             bigFileManager.bigFileRead(metaFile);
         }
         else{
-            smallFileManager.smallFileDataRead(metaFile.getid());
+           //smallFileManager.smallFileDataRead(metaFile.getid());
+           smallFileManager.smallOneFileRead(metaID);
         }
         return Status.OK;
     }

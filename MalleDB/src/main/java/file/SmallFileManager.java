@@ -80,19 +80,19 @@ public class SmallFileManager {
 
         //export metalist in MalleDB
         System.out.println(".................read 1");
-        tempItem = malleDB.readKV(metaId);       //get metalist key      작은 파일의 메타Id로 메타리스트id 를 가져옴
+        tempItem = malleDB.readKV(metaId);       //get metalist key      작은 파일의 메타Id로 메타정보를
+        MetaFile tempMeta = new MetaFile();
+        tempMeta.Stringto(tempItem.getValue());              //읽으려는 스몰 파일의 메타정보를 메타파일로 변환
+
         System.out.println(".................read 2");
-        metaListItem = malleDB.readKV(tempItem.getValue());    //get metalist's Item 메타리스트의 아이템을 가져옴
+        metaListItem = malleDB.readKV(tempMeta.getMetaListId());    //get metalist's Item 메타리스트의 아이템을 가져옴
         System.out.println(".................read 3");
         metalist.setkey(metaListItem.getKey());        // 메타리스트로 변환
         System.out.println(".................read 4");
         metalist.setAllvalue(metaListItem.getValue()); //convert from item  to metalist 메타리스트로 변환
         System.out.println(".................read 5");
         System.out.println("................." + metalist.getallvalue());
-        //export keyList in MalleDB
-        keyListItem = malleDB.readKV("KLI_" + tempItem.getValue());    //get keyList's Item
-        String keyList = keyListItem.getValue();                 //get keyList
-
+        //export keyList in MalleDB/
         //export "one" metavalue in metalist
         int start = 0;
         int end = 0;
@@ -100,18 +100,17 @@ public class SmallFileManager {
         String[] ONEofKey;
         String[] ONEofValue;
 
-        ONEofKey = keyList.split("&");
-        ONEofValue = metalist.getallvalue().split("&");
+          int keynum = tempMeta.getN();
+         ONEofValue = metalist.getallvalue().split("&");
         for (int i = 0; i < counter; i++) {
-            System.out.println(i + "     " + ONEofKey[i] + "    " + ONEofValue[i]);
-            if (metaId.equals(ONEofKey[i])) {
-                System.out.println("suc   " + i + "     " + ONEofKey[i] + "    " + ONEofValue[i]);
+            if (keynum-1 == i) {
+                System.out.println("suc   " + i  + "    " + ONEofValue[i]);
                 String temp = ONEofValue[i];
                 return temp;
             }
         }
-
-        /*
+//현재 메타리스트 아이디의 첫글자를 안읽음음
+       /*
         while(true) {
             counter++;
             end = keyList.indexOf("^",start); //1st keyid
@@ -218,12 +217,12 @@ public class SmallFileManager {
                         System.out.println(buffer.toString());
 
                         metalist.makemerge();
-                        malleDB.insert(metaListId+row, metalist.getallvalue());//key : metalist's            value : metafiles's data
+                        malleDB.insert(metaListId+(row++), metalist.getallvalue());//key : metalist's            value : metafiles's data
                         metalist = new Metalist();
                         metalist.setkey(malleDB.generateRandomString(6)); // change later to name or another
                         //check if existing key 코드작성
                         metaListId = metalist.getkey();       // change later to name or another
-
+                         col=1;
                     }
 
 
@@ -234,9 +233,9 @@ public class SmallFileManager {
                     meta.setname(file.getName());
                     meta.setsize((int) file.length());
                     meta.setMetaListId(metaListId+row);
-                    meta.setN(col);
+                    meta.setN(col++);
                     malleDB.insert(meta.getid(), meta.toString()); //each metafile's value is metalistid
-                    //key : file ID       value : metalistId
+                    //key : file ID       value : meta info
                     System.out.println("............" + meta.getid());
 
                     inputChannel.read(buffer); //read data from inputChannel. and write data in buffer

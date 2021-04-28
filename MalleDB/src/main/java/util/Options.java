@@ -46,7 +46,7 @@ public class Options {
     public static final String[] TABLES_POSTGRESQL = {"mdatatable", "bdatatable", "tdatatable"};
     //PostgreSQL Configurations ends
 
-    public static final int BUFFERSIZE = 4 * 1024;
+    public static final int BUFFER_SIZE = 4 * 1024;
 
     private final boolean usingDefault;
 

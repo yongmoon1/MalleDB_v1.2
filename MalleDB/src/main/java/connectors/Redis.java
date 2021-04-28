@@ -75,7 +75,6 @@ public class Redis extends SubDB {
             System.out.println("Hash_IS_FULL");
             HashMap.flush_redis(pipeline);
         }
-        ;
 
         return Status.OK;
     }

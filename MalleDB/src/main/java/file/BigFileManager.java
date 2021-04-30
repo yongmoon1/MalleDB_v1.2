@@ -67,17 +67,6 @@ public class BigFileManager {
         fos.close();
     }
 
-    public void bigFileDelete(MetaFile metaFile) {
-        String metaID = metaFile.getid();
-        int chunkCount = metaFile.getN();
-
-        for (int chunkNum = 1; chunkNum <= chunkCount; chunkNum++) {
-            malleDB.delete(metaID + chunkNum);
-        }
-
-        malleDB.delete(metaID);
-    }
-
     public void bigFileUpdate(MetaFile metaFile){
 
     }
@@ -114,22 +103,23 @@ public class BigFileManager {
 
     public void BigFileDelete(MetaFile metaFile){// not test
         //MetaFile에 API 여부를 추가해야할듯
-        Item tm = malleDB.readKV(metaFile.getid());
-        MetaFile DMF= new MetaFile();      //DMF = deleteMetaFile
-        DMF.Stringto(tm.getValue());
-        if(DMF.isAPI()){
+        String metaID = metaFile.getid();
+        int chunkCount = metaFile.getN();
+        if(metaFile.isAPI()){
            for(int seq = 1; seq <33; seq++) {//33은 후에 메타파일에 max seq 를 추가해서 그값을 사용한다.
-               for (int chunkNum = 1; chunkNum <= DMF.getN(); chunkNum++) {
-                   malleDB.delete(metaFile.getid() + chunkNum+"_"+seq);
+               for (int chunkNum = 1; chunkNum <= chunkCount; chunkNum++) {
+                   //malleDB.delete(metaFile.getid() + chunkNum+"_"+seq);
+                   malleDB.delete(metaID + chunkNum);
                }
            }
         }
         else {
-            for (int chunkNum = 1; chunkNum <= DMF.getN(); chunkNum++) {
-                malleDB.delete(metaFile.getid() + chunkNum);
+            for (int chunkNum = 1; chunkNum <= chunkCount; chunkNum++) {
+                malleDB.delete(metaID + chunkNum);
+
             }
         }
-        malleDB.delete(metaFile.getid());
+        malleDB.delete(metaID);
 
     }
 

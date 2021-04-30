@@ -110,7 +110,7 @@ public class FileManager {
         metaFile.Stringto(metaFileString);
 
         if (metaFile.isBig()) {
-            bigFileManager.bigFileDelete(metaFile);
+            bigFileManager.BigFileDelete(metaFile);
         } else {
             // Small File Update
         }

@@ -12,8 +12,6 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
-import org.mozilla.universalchardet.UniversalDetector;
-
 public class FileManager {
     private final MalleDB malleDB;
     private final SmallFileManager smallFileManager;
@@ -93,13 +91,30 @@ public class FileManager {
         return Status.OK;
     }
 
-    public void updateFile(String filename) throws IOException {
-        deleteFile(filename);
-        insertFile(filename);
+    public Status updateFile(String metaID) {
+        String metaFileString = malleDB.read(metaID).getValue();
+        MetaFile metaFile = new MetaFile();
+        metaFile.Stringto(metaFileString);
+
+        if (metaFile.isBig()) {
+            bigFileManager.bigFileUpdate(metaFile);
+        } else {
+            // Small File Update
+        }
+        return Status.OK;
     }
 
-    public void deleteFile(String filename) {
-        malleDB.delete(filename);
+    public Status deleteFile(String metaID) {
+        String metaFileString = malleDB.read(metaID).getValue();
+        MetaFile metaFile = new MetaFile();
+        metaFile.Stringto(metaFileString);
+
+        if (metaFile.isBig()) {
+            bigFileManager.bigFileDelete(metaFile);
+        } else {
+            // Small File Update
+        }
+        return Status.OK;
     }
 
 

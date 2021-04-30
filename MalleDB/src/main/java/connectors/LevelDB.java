@@ -31,6 +31,7 @@ public class LevelDB extends SubDB {
                 options = new Options();
                 options.createIfMissing(true);
                 db = factory.open(new File(util.Options.DB_LEVELDB), options);
+                if(db==null) System.out.println("DB IS NULL");
                 assigned = true;    // Flag that LevelDB exists.
                 batch = db.createWriteBatch();
             } catch (IOException e) {
@@ -113,7 +114,11 @@ public class LevelDB extends SubDB {
             System.out.println("Reading: Key: " + key);
             byte[] value = db.get(key.getBytes());
 
-
+            if(value==null){
+                System.out.println("VALUE IS NULL!!!");
+                continue;
+            }
+            System.out.println("key: " + key + " value: " + new String(value));
             items.add(new Item(i, item.getType(), item.getKey(), new String(value)));
             //item.setValue(Arrays.toString(value));
         }
@@ -174,5 +179,10 @@ public class LevelDB extends SubDB {
     public Status direct_delete(String key){
         db.delete(key.getBytes());
         return Status.OK;
+    }
+
+    @Override
+    public void flush() {
+        HashMap.flush_leveldb(batch, db);
     }
 }

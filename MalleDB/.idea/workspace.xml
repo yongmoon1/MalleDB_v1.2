@@ -10,26 +10,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6dd0b625-155d-4ea7-90f1-ab2ea1ba03c8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_googlecode_juniversalchardet_juniversalchardet_1_0_3.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MalleDB.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MalleDB.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/connectors/Redis.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/connectors/Redis.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/file/BigFileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/file/BigFileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/file/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/file/FileManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/file/SmallFileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/file/SmallFileManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fileManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fileManage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/util/HashMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/HashMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/util/Options.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/Options.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/connectors/Redis.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/connectors/Redis.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/util/MetaFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/MetaFile.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/file/BigFileManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/file/BigFileManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/file/FileItem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/file/FileManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/file/FileManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/file/SmallFileManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/file/SmallFileManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/fileManage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fileManage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/util/HashMap.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/util/HashMap.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/util/MetaFile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/util/MetaFile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/util/Options.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/util/Options.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

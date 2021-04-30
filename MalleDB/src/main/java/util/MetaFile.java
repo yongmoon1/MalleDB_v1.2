@@ -173,7 +173,7 @@ public class MetaFile {
     public  boolean isAPI() { return isAPI; }
 
     public static String[] token = {"MetaFile{ hot=", " order=", " id=", " size=", " key='", " name='", " userid='", " " +
-            "Refrenceid='", " time='", " isBig='", " n='", ", metaListId='", ", isAPI='"};
+            "Refrenceid='", " time='", " isBig='", " n='", " metaListId='", " isAPI='"};
 
     public String toStringMeta() {
         return "MetaFile{" +

@@ -83,7 +83,6 @@ public class SmallFileManager {
         tempItem = malleDB.readKV(metaId);       //get metalist key      작은 파일의 메타Id로 메타정보를
         MetaFile tempMeta = new MetaFile();
         tempMeta.Stringto(tempItem.getValue());              //읽으려는 스몰 파일의 메타정보를 메타파일로 변환
-
         System.out.println(".................read 2");
         metaListItem = malleDB.readKV(tempMeta.getMetaListId());    //get metalist's Item 메타리스트의 아이템을 가져옴
         System.out.println(".................read 3");
@@ -94,12 +93,8 @@ public class SmallFileManager {
         System.out.println("................." + metalist.getallvalue());
         //export keyList in MalleDB/
         //export "one" metavalue in metalist
-        int start = 0;
-        int end = 0;
         int counter = 100;//edit later
-        String[] ONEofKey;
         String[] ONEofValue;
-
           int keynum = tempMeta.getN();
          ONEofValue = metalist.getallvalue().split("&");
         for (int i = 0; i < counter; i++) {

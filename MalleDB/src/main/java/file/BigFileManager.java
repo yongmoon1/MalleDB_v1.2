@@ -37,7 +37,7 @@ public class BigFileManager {
         String fileName = getFileName(filepath);
 
         // Insert MetaFile for BigFile
-        MetaFile metaFile = new MetaFile(sourceSize, fileName, true, chunkCount);
+        MetaFile metaFile = new MetaFile(sourceSize, fileName, 2, chunkCount);
         malleDB.insert(metaFile.getid(), metaFile.toString());
 
         byte[] buf = new byte[Options.BUFFER_SIZE];
@@ -80,7 +80,7 @@ public class BigFileManager {
         }
     }
 
-    public void BigfileinsertAPI(MetaFile metaFile, byte[] data, int seq) throws IOException{// not test
+    public void bigfileinsertAPI(MetaFile metaFile, byte[] data, int seq) throws IOException{// not test
              if(seq == 1){
                  malleDB.insert(metaFile.getid(), metaFile.toString());
                  //이부분의 키는 metaListId로 해야할수도
@@ -101,7 +101,7 @@ public class BigFileManager {
     }//기존의 빅 파일생성을 사용하지 못하는 이유는 처음 파일 자체의 메타파일 생성과정 때문
      // 굳이 seq 변수값을 뒤에 붙일필요는 없을것같다. 빅 파일인서트를 내부에서 사용할것이 아니라면.
 
-    public void BigFileDelete(MetaFile metaFile){// not test
+    public void bigFileDelete(MetaFile metaFile){// not test
         //MetaFile에 API 여부를 추가해야할듯
         String metaID = metaFile.getid();
         int chunkCount = metaFile.getN();

@@ -32,7 +32,7 @@ public class MetaFile {
     private boolean isBackup;
     private boolean isinMemory;
 
-    private boolean isBig;
+    private int isBig;
     private boolean isAPI;
     private int n;
     private String metaListId;
@@ -58,7 +58,7 @@ public class MetaFile {
         this.hot = true;
     }
 
-    public MetaFile(int size, String name, boolean isBig, int n) {
+    public MetaFile(int size, String name, int isBig, int n) {
         this.size = size;
         this.name = name;
 
@@ -137,11 +137,11 @@ public class MetaFile {
         return Refrenceid;
     }
 
-    public boolean isBig() {
+    public int isBig() {
         return isBig;
     }
 
-    public void setBig(boolean big) {
+    public void setBig(int big) {
         isBig = big;
     }
 
@@ -225,7 +225,7 @@ public class MetaFile {
         this.setUserid(info[6].substring(token[6].length(), info[6].lastIndexOf("\'")));
         this.setRefrenceid(info[7].substring(token[7].length(), info[7].lastIndexOf("\'")));
         this.setTime(info[8].substring(token[8].length(), info[8].lastIndexOf('\'')));
-        this.setBig(Boolean.parseBoolean(info[9].substring(token[9].length(), info[9].lastIndexOf('\''))));
+        this.setBig(Integer.parseInt(info[9].substring(token[9].length(), info[9].lastIndexOf('\''))));
         this.setN(Integer.parseInt(info[10].substring(token[10].length(), info[10].lastIndexOf('\''))));
         this.setMetaListId(info[11].substring(token[11].length(), info[11].lastIndexOf('\'')));
         this.setAPI(Boolean.parseBoolean(info[12].substring(token[12].length(), info[12].lastIndexOf('\''))));

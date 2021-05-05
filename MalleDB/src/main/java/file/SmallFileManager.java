@@ -4,10 +4,7 @@ import db.MalleDB;
 
 import util.*;
 //adfdjklsdfjkl
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
@@ -68,6 +65,31 @@ public class SmallFileManager {
 
         return Status.OK;
     }
+
+    public Status smallOneFileInsert( String filepath)throws IOException{
+        File file = new File(filepath);
+        FileInputStream fis = new FileInputStream(file);
+
+
+        //RandomAccessFile raf = new RandomAccessFile(filepath, "r");
+        int sourceSize = Long.valueOf(file.length()).intValue();
+        String fileName = getFileName(filepath);
+
+        BufferedInputStream bis = new BufferedInputStream(fis, sourceSize);
+
+        // Insert MetaFile for BigFile
+        MetaFile metaFile = new MetaFile(sourceSize, fileName, 0, 1);
+        malleDB.insert("Meta_"+metaFile.getid(), metaFile.toString());
+
+        byte[] buf = new byte[sourceSize];//maybe change later.
+        while(bis.read(buf) != -1)
+            malleDB.insert(metaFile.getid(), FileManager.encoder(buf));
+
+        bis.close();
+        fis.close();
+       return Status.OK;
+    }//파일 사이즈에 따라 버퍼의 길이가 가변됨
+
 
     //메타리스트는 메타파일 정보의 value를 저장하고 키리스트는 메타파일의 키들을 저장
     // 또한 각각 파일들은 키와 value를 따로저장 이었지만     key : 메타파일   value : 메타리스트 ID로 변경
@@ -345,5 +367,12 @@ public class SmallFileManager {
             }
         }
     }
-
+    static String getFileName(String filePath) {
+        int lastSlashIdx = filePath.lastIndexOf('\\');
+        if (lastSlashIdx == -1) {
+            return filePath;
+        } else {
+            return filePath.substring(lastSlashIdx + 1);
+        }
+    }
 }

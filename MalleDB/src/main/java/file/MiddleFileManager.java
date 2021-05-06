@@ -49,7 +49,30 @@ public class MiddleFileManager {
         fis.close();
         return Status.OK;
     }//파일 사이즈에 따라 버퍼의 길이가 가변됨
+    public Status middleFilesInsert(String filepath)throws IOException{
+        File file = new File(filepath);
+        FileInputStream fis = new FileInputStream(file);
 
+
+        //RandomAccessFile raf = new RandomAccessFile(filepath, "r");
+        int sourceSize = Long.valueOf(file.length()).intValue();
+        String fileName = getFileName(filepath);
+
+        BufferedInputStream bis = new BufferedInputStream(fis, sourceSize);
+
+        // Insert MetaFile for BigFile
+        MetaFile metaFile = new MetaFile(sourceSize, fileName, 1, 1);
+        malleDB.insert("Meta_"+metaFile.getid(), metaFile.toString());
+
+        byte[] buf = new byte[sourceSize];
+        int chunkNum = 1;
+        while(bis.read(buf) != -1)
+            malleDB.insert(metaFile.getid() + chunkNum++, FileManager.encoder(buf));
+
+        bis.close();
+        fis.close();
+        return Status.OK;
+    }//파일 사이즈에 따라 버퍼의 길이가 가변됨
     public void middleFileDelete(MetaFile metaFile){
 
         String metaID = metaFile.getid();

@@ -88,31 +88,55 @@ public class FileManager {
         System.out.println("Inserting File : " + filename);
         //일부 파일은 파일 path를 인자로 받는중
         File file = new File(filename);
+        int listSize = 10;
+        int listCsr=0;
+
+
+        if( (( (listCsr+1)%listSize == 0) && ( listCsr!=0 )) || listCsr+1 == listSize ) {//this is isListFull() or all MetaFile read
+            MetaFile tempMeta;
+            int cycle = (listCsr)%listSize;//if size = 10 , cycle = 9
+            for(int i = 0; i< cycle;  i++ ){
+                tempMeta = listOfMetaFiles.get(i);
+                malleDB.insert(tempMeta.getid(),tempMeta.toString());
+            }
+        }
+
+        //MetaFile의 info 정의
+        MetaFile meta = new MetaFile();
+        int sourceSize = Long.valueOf(file.length()).intValue();
 
         if (isBig(filename) == 2 ) {
             bigFileManager.bigFileInsert(filename);
         } else if(isBig(filename) == 1){
             middleFileManager.middleFileInsert(filename);
-        }
-        else {
-            smallFileManager.smallFileInsertEncoder(filename);//
+        } else {
+            if(malleDB.smallFilesbuffer == null){malleDB.smallFilesbuffer = new byte[sourceSize];}
+            smallFileManager.smallOneFileInsert(filename, malleDB.smallFilesbuffer,sourceSize);//
         }//insert 방식을 어떻게 filepath에서 filename으로 바꿀것인가
 
 
-         // this part is fatal error part. now smallFileInsertEncoder() is assume that insert many file from parameter of filepath
 
-        //but now parameter is filename. so this func is only work about one file.
-        // when file is smallfile, occur buffer wasted.
-        // for solve this problem, we also add parameter of buffer
+        // 모든 파일이 경로가 다르면, 현재의 스몰파일의 경우 버퍼의 지속성이 어려워진다.
+        // 그렇기에 파일네임으로만 스몰파일인서트를 실행하고 싶으면 외부에서 버퍼를 받아와야한다.
+        //버퍼의 지속성 문제
+        //버퍼는 내부에서 정의 된후 유지되어야한다. 가비지 처리 되나 안되나?
+        //리턴주소를 버퍼로 하면 어떨까
+        //malleDB내에 버퍼를 정의하면 될수도있다.
+
+
+        //혹은 스몰파일 인서트시 버퍼정의시 이전 파일의 메타파일에 저장된 버퍼주소를 불러오는 형식은 어떨까
+        //이것은 물론 가비지 컬렉션을 피해야함
+
+        meta.setid("Meta_" + file.getName());
+        meta.setname(file.getName());
+        meta.setsize((int) file.length());
+        listOfMetaFiles.add((listCsr)%listSize,meta);
+        listCsr++;
 
 
 
-        //if we receive parameter to filename
-        // we can serch filepath using serchpath()
-        // but this way is must assume that all file's name diffrent each other
-        //-the solution is serch filepath and remember, and check it often ?
 
-       /* int listSize = Long.valueOf(file.length()).intValue()/Options.BUFFER_SIZE + 1;
+       /* int listize = Long.valueOf(file.length()).intValue()/Options.BUFFER_SIZE + 1;
         int listCsr=0;
         LinkedList<MetaFile> listOfMetaFiles= new LinkedList<MetaFile>();
         while(true){
@@ -137,27 +161,8 @@ public class FileManager {
         }
          */
         //주석은 파라미터 파일패스일때 다수 파일에 대한 메타파일 제작 구문이다.//오류코드 참고만하다 삭제
-        int listSize = 10;
-        int listCsr=0;
 
-
-            if( (( (listCsr+1)%listSize == 0) && ( listCsr!=0 )) || listCsr+1 == listSize ) {//this is isListFull() or all MetaFile read
-                MetaFile tempMeta;
-                int cycle = (listCsr)%listSize;//if size = 10 , cycle = 9
-                for(int i = 0; i< cycle;  i++ ){
-                    tempMeta = listOfMetaFiles.get(i);
-                    malleDB.insert(tempMeta.getid(),tempMeta.toString());
-                }
-            }
-
-            //MetaFile의 info 정의
-            MetaFile meta = new MetaFile();
-            meta.setid("Meta_" + file.getName());
-            meta.setname(file.getName());
-            meta.setsize((int) file.length());
-            listOfMetaFiles.add((listCsr)%listSize,meta);
-            listCsr++;
-        //일단은 프로토로 개수로 사이즈가 정해짐. 추후 크기를 이용하여 리스트의 사이즈를 변경할수도있음
+        //일단은 프로토로. 개수로 사이즈가 정해짐. 추후 크기를 이용하여 리스트의 사이즈를 변경할수도있음
 
 
 

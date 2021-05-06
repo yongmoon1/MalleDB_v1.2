@@ -66,13 +66,13 @@ public class SmallFileManager {
         return Status.OK;
     }
 
-    public Status smallOneFileInsert( String filepath)throws IOException{
+    public Status smallOneFileInsert( String filepath,byte[] buf,int sourceSize)throws IOException{
         File file = new File(filepath);
         FileInputStream fis = new FileInputStream(file);
 
 
         //RandomAccessFile raf = new RandomAccessFile(filepath, "r");
-        int sourceSize = Long.valueOf(file.length()).intValue();
+        //int sourceSize = Long.valueOf(file.length()).intValue();
         String fileName = getFileName(filepath);
 
         BufferedInputStream bis = new BufferedInputStream(fis, sourceSize);
@@ -81,7 +81,6 @@ public class SmallFileManager {
         MetaFile metaFile = new MetaFile(sourceSize, fileName, 0, 1);
         malleDB.insert("Meta_"+metaFile.getid(), metaFile.toString());
 
-        byte[] buf = new byte[sourceSize];//maybe change later.
         while(bis.read(buf) != -1)
             malleDB.insert(metaFile.getid(), FileManager.encoder(buf));
 
@@ -126,7 +125,7 @@ public class SmallFileManager {
                 return temp;
             }
         }
-//현재 메타리스트 아이디의 첫글자를 안읽음음
+
        /*
         while(true) {
             counter++;

@@ -27,6 +27,8 @@ public class MetaFile {
     private String userid;
     private String Refrenceid;
     private String time;
+    private MetaFile link;
+
 
     private boolean hot;
     private boolean isBackup;
@@ -76,101 +78,78 @@ public class MetaFile {
     public void setOrder(int order) {
         this.order = order;
     }
-
     public void setid(String id) {
         this.metaID = id;
     }
-
     public void setsize(int size) {
         this.size = size;
     }
-
     public void setname(String name) {
         this.name = name;
     }
-
     public void setKey(String key) {
         this.key = key;
     }
-
     public void setUserid(String userid) {
         this.userid = userid;
     }
-
     public void setRefrenceid(String Refrenceid) {
         this.Refrenceid = Refrenceid;
     }
-
     public void sethot(boolean hot) {
         this.hot = hot;
     }
-
-    public boolean ishot() {
-        return hot;
+    public void setTime(String time) {
+        this.time = time;
     }
+    public void setAPI(boolean API) { isAPI = API; }
+    public void setMetaListId(String metaListId) {
+        this.metaListId = metaListId;
+    }
+    public void setBig(int big) { isBig = big; }
+    public void setN(int n) { this.n = n; }
+    public void setLink(MetaFile link){this.link = link;}
+
 
     public int getOrder() {
         return order;
     }
-
     public int getsize() {
         return size;
     }
-
     public String getid() {
         return metaID;
     }
-
     public String getname() {
         return name;
     }
-
     public String getKey() {
         return key;
     }
-
     public String getuserid() {
         return userid;
     }
-
     public String getRefrenceid() {
         return Refrenceid;
     }
-
-    public int isBig() {
-        return isBig;
-    }
-
-    public void setBig(int big) {
-        isBig = big;
-    }
-
     public int getN() {
         return n;
     }
-
-    public void setN(int n) {
-        this.n = n;
-    }
-
     public String getMetaListId() {
         return metaListId;
     }
-
-    public void setMetaListId(String metaListId) {
-        this.metaListId = metaListId;
-    }
-
     public String getTime() {
         return time;
     }
+    public MetaFile getLink(MetaFile link){ return link; }
 
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public void setAPI(boolean API) { isAPI = API; }
     public  boolean isAPI() { return isAPI; }
+    public int isBig() {
+        return isBig;
+    }
+    public boolean ishot() { return hot; }
+
+
 
     public static String[] token = {"MetaFile{ hot=", " order=", " id=", " size=", " key='", " name='", " userid='", " " +
             "Refrenceid='", " time='", " isBig='", " n='", " metaListId='", " isAPI='"};

@@ -15,6 +15,8 @@ public class MalleDB implements interfaces.MalleDB {
     private SubDB tdb;
     private boolean usingOneSubDB = false;
 
+    public byte[] smallFilesbuffer;
+
     //Initialize with default configuration
     @Override
     public Status init() {

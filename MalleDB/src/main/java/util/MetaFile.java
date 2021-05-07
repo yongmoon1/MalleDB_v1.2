@@ -28,7 +28,7 @@ public class MetaFile {
     private String Refrenceid;
     private String time;
     private MetaFile link;
-
+    private int linknum = 0;
 
     private boolean hot;
     private boolean isBackup;
@@ -108,8 +108,10 @@ public class MetaFile {
     }
     public void setBig(int big) { isBig = big; }
     public void setN(int n) { this.n = n; }
-    public void setLink(MetaFile link){this.link = link;}
-
+    public void setLink(MetaFile link){
+        this.link = link;
+        this.linknum = linknum + 1;
+    }
 
     public int getOrder() {
         return order;
@@ -141,13 +143,15 @@ public class MetaFile {
     public String getTime() {
         return time;
     }
-    public MetaFile getLink(MetaFile link){ return link; }
+    public MetaFile getLink(){ return this.link; }
 
     public  boolean isAPI() { return isAPI; }
     public int isBig() {
         return isBig;
     }
     public boolean ishot() { return hot; }
+
+
 
 
 

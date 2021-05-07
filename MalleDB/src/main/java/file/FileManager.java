@@ -84,20 +84,23 @@ public class FileManager {
         }
         return Status.OK;
     }
-    public Status insertFile2(String filename,LinkedList<MetaFile> listOfMetaFiles) throws IOException {
+    public Status insertFile2(String filepath) throws IOException {
+
+        String filename = bigFileManager.getFileName(filepath);
+
         System.out.println("Inserting File : " + filename);
         //일부 파일은 파일 path를 인자로 받는중
-        File file = new File(filename);
+        File file = new File(filepath);
         int listSize = 10;
         int listCsr=0;
 
-
+        MetaFile tempMeta = smallFileManager.link;
         if( (( (listCsr+1)%listSize == 0) && ( listCsr!=0 )) || listCsr+1 == listSize ) {//this is isListFull() or all MetaFile read
-            MetaFile tempMeta;
-            int cycle = (listCsr)%listSize;//if size = 10 , cycle = 9
-            for(int i = 0; i< cycle;  i++ ){
-                tempMeta = listOfMetaFiles.get(i);
+            System.out.println("Insert linkedlist" );
+            for(; listCsr < 0;  listCsr-- ){
+
                 malleDB.insert(tempMeta.getid(),tempMeta.toString());
+                tempMeta = tempMeta.getLink();
             }
         }
 
@@ -111,7 +114,7 @@ public class FileManager {
             middleFileManager.middleFileInsert(filename);
         } else {
             if(malleDB.smallFilesbuffer == null){malleDB.smallFilesbuffer = new byte[sourceSize];}
-            smallFileManager.smallOneFileInsert(filename, malleDB.smallFilesbuffer,sourceSize);//
+            smallFileManager.smallOneFileInsert(filepath, malleDB.smallFilesbuffer,sourceSize);//
         }//insert 방식을 어떻게 filepath에서 filename으로 바꿀것인가
 
 
@@ -127,10 +130,13 @@ public class FileManager {
         //혹은 스몰파일 인서트시 버퍼정의시 이전 파일의 메타파일에 저장된 버퍼주소를 불러오는 형식은 어떨까
         //이것은 물론 가비지 컬렉션을 피해야함
 
-        meta.setid("Meta_" + file.getName());
+        meta.setid("Meta_temp" + file.getName());
         meta.setname(file.getName());
         meta.setsize((int) file.length());
-        listOfMetaFiles.add((listCsr)%listSize,meta);
+        if(listCsr != 0){
+            meta.setLink(smallFileManager.link);
+        }
+        smallFileManager.link = meta;
         listCsr++;
 
 

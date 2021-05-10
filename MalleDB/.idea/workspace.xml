@@ -11,16 +11,14 @@
   <component name="ChangeListManager">
     <list default="true" id="6dd0b625-155d-4ea7-90f1-ab2ea1ba03c8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/file/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/file/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/file/MiddleFileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/file/MiddleFileManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/file/SmallFileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/file/SmallFileManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fileManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fileManage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/util/MetaFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/MetaFile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/db/MalleDB.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db/MalleDB.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/file/BigFileManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/file/BigFileManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/file/FileManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/file/FileManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/file/MiddleFileManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/file/MiddleFileManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/file/SmallFileManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/file/SmallFileManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/fileManage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fileManage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/util/MetaFile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/util/MetaFile.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

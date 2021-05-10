@@ -86,10 +86,18 @@ public class MiddleFileManager {
         malleDB.delete(metaID);
     }
 
-    public String middleFileRead(MetaFile metaFile) {
+    public void middleFileRead(MetaFile metaFile)throws IOException  {
 
         Item tempItem = malleDB.readKV(metaFile.getid());
-        return tempItem.getValue();
+        FileOutputStream fos = new FileOutputStream("./output.txt");
+        BufferedOutputStream bos = new BufferedOutputStream(fos);
+
+        bos.write(FileManager.decoder(tempItem.getValue()));
+        System.out.println(FileManager.decoder(tempItem.getValue()) );
+        System.out.println(tempItem.getValue() );
+        bos.close();
+        fos.close();
+
      // 파일 형식에 따라 read 하는 방식으로 구현해야하나 싶음
     }
 
